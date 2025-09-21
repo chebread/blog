@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"html/template"
 	"io"
-	"io/fs"
 	"log"
 	"net/url"
 	"os"
@@ -16,31 +15,9 @@ import (
 	meta "github.com/yuin/goldmark-meta"
 	"github.com/yuin/goldmark/parser"
 	"gopkg.in/yaml.v2"
+
+	"blog/lib"
 )
-
-func copyDir(src, dst string) error {
-	return filepath.WalkDir(src, func(path string, d fs.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-
-		relPath, err := filepath.Rel(src, path)
-		if err != nil {
-			return err
-		}
-		dstPath := filepath.Join(dst, relPath)
-
-		if d.IsDir() {
-			return os.MkdirAll(dstPath, 0755)
-		} else {
-			data, err := os.ReadFile(path)
-			if err != nil {
-				return err
-			}
-			return os.WriteFile(dstPath, data, 0644)
-		}
-	})
-}
 
 func buildHtmlPostList(srcSlice [][]string) string {
 	var s []string
@@ -65,43 +42,12 @@ func filePathToURLPath(filePath string) string {
 	return fmt.Sprintf("%s.html", urlPath)
 }
 
-func getFilePaths(dirPath string) []string {
-	var files []string
-
-	var f func(string) []string // 클로저 함수 타입 선언
-
-	f = func(dirPath string) []string {
-		entries, err := os.ReadDir(dirPath)
-		if err != nil {
-			fmt.Println(err)
-		}
-
-		for _, v := range entries {
-			if v.IsDir() {
-				// 파일이 아니라 디렉토리임.
-				subDirPath := dirPath + "/" + v.Name()
-				f(subDirPath)
-			} else {
-				if filepath.Ext(v.Name()) == ".md" || filepath.Ext(v.Name()) == ".mdx" {
-					files = append(files, dirPath+"/"+v.Name())
-				}
-			}
-		}
-
-		return files
-	}
-
-	f(dirPath) // 일단 처음 실행
-
-	return files
-}
-
 func main() {
 
 	// 모든 .md(x) 파일 path 가져오기
 	var dirPath string = "./content"
 
-	var filePaths []string = getFilePaths(dirPath)
+	var filePaths []string = lib.GetFilePaths(dirPath)
 
 	// 프론트 매터 가져와서 published, fixed, category로 파일 경로 나누기
 	type FrontMatter struct {
@@ -314,14 +260,16 @@ func main() {
 	// CSS를 위한 layout/style 디렉토리 복사
 	sourceStylesDir := "layout/styles"
 	destStylesDir := "public/styles"
-	if err := copyDir(sourceStylesDir, destStylesDir); err != nil {
+	if err := lib.CopyDir(sourceStylesDir, destStylesDir); err != nil {
 		fmt.Printf("layout/style 디렉토리 복사 실패\n")
 	}
 
 	// favicon을 위한 favicons 디렉토리 복사
 	sourceFaviconsDir := "layout/favicons"
 	destFaviconsDir := "public/favicons"
-	if err := copyDir(sourceFaviconsDir, destFaviconsDir); err != nil {
+	if err := lib.CopyDir(sourceFaviconsDir, destFaviconsDir); err != nil {
 		fmt.Printf("layout/favicons 디렉토리 복사 실패\n")
 	}
+
+	// TODO: github action으로 git tag ... 이렇게 하면 go run 해서 public에 정적 파일 생성해서 그거를 github.io에 올리면 됨.
 }
