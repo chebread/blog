@@ -83,13 +83,7 @@ func getFilePaths(dirPath string) []string {
 				f(subDirPath)
 			} else {
 				if filepath.Ext(v.Name()) == ".md" || filepath.Ext(v.Name()) == ".mdx" {
-					if v.Name() == "README.md" {
-						// exclude file list
-						// TODO: exclude 부분 개선해야 함.
-						continue
-					} else {
-						files = append(files, dirPath+"/"+v.Name())
-					}
+					files = append(files, dirPath+"/"+v.Name())
 				}
 			}
 		}
@@ -174,12 +168,15 @@ func main() {
 			for _, c := range fm.Category {
 				categoryFilePaths[c] = append(categoryFilePaths[c], filePath)
 			}
+		} else {
+			fmt.Println(filePath)
 		}
 	}
 
 	// path에서 filename만 남기기.
-	// path는 post/filename.md로 함. 단 filename은 '띄어쓰기 -> dash, 한국어 -> 퍼센트 인코딩'로 가공된 title로 하기.
+
 	// TODO: 일단 카테고리는 map 공부 이후 하자.
+
 	var fixedPostInfos [][]string
 	var publishedPostInfos [][]string
 
@@ -221,14 +218,22 @@ func main() {
 	if err := tmpl.Execute(outputFile, data); err != nil {
 		fmt.Printf("템플릿 실행 실패\n")
 	}
+	log.Printf("성공: [index.html] 파일이 생성되었습니다.\n")
 
-	// TODO: Post 생성하기
-	// TODO: post는 post 디렉토리 밑에 둔다.
-	if err := os.MkdirAll("public/post", 0755); err != nil {
+	// Post 생성하기
+	var postDirPath string = "public/post"
+
+	// public/post 디렉토리 초기화
+	if err := os.RemoveAll(postDirPath); err != nil {
+		fmt.Printf("public/post 디렉토리 삭제 실패\n")
+	}
+
+	// public/post 디렉토리 생성
+	if err := os.MkdirAll(postDirPath, 0755); err != nil {
 		fmt.Printf("public/post 디렉토리 생성 실패\n")
 	}
 
-	var postInfos [][]string = append(fixedPostInfos, publishedPostInfos...)
+	var postInfos [][]string = append(fixedPostInfos, publishedPostInfos...) // 참고로, 여기에는 category는 포함시키지 않아도 됨.
 
 	md := goldmark.New(
 		goldmark.WithExtensions(
@@ -310,6 +315,13 @@ func main() {
 	sourceStylesDir := "layout/styles"
 	destStylesDir := "public/styles"
 	if err := copyDir(sourceStylesDir, destStylesDir); err != nil {
-		fmt.Printf("스타일 복사 실패\n")
+		fmt.Printf("layout/style 디렉토리 복사 실패\n")
+	}
+
+	// favicon을 위한 favicons 디렉토리 복사
+	sourceFaviconsDir := "layout/favicons"
+	destFaviconsDir := "public/favicons"
+	if err := copyDir(sourceFaviconsDir, destFaviconsDir); err != nil {
+		fmt.Printf("layout/favicons 디렉토리 복사 실패\n")
 	}
 }
