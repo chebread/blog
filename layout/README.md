@@ -11,3 +11,6 @@ devd -l . # livereload 사용
 
 devd -ol . # livereload 사용 및 브라우저 열기
 ```
+
+## LICENSE
+MIT LICENSE &copy; 2025 Cha Haneum
