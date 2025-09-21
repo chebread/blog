@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>차한음 블로그</title>
-    <link rel="stylesheet" href="./styles/layout.css" />
-    <link rel="stylesheet" href="./styles/color-palette.css">
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/color-palette.css">
 </head>
 <body>
     <div class="root">
@@ -18,10 +18,12 @@
                 <!--Go 템플릿 주석-->
             </section>
 
+            <h2>Fixed posts</h2>
             <section>
                 {{ .Fixed }}
             </section>
 
+            <h2>Posts</h2>
              <section>
                 {{ .Published }}
             </section>

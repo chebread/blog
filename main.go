@@ -5,13 +5,42 @@ import (
 	"fmt"
 	"html/template"
 	"io"
+	"io/fs"
+	"log"
 	"net/url"
 	"os"
 	"path/filepath"
 	"strings"
 
+	"github.com/yuin/goldmark"
+	meta "github.com/yuin/goldmark-meta"
+	"github.com/yuin/goldmark/parser"
 	"gopkg.in/yaml.v2"
 )
+
+func copyDir(src, dst string) error {
+	return filepath.WalkDir(src, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+
+		relPath, err := filepath.Rel(src, path)
+		if err != nil {
+			return err
+		}
+		dstPath := filepath.Join(dst, relPath)
+
+		if d.IsDir() {
+			return os.MkdirAll(dstPath, 0755)
+		} else {
+			data, err := os.ReadFile(path)
+			if err != nil {
+				return err
+			}
+			return os.WriteFile(dstPath, data, 0644)
+		}
+	})
+}
 
 func buildHtmlPostList(srcSlice [][]string) string {
 	var s []string
@@ -19,7 +48,7 @@ func buildHtmlPostList(srcSlice [][]string) string {
 	for _, v := range srcSlice {
 		title := v[0]
 		path := v[1]
-		html := fmt.Sprintf("<li><a href=\"%s\">%s</a></li>", path, title)
+		html := fmt.Sprintf("<li><a href=\"post/%s\">%s</a></li>", path, title)
 		s = append(s, html)
 	}
 	s = append(s, "<ul>")
@@ -33,7 +62,7 @@ func filePathToURLPath(filePath string) string {
 	pathWithDashes := strings.ReplaceAll(title, " ", "-")
 	urlPath := url.PathEscape(pathWithDashes)
 
-	return fmt.Sprintf("post/%s.html", urlPath)
+	return fmt.Sprintf("%s.html", urlPath)
 }
 
 func getFilePaths(dirPath string) []string {
@@ -79,7 +108,6 @@ func main() {
 	var dirPath string = "./content"
 
 	var filePaths []string = getFilePaths(dirPath)
-	_ = filePaths
 
 	// 프론트 매터 가져와서 published, fixed, category로 파일 경로 나누기
 	type FrontMatter struct {
@@ -94,7 +122,6 @@ func main() {
 	var publishedFilePaths []string
 	var fixedFilePaths []string
 	var categoryFilePaths = make(map[string][]string)
-	_, _, _ = publishedFilePaths, fixedFilePaths, categoryFilePaths // 슬라이스도 된다.
 
 	for _, filePath := range filePaths {
 		file, err := os.Open(filePath)
@@ -153,25 +180,23 @@ func main() {
 	// path에서 filename만 남기기.
 	// path는 post/filename.md로 함. 단 filename은 '띄어쓰기 -> dash, 한국어 -> 퍼센트 인코딩'로 가공된 title로 하기.
 	// TODO: 일단 카테고리는 map 공부 이후 하자.
-	var fixedPostTitles [][]string
-	var publishedPostTitles [][]string
+	var fixedPostInfos [][]string
+	var publishedPostInfos [][]string
 
 	for _, filePath := range fixedFilePaths {
 		title := filePath[strings.LastIndex(filePath, "/")+1 : strings.LastIndex(filePath, ".")]
 		path := filePathToURLPath(title)
-		fixedPostTitles = append(fixedPostTitles, []string{title, path})
+		fixedPostInfos = append(fixedPostInfos, []string{title, path, filePath})
 	}
 	for _, filePath := range publishedFilePaths {
 		title := filePath[strings.LastIndex(filePath, "/")+1 : strings.LastIndex(filePath, ".")]
 		path := filePathToURLPath(title)
-		publishedPostTitles = append(publishedPostTitles, []string{title, path})
+		publishedPostInfos = append(publishedPostInfos, []string{title, path, filePath})
 	}
 
-	fmt.Println(fixedPostTitles, publishedPostTitles)
-
 	// index.html의 post list 채우기
-	var htmlFixedPostList string = buildHtmlPostList(fixedPostTitles)
-	var htmlPublishedPostList string = buildHtmlPostList(publishedPostTitles)
+	var htmlFixedPostList string = buildHtmlPostList(fixedPostInfos)
+	var htmlPublishedPostList string = buildHtmlPostList(publishedPostInfos)
 
 	type PageData struct {
 		Fixed     template.HTML
@@ -199,4 +224,92 @@ func main() {
 
 	// TODO: Post 생성하기
 	// TODO: post는 post 디렉토리 밑에 둔다.
+	if err := os.MkdirAll("public/post", 0755); err != nil {
+		fmt.Printf("public/post 디렉토리 생성 실패\n")
+	}
+
+	var postInfos [][]string = append(fixedPostInfos, publishedPostInfos...)
+
+	md := goldmark.New(
+		goldmark.WithExtensions(
+			meta.New(),
+		),
+	)
+
+	layoutFile := "layout/post.html"
+	tmplPost, err := template.ParseFiles(layoutFile)
+	if err != nil {
+		log.Fatalf("템플릿 파싱 실패: %v", err)
+	}
+
+	type PostData struct {
+		Title   string
+		Date    string
+		Content template.HTML
+	}
+
+	for _, postInfo := range postInfos {
+		title := postInfo[0]
+		filename := postInfo[1]
+		filePath := postInfo[2]
+
+		sourceBytes, err := os.ReadFile(filePath)
+		if err != nil {
+			fmt.Printf("파일 읽기 실패\n")
+			continue
+		}
+
+		var contentBuf bytes.Buffer
+		context := parser.NewContext()
+		if err := md.Convert(sourceBytes, &contentBuf, parser.WithContext(context)); err != nil {
+			fmt.Printf("Markdown 변환 실패\n")
+			continue
+		}
+
+		metaData := meta.Get(context)
+		var fm FrontMatter
+		if metaData != nil {
+			metaBytes, _ := yaml.Marshal(metaData)
+			if err := yaml.Unmarshal(metaBytes, &fm); err != nil {
+				fmt.Printf("프론트 메터 파싱 실패\n")
+				// TODO: Date를 또 따로 파싱 하지 말고, 위에서 yaml 할 때 한 번에 파싱 하자.
+				continue
+			}
+		}
+
+		page := PostData{
+			Title:   title,
+			Date:    fm.Date,
+			Content: template.HTML(contentBuf.String()),
+		}
+
+		decodedFilename, err := url.PathUnescape(filename)
+		if err != nil {
+			// 디코딩 실패 시 에러 처리 (예: 잘못된 % 인코딩)
+			fmt.Printf("파일명 디코딩 실패\n")
+			continue
+		}
+
+		outputPath := filepath.Join("public", "post", decodedFilename)
+		outputFile, err := os.Create(outputPath)
+		if err != nil {
+			fmt.Printf("출력 파일 생성 실패\n")
+			continue
+		}
+		defer outputFile.Close()
+
+		if err := tmplPost.Execute(outputFile, page); err != nil {
+			fmt.Printf("템플릿 실행 실패\n")
+			continue
+		}
+
+		log.Printf("성공: [%s] 파일이 생성되었습니다.", outputPath)
+	}
+
+	// CSS를 위한 layout/style 디렉토리 복사
+	sourceStylesDir := "layout/styles"
+	destStylesDir := "public/styles"
+	if err := copyDir(sourceStylesDir, destStylesDir); err != nil {
+		fmt.Printf("스타일 복사 실패\n")
+	}
 }
