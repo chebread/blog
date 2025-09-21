@@ -73,3 +73,6 @@ go.work.sum
 
 # custom
 unpublished/
+
+public/*
+!public/assets
