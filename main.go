@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"html/template"
 	"io"
-	"log"
+	"net/url"
 	"os"
 	"path/filepath"
 	"strings"
@@ -13,12 +13,27 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-type FrontMatter struct {
-	Date      string   `yaml:"date"`
-	Desc      string   `yaml:"desc"`
-	Category  []string `yaml:"category"`
-	Published bool     `yaml:"published"`
-	Fixed     bool     `yaml:"fixed"`
+func buildHtmlPostList(srcSlice [][]string) string {
+	var s []string
+	s = append(s, "<ul>")
+	for _, v := range srcSlice {
+		title := v[0]
+		path := v[1]
+		html := fmt.Sprintf("<li><a href=\"%s\">%s</a></li>", path, title)
+		s = append(s, html)
+	}
+	s = append(s, "<ul>")
+	html := strings.Join(s, "")
+	return html
+}
+
+func filePathToURLPath(filePath string) string {
+	base := filepath.Base(filePath)
+	title := strings.TrimSuffix(base, filepath.Ext(base))
+	pathWithDashes := strings.ReplaceAll(title, " ", "-")
+	urlPath := url.PathEscape(pathWithDashes)
+
+	return fmt.Sprintf("post/%s.html", urlPath)
 }
 
 func getFilePaths(dirPath string) []string {
@@ -59,6 +74,7 @@ func getFilePaths(dirPath string) []string {
 }
 
 func main() {
+
 	// 모든 .md(x) 파일 path 가져오기
 	var dirPath string = "./content"
 
@@ -66,6 +82,15 @@ func main() {
 	_ = filePaths
 
 	// 프론트 매터 가져와서 published, fixed, category로 파일 경로 나누기
+	type FrontMatter struct {
+		Date      string   `yaml:"date"`
+		Desc      string   `yaml:"desc"`
+		Category  []string `yaml:"category"`
+		Published bool     `yaml:"published"`
+		Fixed     bool     `yaml:"fixed"`
+	}
+
+	// 이거는 index.html의 블로그 리스트를 위한 슬라이스-맵 임.
 	var publishedFilePaths []string
 	var fixedFilePaths []string
 	var categoryFilePaths = make(map[string][]string)
@@ -109,14 +134,6 @@ func main() {
 			continue
 		}
 
-		// fmt.Printf("--- %s ---\n", filePath)
-		// fmt.Printf("Date: %s\n", fm.Date)
-		// fmt.Printf("Description: %s\n", fm.Desc)
-		// fmt.Printf("Category: %v\n", fm.Category)
-		// fmt.Printf("Published: %v\n", fm.Published)
-		// fmt.Printf("Fixed: %v\n", fm.Fixed)
-		// fmt.Println()
-
 		if fm.Published {
 			if fm.Fixed {
 				// fixed된 것은 어차피 published를 내포하고 있음으로, published에 넣지 않고 fixed에 넣는다
@@ -133,43 +150,33 @@ func main() {
 		}
 	}
 
-	// 이거는 index.html의 블로그 리스트를 위한 슬라이스-맵 임.
-	// fmt.Printf("fixed: %v\n", fixedFilePaths)
-	// fmt.Printf("published: %v\n", publishedFilePaths)
-	// fmt.Printf("categories: %v\n", categoryFilePaths)
-	// TODO: 일단 카테고리 구현은 map 공부 이후 하자.
-
-	// TODO: path에서 / 다 지우고 filename만 남기기.
+	// path에서 filename만 남기기.
+	// path는 post/filename.md로 함. 단 filename은 '띄어쓰기 -> dash, 한국어 -> 퍼센트 인코딩'로 가공된 title로 하기.
+	// TODO: 일단 카테고리는 map 공부 이후 하자.
 	var fixedPostTitles [][]string
 	var publishedPostTitles [][]string
 
 	for _, filePath := range fixedFilePaths {
-		// string slice
-		// fmt.Println(v, strings.LastIndex(v, "/"), strings.LastIndex(v, "."))
 		title := filePath[strings.LastIndex(filePath, "/")+1 : strings.LastIndex(filePath, ".")]
-		fixedPostTitles = append(fixedPostTitles, []string{title, filePath})
+		path := filePathToURLPath(title)
+		fixedPostTitles = append(fixedPostTitles, []string{title, path})
 	}
 	for _, filePath := range publishedFilePaths {
 		title := filePath[strings.LastIndex(filePath, "/")+1 : strings.LastIndex(filePath, ".")]
-		publishedPostTitles = append(publishedPostTitles, []string{title, filePath})
+		path := filePathToURLPath(title)
+		publishedPostTitles = append(publishedPostTitles, []string{title, path})
 	}
 
-	// fmt.Println(fixedPostTitles, publishedPostTitles)
+	fmt.Println(fixedPostTitles, publishedPostTitles)
 
-	// TODO: index.html의 post list 채우기
-	// TODO: fixed / published / category를 html로서 각각 하나의 문자열 묶음처럼 저장해야 함.
-
+	// index.html의 post list 채우기
 	var htmlFixedPostList string = buildHtmlPostList(fixedPostTitles)
 	var htmlPublishedPostList string = buildHtmlPostList(publishedPostTitles)
-
-	fmt.Println(htmlFixedPostList)
-	fmt.Println(htmlPublishedPostList)
 
 	type PageData struct {
 		Fixed     template.HTML
 		Published template.HTML
 	}
-
 	data := PageData{
 		Fixed:     template.HTML(htmlFixedPostList),
 		Published: template.HTML(htmlPublishedPostList),
@@ -177,33 +184,19 @@ func main() {
 
 	tmpl, err := template.ParseFiles("./layout/index.html")
 	if err != nil {
-		log.Fatalf("템플릿 파싱 실패: %v", err)
+		fmt.Printf("템플릿 파싱 실패\n")
 	}
 
 	outputFile, err := os.Create("public/index.html")
 	if err != nil {
-		log.Fatalf("출력 파일 생성 실패: %v", err)
+		fmt.Printf("출력 파일 생성 실패\n")
 	}
 	defer outputFile.Close()
 
 	if err := tmpl.Execute(outputFile, data); err != nil {
-		log.Fatalf("템플릿 실행 실패: %v", err)
+		fmt.Printf("템플릿 실행 실패\n")
 	}
 
-	log.Println("성공: public/index.html 파일이 생성되었습니다.")
-
-}
-
-func buildHtmlPostList(srcSlice [][]string) string {
-	var s []string
-	s = append(s, "<ul>")
-	for _, v := range srcSlice {
-		title := v[0]
-		path := v[1]
-		html := fmt.Sprintf("<li><a href=\"%s\">%s</a></li>", path, title)
-		s = append(s, html)
-	}
-	s = append(s, "<ul>")
-	html := strings.Join(s, "")
-	return html
+	// TODO: Post 생성하기
+	// TODO: post는 post 디렉토리 밑에 둔다.
 }
