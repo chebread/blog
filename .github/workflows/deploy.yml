@@ -13,6 +13,9 @@ jobs:
     # 실행 환경: 최신 우분투
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write 
+
     # 작업 단계들
     steps:
       # 1. 소스 코드 체크아웃 (내 저장소의 코드를 가져옴)
