@@ -2,6 +2,7 @@ package main
 
 import (
 	"blog/lib"
+
 	"bytes"
 	"fmt"
 	"html/template"
@@ -11,7 +12,6 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
-	"unicode"
 
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark/parser"
@@ -19,24 +19,6 @@ import (
 )
 
 // TODO: IO 공부하기
-
-// 문자열의 첫 글자가 한글인지 판별하는 함수
-func isKorean(s string) bool {
-	for _, r := range s {
-		return unicode.Is(unicode.Hangul, r)
-	}
-	return false
-}
-
-func slugifyPath(filePath string) string {
-	// 웹 개발에서는 "A Go Programming Language"와 같은 제목을
-	// URL 친화적인 A-Go-Programming-Language 형태로 만든 것을 slug라고 부른다.
-	base := filepath.Base(filePath)
-	title := strings.TrimSuffix(base, filepath.Ext(base))
-	pathWithDashes := strings.ReplaceAll(title, " ", "-")
-
-	return pathWithDashes
-}
 
 func main() {
 	// *** post data 처리
@@ -97,7 +79,7 @@ func main() {
 
 		if fm.Published {
 			var title string = path[strings.LastIndex(path, "/")+1 : strings.LastIndex(path, ".")]
-			var outputFilePath string = fmt.Sprintf("%s.html", slugifyPath(title)) // TODO: filepath.Join("public", "post", ...)  이거 않하고 그냥 따로 처리
+			var outputFilePath string = fmt.Sprintf("%s.html", lib.SlugifyPath(title)) // filepath.Join("public", "post", ...)  이거 않하고 그냥 따로 처리
 
 			var description string
 			if fm.Desc != "" {
@@ -141,7 +123,6 @@ func main() {
 	}
 
 	// *** public 디렉토리 삭제 및 생성
-	// TODO: assets은 content에서 관리한다.
 	publicDir := "public"
 	if err := lib.InitDir(publicDir); err != nil {
 		log.Fatalf("public 디렉토리 초기화 실패: %v", err)
@@ -169,14 +150,19 @@ func main() {
 	}
 	fmt.Printf("성공: content/assets 디렉토리 복사\n")
 
-	source404File := "layout/404.html"
-	dest404File := "public/404.html"
+	// gp-pages에서 기본적으로 제공하는 404 사용
+	// source404File := "layout/404.html"
+	// dest404File := "public/404.html"
+	// if err := lib.CopyFile(source404File, dest404File); err != nil {
+	// 	fmt.Printf("layout/404.html 파일 복사 실패\n")
+	// }
+	// fmt.Printf("성공: layout/404.html 파일 복사\n")
 
-	// lib.CopyFile 함수 호출
-	if err := lib.CopyFile(source404File, dest404File); err != nil {
-		log.Fatalf("파일 복사 실패: %v", err)
+	noJekyllPath := filepath.Join("public", ".nojekyll")
+	if err := os.WriteFile(noJekyllPath, []byte(""), 0644); err != nil {
+		fmt.Printf(".nojekyll 파일 생성 실패\n")
 	}
-	fmt.Printf("성공: layout/404.html 파일 복사\n")
+	fmt.Printf("성공: public/.nojekyll 파일 생성\n")
 
 	// *** category 기반 post list 처리
 	var postList []string
@@ -189,8 +175,8 @@ func main() {
 	sort.Slice(categories, func(i, j int) bool {
 		keyI := categories[i]
 		keyJ := categories[j]
-		isKoreanI := isKorean(keyI)
-		isKoreanJ := isKorean(keyJ)
+		isKoreanI := lib.IsKorean(keyI)
+		isKoreanJ := lib.IsKorean(keyJ)
 
 		if isKoreanI != isKoreanJ {
 			return isKoreanI
@@ -294,29 +280,44 @@ func main() {
 	}
 
 	type PostPageTemplateData struct {
-		Title    string
-		Date     string
-		Category string
-		Content  template.HTML
+		Title       string
+		Date        string
+		Category    []string
+		Description string
+		URL         string
+		Content     template.HTML
 	}
 
 	for _, data := range postsData {
 		title, _ := data["title"].(string)
 		date, _ := data["date"].(string)
-		category, _ := data["category"].(string)
+		category, _ := data["category"].([]string)
+		description, _ := data["description"].(string)
 		outputFilePath, _ := data["outputFilePath"].(string)
 		permalink := filepath.Join("public", "post", outputFilePath)
+		url := filepath.Join("post", outputFilePath)
 		sourceFilePath, _ := data["sourceFilePath"].(string)
 
+		// goldmark
 		sourceBytes, err := os.ReadFile(sourceFilePath)
 		if err != nil {
 			fmt.Printf("파일 읽기 실패\n")
 			continue
 		}
-
+		var bodyBytes []byte
+		if bytes.HasPrefix(sourceBytes, []byte("---")) {
+			parts := bytes.SplitN(sourceBytes, []byte("---"), 3)
+			if len(parts) >= 3 {
+				bodyBytes = parts[2]
+			} else {
+				bodyBytes = sourceBytes
+			}
+		} else {
+			bodyBytes = sourceBytes
+		}
 		var contentBuf bytes.Buffer
 		context := parser.NewContext()
-		if err := md.Convert(sourceBytes, &contentBuf, parser.WithContext(context)); err != nil {
+		if err := md.Convert(bodyBytes, &contentBuf, parser.WithContext(context)); err != nil {
 			fmt.Printf("Markdown 변환 실패\n")
 			continue
 		}
@@ -329,10 +330,12 @@ func main() {
 		defer outputFile.Close()
 
 		page := PostPageTemplateData{
-			Title:    title,
-			Date:     date,
-			Category: category,
-			Content:  template.HTML(contentBuf.String()),
+			Title:       title,
+			Date:        date,
+			Category:    category,
+			Description: description,
+			URL:         url,
+			Content:     template.HTML(contentBuf.String()),
 		}
 
 		if err := tmplPost.Execute(outputFile, page); err != nil {
@@ -342,6 +345,8 @@ func main() {
 
 		fmt.Printf("성공: %s 파일 생성\n", outputFilePath)
 	}
+
+	// TODO: assets은 content에서 관리한다.
 
 	// TODO: public/index.html Category 처리하기
 }

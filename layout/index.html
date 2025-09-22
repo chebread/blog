@@ -3,7 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>차한음 블로그</title>
+    <meta name="description" content="개발자 차한음 블로그">
+    <meta name="author" content="차한음">
+    <link rel="canonical" href="https://chebread.github.io/">
+
+    <meta property="og:title" content="차한음 블로그">
+    <meta property="og:description" content="개발자 차한음 블로그">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://chebread.github.io/">
+    <meta property="og:site_name" content="차한음 블로그">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="차한음 블로그">
+    <meta name="twitter:description" content="개발자 차한음 블로그">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "차한음 블로그",
+        "author": {
+            "@type": "Person",
+            "name": "차한음"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "차한음",
+        },
+        "description": "개발자 차한음 블로그"
+    }
+    </script>
+
     <link rel="stylesheet" href="/styles/layout.css" />
     <link rel="stylesheet" href="/styles/color-palette.css">
     
@@ -17,11 +49,6 @@
             <h1>차한음 블로그</h1>
         </header>
         <main>
-            <section>
-                {{/* {{ .Category }} */}}
-                <!--Go 템플릿 주석-->
-            </section>
-
             <h2>포스트</h2>
              <section>
                 {{ .PostList }}
