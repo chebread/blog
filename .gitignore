@@ -75,4 +75,5 @@ go.work.sum
 unpublished/
 
 public/*
-!public/assets
+
+test/*

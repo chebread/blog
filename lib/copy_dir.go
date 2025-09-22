@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 )
 
+// 디렉터리가 없으면 생성. 있으면 덮어쓰기.
 func CopyDir(src, dst string) error {
 	return filepath.WalkDir(src, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
