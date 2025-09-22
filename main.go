@@ -143,14 +143,15 @@ func main() {
 	}
 	fmt.Printf("성공: layout/favicons 디렉토리 복사\n")
 
+	// TODO: assets 이미지 파일 압축하기
 	sourceAssetsDir := "content/assets"
 	destAssetsDir := "public/assets"
 	if err := lib.CopyDir(sourceAssetsDir, destAssetsDir); err != nil {
 		fmt.Printf("content/assets 디렉토리 복사 실패\n")
 	}
-	fmt.Printf("성공: content/assets 디렉토리 복사\n")
+	fmt.Printf("성공: public/assets 디렉토리 복사\n")
 
-	// gp-pages에서 기본적으로 제공하는 404 사용
+	// gp-pages에서 기본적으로 제공하는 404 사용함
 	// source404File := "layout/404.html"
 	// dest404File := "public/404.html"
 	// if err := lib.CopyFile(source404File, dest404File); err != nil {
@@ -163,6 +164,13 @@ func main() {
 		fmt.Printf(".nojekyll 파일 생성 실패\n")
 	}
 	fmt.Printf("성공: public/.nojekyll 파일 생성\n")
+
+	source404File := "layout/robots.txt"
+	dest404File := "public/robots.txt"
+	if err := lib.CopyFile(source404File, dest404File); err != nil {
+		fmt.Printf("layout/robots.txt 파일 복사 실패\n")
+	}
+	fmt.Printf("성공: layout/robots.txt 파일 복사\n")
 
 	// *** category 기반 post list 처리
 	var postList []string
@@ -346,7 +354,7 @@ func main() {
 		fmt.Printf("성공: %s 파일 생성\n", outputFilePath)
 	}
 
-	// TODO: assets은 content에서 관리한다.
-
 	// TODO: public/index.html Category 처리하기
+
+	// TODO: SEO image 추가하기
 }
