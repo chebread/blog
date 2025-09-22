@@ -14,7 +14,6 @@ import (
 	"unicode"
 
 	"github.com/yuin/goldmark"
-	meta "github.com/yuin/goldmark-meta"
 	"github.com/yuin/goldmark/parser"
 	"gopkg.in/yaml.v2"
 )
@@ -286,11 +285,7 @@ func main() {
 		fmt.Printf("성공: public/post 디렉토리 생성\n")
 	}
 
-	md := goldmark.New(
-		goldmark.WithExtensions(
-			meta.New(),
-		),
-	)
+	md := goldmark.New() // goldmark
 
 	layoutFile := "layout/post.html"
 	tmplPost, err := template.ParseFiles(layoutFile)
