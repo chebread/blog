@@ -1,9 +1,6 @@
 ---
-date: 2025-09-22
-desc: About
-category: [foo]
 published: false
 fixed: false
 ---
 
-안녕하세요.
+안녕하세요. 개발자 차한음입니다.

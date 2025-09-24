@@ -136,7 +136,7 @@ func main() {
 	if err := build.SetupStaticAssets(); err != nil {
 		log.Fatalf("정적 파일 준비 중 에러 발생: %v", err)
 	}
-	fmt.Printf("성공: 정적 파일 준비\n")
+	fmt.Printf("성공: 정적 파일 준비 완료\n")
 
 	// *** category 기반 post list 처리
 	var postList []string
@@ -213,25 +213,44 @@ func main() {
 	htmlPostList := strings.Join(postList, "")
 
 	// index.html 처리
-	// 아직 index.html에서 템플릿을 안써서 일단 이렇게 처리함.
-	sourceIndexFile := "layout/index.html"
-	destIndexFile := "public/index.html"
-	indexTmpl, err := template.ParseFiles(sourceIndexFile)
+	sourceHomeFile := "layout/index.html"
+	destHomeFile := "public/index.html"
+	tmplHome, err := template.ParseFiles(sourceHomeFile)
 	if err != nil {
 		fmt.Printf("템플릿 파일 파싱 실패: %v\n", err)
 		return
 	}
-	outputIndexFile, err := os.Create(destIndexFile)
+	outputHomeFile, err := os.Create(destHomeFile)
 	if err != nil {
 		fmt.Printf("출력 파일 생성 실패: %v\n", err)
 		return
 	}
-	defer outputIndexFile.Close()
-	if err := indexTmpl.Execute(outputIndexFile, nil); err != nil {
+	defer outputHomeFile.Close()
+	if err := tmplHome.Execute(outputHomeFile, nil); err != nil {
 		fmt.Printf("템플릿 실행 실패: %v\n", err)
 		return
 	}
-	fmt.Printf("성공: %s 파일 생성\n", destIndexFile)
+	fmt.Printf("성공: %s 파일 생성\n", destHomeFile)
+
+	// about.html 처리
+	sourceAboutFile := "layout/about.html"
+	destAboutFile := "public/about.html"
+	tmplAbout, err := template.ParseFiles(sourceAboutFile)
+	if err != nil {
+		fmt.Printf("템플릿 파일 파싱 실패: %v\n", err)
+		return
+	}
+	outputAboutFile, err := os.Create(destAboutFile)
+	if err != nil {
+		fmt.Printf("출력 파일 생성 실패: %v\n", err)
+		return
+	}
+	defer outputAboutFile.Close()
+	if err := tmplAbout.Execute(outputAboutFile, nil); err != nil {
+		fmt.Printf("템플릿 실행 실패: %v\n", err)
+		return
+	}
+	fmt.Printf("성공: %s 파일 생성\n", destAboutFile)
 
 	// *** Posts 처리
 	type IndexPageTemplateData struct {

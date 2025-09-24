@@ -4,26 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>포스트 | 차한음 블로그</title>
-    <meta name="description" content="포스트 | 차한음 블로그">
+    <title>어바웃 | 차한음 블로그</title>
+    <meta name="description" content="어바웃 | 차한음 블로그">
     <meta name="author" content="차한음">
     <link rel="canonical" href="https://chebread.github.io/">
 
-    <meta property="og:title" content="포스트 | 차한음 블로그">
-    <meta property="og:description" content="포스트 | 차한음 블로그">
+    <meta property="og:title" content="어바웃 | 차한음 블로그">
+    <meta property="og:description" content="어바웃 | 차한음 블로그">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://chebread.github.io/posts.html">
+    <meta property="og:url" content="https://chebread.github.io/about.html">
     <meta property="og:site_name" content="차한음 블로그">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="포스트 | 차한음 블로그">
-    <meta name="twitter:description" content="차한음 블로그 포스트">
+    <meta name="twitter:title" content="어바웃 | 차한음 블로그">
+    <meta name="twitter:description" content="어바웃 | 차한음 블로그">
 
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
-        "headline": "포스트 | 차한음 블로그",
+        "headline": "어바웃 | 차한음 블로그",
         "author": {
             "@type": "Person",
             "name": "차한음"
@@ -32,14 +32,15 @@
             "@type": "Organization",
             "name": "차한음",
         },
-        "description": "포스트 | 차한음 블로그"
+        "description": "어바웃 | 차한음 블로그"
     }
     </script>
 
     <link rel="stylesheet" href="/styles/layout.css" />
     <link rel="stylesheet" href="/styles/color-palette.css">
 
-    <link rel="stylesheet" href="/styles/posts.css">
+    <link rel="stylesheet" href="/styles/about.css">
+    <link rel="stylesheet" href="/styles/github-markdown.css">
     
     <link rel="icon" href="/favicons/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
@@ -48,14 +49,15 @@
 <body>
     <div class="root">
         <header>
-            <h1>포스트</h1>
+            <h1>어바웃</h1>
         </header>
-        <main>
-             <section>
-                {{ .PostList }}
-            </section>
-        </main>
-        <footer>
+        <div>
+            <article class="markdown-body">
+                <p>안녕하세요. 개발자 차한음입니다.</p>
+                <img src="/assets/gopher.png" />
+            </article>
+        </div>
+        <footer class="post-footer">
             &copy; 2025 Cha Haneum
         </footer>
     </div>

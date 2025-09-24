@@ -10,14 +10,14 @@ import (
 func InitDir(dirPath string) error {
 	_, err := os.Stat(dirPath)
 	if os.IsNotExist(err) {
-		fmt.Printf("정보: '%s' 디렉터리가 존재하지 않습니다. 새로 생성합니다.\n", dirPath)
+		fmt.Printf("정보: %s 디렉터리가 존재하지 않습니다. 새로 생성합니다.\n", dirPath)
 		return os.MkdirAll(dirPath, 0755)
 	}
 	if err != nil {
 		return err
 	}
 
-	fmt.Printf("성공: '%s' 디렉터리가 존재합니다. 내용물을 삭제합니다.\n", dirPath)
+	fmt.Printf("성공: %s 디렉터리가 존재합니다. 내용물을 삭제합니다.\n", dirPath)
 
 	entries, err := os.ReadDir(dirPath)
 	if err != nil {
