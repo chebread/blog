@@ -1,5 +1,5 @@
 # chebread.github.io
-This is my blog.
+This is my personal blog.
 
 ## How to Deploy
 To publish a new post or deploy changes, you must push a specially formatted Git tag. The deployment is handled automatically by GitHub Actions.
@@ -12,7 +12,7 @@ First, make sure all your new content and changes are committed to the main bran
 git add .
 
 # Commit the changes
-git commit -m "post: foo"
+git commit -m "post: foo: boo"
 
 # Push the commit to the main branch
 git push origin main
@@ -37,5 +37,3 @@ You can now go to the Actions tab in your GitHub repository to watch the deploym
 
 ## LICENSE
 MIT LICENSE &copy; 2025 Cha Haneum
-
-<!--https://github.com/sharkdp/dp-->

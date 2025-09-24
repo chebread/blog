@@ -1,6 +1,7 @@
 package main
 
 import (
+	"blog/build"
 	"blog/lib"
 
 	"bytes"
@@ -15,6 +16,7 @@ import (
 
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark/parser"
+	"github.com/yuin/goldmark/renderer/html"
 	"gopkg.in/yaml.v2"
 )
 
@@ -122,55 +124,11 @@ func main() {
 		}
 	}
 
-	// *** public 디렉토리 삭제 및 생성
-	publicDir := "public"
-	if err := lib.InitDir(publicDir); err != nil {
-		log.Fatalf("public 디렉토리 초기화 실패: %v", err)
+	// *** 정적 파일 준비
+	if err := build.SetupStaticAssets(); err != nil {
+		log.Fatalf("정적 파일 준비 중 에러 발생: %v", err)
 	}
-
-	// public 위한 파일, 디렉토리 복사
-	sourceStylesDir := "layout/styles"
-	destStylesDir := "public/styles"
-	if err := lib.CopyDir(sourceStylesDir, destStylesDir); err != nil {
-		fmt.Printf("layout/style 디렉토리 복사 실패\n")
-	}
-	fmt.Printf("성공: layout/style 디렉토리 복사\n")
-
-	sourceFaviconsDir := "layout/favicons"
-	destFaviconsDir := "public/favicons"
-	if err := lib.CopyDir(sourceFaviconsDir, destFaviconsDir); err != nil {
-		fmt.Printf("layout/favicons 디렉토리 복사 실패\n")
-	}
-	fmt.Printf("성공: layout/favicons 디렉토리 복사\n")
-
-	// TODO: assets 이미지 파일 압축하기
-	sourceAssetsDir := "content/assets"
-	destAssetsDir := "public/assets"
-	if err := lib.CopyDir(sourceAssetsDir, destAssetsDir); err != nil {
-		fmt.Printf("content/assets 디렉토리 복사 실패\n")
-	}
-	fmt.Printf("성공: public/assets 디렉토리 복사\n")
-
-	// gp-pages에서 기본적으로 제공하는 404 사용함
-	// source404File := "layout/404.html"
-	// dest404File := "public/404.html"
-	// if err := lib.CopyFile(source404File, dest404File); err != nil {
-	// 	fmt.Printf("layout/404.html 파일 복사 실패\n")
-	// }
-	// fmt.Printf("성공: layout/404.html 파일 복사\n")
-
-	noJekyllPath := filepath.Join("public", ".nojekyll")
-	if err := os.WriteFile(noJekyllPath, []byte(""), 0644); err != nil {
-		fmt.Printf(".nojekyll 파일 생성 실패\n")
-	}
-	fmt.Printf("성공: public/.nojekyll 파일 생성\n")
-
-	source404File := "layout/robots.txt"
-	dest404File := "public/robots.txt"
-	if err := lib.CopyFile(source404File, dest404File); err != nil {
-		fmt.Printf("layout/robots.txt 파일 복사 실패\n")
-	}
-	fmt.Printf("성공: layout/robots.txt 파일 복사\n")
+	fmt.Printf("성공: 정적 파일 준비\n")
 
 	// *** category 기반 post list 처리
 	var postList []string
@@ -246,7 +204,28 @@ func main() {
 	}
 	htmlPostList := strings.Join(postList, "")
 
-	// public/index.html 처리
+	// index.html 처리
+	// 아직 index.html에서 템플릿을 안써서 일단 이렇게 처리함.
+	sourceIndexFile := "layout/index.html"
+	destIndexFile := "public/index.html"
+	indexTmpl, err := template.ParseFiles(sourceIndexFile)
+	if err != nil {
+		fmt.Printf("템플릿 파일 파싱 실패: %v\n", err)
+		return
+	}
+	outputIndexFile, err := os.Create(destIndexFile)
+	if err != nil {
+		fmt.Printf("출력 파일 생성 실패: %v\n", err)
+		return
+	}
+	defer outputIndexFile.Close()
+	if err := indexTmpl.Execute(outputIndexFile, nil); err != nil {
+		fmt.Printf("템플릿 실행 실패: %v\n", err)
+		return
+	}
+	fmt.Printf("성공: %s 파일 생성\n", destIndexFile)
+
+	// *** Posts 처리
 	type IndexPageTemplateData struct {
 		PostList template.HTML
 	}
@@ -254,12 +233,12 @@ func main() {
 		PostList: template.HTML(htmlPostList),
 	}
 
-	tmpl, err := template.ParseFiles("./layout/index.html")
+	tmpl, err := template.ParseFiles("./layout/posts.html")
 	if err != nil {
-		fmt.Printf("layout/index.html 템플릿 파일 파싱 실패\n")
+		fmt.Printf("layout/posts.html 템플릿 파일 파싱 실패\n")
 	}
 
-	outputFile, err := os.Create("public/index.html") // 파일이 없으면 새로 생성. 파일이 이미 있으면 초기화.
+	outputFile, err := os.Create("public/posts.html") // 파일이 없으면 새로 생성. 파일이 이미 있으면 초기화.
 	if err != nil {
 		fmt.Printf("출력 파일 생성 실패\n")
 	}
@@ -268,7 +247,7 @@ func main() {
 	if err := tmpl.Execute(outputFile, data); err != nil {
 		fmt.Printf("템플릿 실행 실패\n")
 	}
-	fmt.Printf("성공: public/index.html 파일 생성.\n")
+	fmt.Printf("성공: public/posts.html 파일 생성\n")
 
 	// *** post 처리
 	// public/post 디렉토리 생성
@@ -279,7 +258,11 @@ func main() {
 		fmt.Printf("성공: public/post 디렉토리 생성\n")
 	}
 
-	md := goldmark.New() // goldmark
+	md := goldmark.New(
+		goldmark.WithRendererOptions(
+			html.WithUnsafe(), // markdown에서 html tag 사용할 수 있게 활성화함
+		),
+	) // goldmark
 
 	layoutFile := "layout/post.html"
 	tmplPost, err := template.ParseFiles(layoutFile)
@@ -307,6 +290,7 @@ func main() {
 		sourceFilePath, _ := data["sourceFilePath"].(string)
 
 		// goldmark
+		// TODO: inline code, code block hightlight 설정
 		sourceBytes, err := os.ReadFile(sourceFilePath)
 		if err != nil {
 			fmt.Printf("파일 읽기 실패\n")
@@ -354,7 +338,11 @@ func main() {
 		fmt.Printf("성공: %s 파일 생성\n", outputFilePath)
 	}
 
-	// TODO: public/index.html Category 처리하기
-
 	// TODO: SEO image 추가하기
+
+	// TODO: css 스타일링 하기
+
+	// TODO: about 추가하기
+
+	// TODO: index / about / posts / post 나누기
 }

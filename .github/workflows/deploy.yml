@@ -1,36 +1,42 @@
 # 워크플로우의 이름
 name: Deploy to GitHub Pages
 
-# 언제 이 워크플로우를 실행할 것인가: 태그(tag)가 push되었을 때
 on:
   push:
     tags:
       - 'post/*' # git tag post/yyyy-mm-dd-xx.. 같은 형태의 태그에만 반응합니다.
 
-# 실행될 작업들
 jobs:
   build-and-deploy:
-    # 실행 환경: 최신 우분투
     runs-on: ubuntu-latest
 
     permissions:
       contents: write 
 
-    # 작업 단계들
     steps:
-      # 1. 소스 코드 체크아웃 (내 저장소의 코드를 가져옴)
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 2. Go 언어 환경 설정
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.25' # 사용하는 Go 버전에 맞게 수정
+          go-version: '1.25'
 
-      # 3. 정적 사이트 빌드 (사용자님이 만드신 main.go 실행)
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      # 정적 사이트 빌드
       - name: Build
-        run: go run .
+        run: pnpm run build
 
       # 4. 빌드 결과물(public 디렉터리)을 gh-pages 브랜치에 배포
       - name: Deploy

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>차한음 블로그</title>
+    <title>포스트 | 차한음 블로그</title>
     <meta name="description" content="개발자 차한음 블로그">
     <meta name="author" content="차한음">
     <link rel="canonical" href="https://chebread.github.io/">
@@ -47,10 +47,12 @@
 <body>
     <div class="root">
         <header>
-            <h1>차한음 블로그</h1>
+            <h1>포스트</h1>
         </header>
         <main>
-             <a href="posts.html">포스트</a>
+             <section>
+                {{ .PostList }}
+            </section>
         </main>
         <footer>
             &copy; 2025 Cha Haneum

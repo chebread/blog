@@ -6,6 +6,6 @@ published: true
 fixed: false
 ---
 
-![Go Gopher](/assets/gopher.png)
+![Gopher](/assets/gopher.png)
 
 I love Golang!

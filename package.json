@@ -1,0 +1,20 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "go run . && pnpm run build:css && pnpm run build:js",
+    "build:css": "sass layout/styles:public/styles --style=compressed",
+    "dev": "devd -ol public/",
+    "build:js": "esbuild layout/js/main.ts --bundle --outfile=public/js/main.js --minify --target=es2017"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "packageManager": "pnpm@10.15.0",
+  "devDependencies": {
+    "esbuild": "^0.25.10",
+    "sass": "^1.93.2",
+    "typescript": "^5.9.2"
+  }
+}
