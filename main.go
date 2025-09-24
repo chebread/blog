@@ -22,6 +22,14 @@ import (
 
 // TODO: IO 공부하기
 
+// TODO: SEO image 추가하기
+
+// TODO: css 스타일링 하기
+
+// TODO: about 추가하기
+
+// TODO: index / about / posts / post 나누기
+
 func main() {
 	// *** post data 처리
 	var contentDirPath string = "./content"
@@ -338,11 +346,4 @@ func main() {
 		fmt.Printf("성공: %s 파일 생성\n", outputFilePath)
 	}
 
-	// TODO: SEO image 추가하기
-
-	// TODO: css 스타일링 하기
-
-	// TODO: about 추가하기
-
-	// TODO: index / about / posts / post 나누기
 }

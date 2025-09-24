@@ -1,6 +1,24 @@
 # chebread.github.io
 This is my personal blog.
 
+## How to Build
+```shell
+pnpm run build
+```
+
+## How to Run
+### 1. Install Dependencies
+```shell
+go install github.com/cortesi/devd/cmd/devd@latest
+
+pnpm install
+```
+
+### 2. Run the Development Server
+```shell
+pnpm run dev
+```
+
 ## How to Deploy
 To publish a new post or deploy changes, you must push a specially formatted Git tag. The deployment is handled automatically by GitHub Actions.
 
