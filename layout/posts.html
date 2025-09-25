@@ -36,6 +36,7 @@
     }
     </script>
 
+    <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/layout.css" />
     <link rel="stylesheet" href="/styles/color-palette.css">
 
@@ -47,17 +48,36 @@
 </head>
 <body>
     <div class="root">
-        <header>
-            <h1>포스트</h1>
-        </header>
-        <main>
-             <section>
+        <div class="posts">
+           <nav class="posts-nav">
+                <a href="/" class="{{if eq .CurrentURL "/"}}active{{end}}">
+                    <span>홈</span>
+                </a>
+                <a href="/about.html" class="{{if eq .CurrentURL "/about.html"}}active{{end}}">
+                    <span>어바웃</span>
+                </a>
+                <a href="/posts.html" class="{{if eq .CurrentURL "/posts.html"}}active{{end}}">
+                    <span>포스트</span>
+                </a>
+            </nav>
+            
+            <main class="posts-list">
                 {{ .PostList }}
-            </section>
-        </main>
-        <footer>
-            &copy; 2025 Cha Haneum
-        </footer>
+            </main>
+            <footer class="posts-footer">
+                <section>
+                    <p>&copy; 2025 Cha Haneum</p>
+                </section>
+                <section>
+                    <a href="https://github.com/chebread">
+                        <span>깃허브</span>
+                    </a>
+                    <a href="">
+                        <span>이메일</span>
+                    </a>
+                </section>
+            </footer>
+        </div>
     </div>
 
     <script src="/js/main.js"></script>

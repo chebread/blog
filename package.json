@@ -5,14 +5,18 @@
   "scripts": {
     "build": "go run . && pnpm run build:css && pnpm run build:js",
     "build:css": "sass layout/styles:public/styles --style=compressed",
-    "dev": "devd -ol public/",
-    "build:js": "esbuild layout/js/main.ts --bundle --outfile=public/js/main.js --minify --target=es2017"
+    "build:js": "esbuild layout/js/main.ts --bundle --outfile=public/js/main.js --minify --target=es2017",
+    "serve": "devd -ol public/",
+    "watch": "chokidar \"layout/**/*\" -c \"pnpm run build\"",
+    "dev": "concurrently \"pnpm run watch\" \"pnpm run serve\""
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "packageManager": "pnpm@10.15.0",
   "devDependencies": {
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^9.2.1",
     "esbuild": "^0.25.10",
     "sass": "^1.93.2",
     "typescript": "^5.9.2"

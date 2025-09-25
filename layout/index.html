@@ -36,10 +36,12 @@
     }
     </script>
 
+    <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/layout.css" />
     <link rel="stylesheet" href="/styles/color-palette.css">
     
     <link rel="stylesheet" href="/styles/home.css">
+    <link rel="stylesheet" href="/styles/github-markdown.css">
     
     <link rel="icon" href="/favicons/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
@@ -47,16 +49,49 @@
 </head>
 <body>
     <div class="root">
-        <header>
-            <h1>차한음 블로그</h1>
-        </header>
-        <main>
-            <a href="posts.html">포스트</a>
-            <a href="about.html">어바웃</a>
-        </main>
-        <footer>
-            &copy; 2025 Cha Haneum
-        </footer>
+        <div class="home">
+            <header class="home-header">
+                <nav class="home-nav">
+                    <a href="/" class="{{if eq .CurrentURL "/"}}active{{end}}">
+                        <span>홈</span>
+                    </a>
+                    <a href="/about.html" class="{{if eq .CurrentURL "/about.html"}}active{{end}}">
+                        <span>어바웃</span>
+                    </a>
+                    <a href="/posts.html" class="{{if eq .CurrentURL "/posts.html"}}active{{end}}">
+                        <span>포스트</span>
+                    </a>
+                </nav>
+                <div class="home-hero">
+                    <h1>차한음 블로그</h1>
+                </div>
+            </header>
+            <main class="home-content">
+                <article class="markdown-body">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+                    <p>when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                    <p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,</p>
+                    <p>and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+                </article>
+            </main>
+            <footer class="home-footer">
+                <section>
+                    <p>&copy; 2025 Cha Haneum</p>
+                </section>
+                <section>
+                    <a href="https://github.com/chebread">
+                        <span>깃허브</span>
+                    </a>
+                    <a href="">
+                        <span>이메일</span>
+                    </a>
+                </section>
+            </footer>
+        </div>
     </div>
 
     <script src="/js/main.js"></script>
