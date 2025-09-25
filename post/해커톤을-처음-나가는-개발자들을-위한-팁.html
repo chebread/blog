@@ -37,10 +37,12 @@
     }
     </script>
 
+    <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/layout.css" />
     <link rel="stylesheet" href="/styles/color-palette.css">
-    <link rel="stylesheet" href="/styles/github-markdown.css">
+
     <link rel="stylesheet" href="/styles/post.css">
+    <link rel="stylesheet" href="/styles/github-markdown.css">
 
     <link rel="icon" href="/favicons/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
@@ -48,14 +50,27 @@
 </head>
 <body>
     <div class="root">
-        <header class="post-header">
-            <button><a href="/">뒤로가기</a></button>
-            <h1>해커톤을 처음 나가는 개발자들을 위한 팁</h1>
-            <h3><time datetime="2022-12-10">2022-12-10</time></h3>
-            <h3>[해커톤]</h3>
-        </header>
-        <div class="post-content">
-            <article class="markdown-body"><blockquote>
+        <div class="post">
+           <nav class="post-nav">
+                <a href="/" class="">
+                    <span>홈</span>
+                </a>
+                <a href="/about.html" class="">
+                    <span>어바웃</span>
+                </a>
+                <a href="/posts.html" class="active">
+                    <span>포스트</span>
+                </a>
+            </nav>
+            
+            <main class="post-content">
+                <header class="post-header">
+                    <h1 class="post-title">해커톤을 처음 나가는 개발자들을 위한 팁</h1>
+                    <p class="post-date"><time datetime="2022-12-10">2022년 12월 10일</time></p>
+                    <p class="post-category">[개발]</p>
+                </header>
+                <div class="post-body">
+                    <article class="markdown-body"><blockquote>
 <p>저는 이번 처음 한국코드페어 해커톤을 출전하여 동상을 수상하였습니다. 거기서 느낀 경험담을 들리고자 합니다.</p>
 </blockquote>
 <h2>주어질 주제에 대해 지나치게 신경 쓰지 마라</h2>
@@ -70,10 +85,25 @@
 <p>내가 생각하기로 해커톤에서 가장 까다로운 점은 개발도, 아이디어도 아닌 발표 같았다. 그렇지만 이번 해커톤으로 나는 깨달았다. 해커톤에서 발표는 그저 힌 바탕의 발표 자료로도 이해만 편하다면, 결과물만 우수하다면 아무 상관은 없다는 것이다.</p>
 <p>발표 자료는 시간이 없다면, 그냥 Keynote로만 만들어서 발표해도 상관없다. 그러니 구현한 결과물에만 신경 쓰길 바란다.</p>
 </article>
+                </div>
+            </main>
+
+            <footer class="post-footer">
+                <section>
+                    <p>&copy; 2025 Cha Haneum</p>
+                </section>
+                <section>
+                    <a href="https://github.com/chebread">
+                        <span>깃허브</span>
+                    </a>
+                    <a href="">
+                        <span>이메일</span>
+                    </a>
+                </section>
+            </footer>
         </div>
-        <footer class="post-footer">
-            &copy; 2025 Cha Haneum
-        </footer>
     </div>
+
+    <script src="/js/main.js"></script>
 </body>
 </html>

@@ -37,10 +37,12 @@
     }
     </script>
 
+    <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/layout.css" />
     <link rel="stylesheet" href="/styles/color-palette.css">
-    <link rel="stylesheet" href="/styles/github-markdown.css">
+
     <link rel="stylesheet" href="/styles/post.css">
+    <link rel="stylesheet" href="/styles/github-markdown.css">
 
     <link rel="icon" href="/favicons/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
@@ -48,14 +50,27 @@
 </head>
 <body>
     <div class="root">
-        <header class="post-header">
-            <button><a href="/">뒤로가기</a></button>
-            <h1>힙하게 코딩하는 방법</h1>
-            <h3><time datetime="2022-06-05">2022-06-05</time></h3>
-            <h3>[클린코드]</h3>
-        </header>
-        <div class="post-content">
-            <article class="markdown-body"><h2>라이브러리를 자제하여 사용한다</h2>
+        <div class="post">
+           <nav class="post-nav">
+                <a href="/" class="">
+                    <span>홈</span>
+                </a>
+                <a href="/about.html" class="">
+                    <span>어바웃</span>
+                </a>
+                <a href="/posts.html" class="active">
+                    <span>포스트</span>
+                </a>
+            </nav>
+            
+            <main class="post-content">
+                <header class="post-header">
+                    <h1 class="post-title">힙하게 코딩하는 방법</h1>
+                    <p class="post-date"><time datetime="2022-06-05">2022년 06월 05일</time></p>
+                    <p class="post-category">[개발]</p>
+                </header>
+                <div class="post-body">
+                    <article class="markdown-body"><h2>라이브러리를 자제하여 사용한다</h2>
 <p>자신의 역량으로도 충분히 개발할 수 있는 기능인데 굳이 라이브러리를 가져다가 사용하는 경우가 있다. 바로 라이브러리를 가져다가 사용하면 시간적인 효율성은 증가할 수도 있지만, 나중에 그 라이브러리를 사용하는 코드에 큰 에러라도 난다면, 아니면 프로젝트의 필수적이고 핵심적인 기능을 하는 로직과 라이브러리를 사용한 로직에 충돌이 일어나게 된다면, 정말 힘들어질 수 있다. 간단한 기능을 하는 라이브러리라면 라이브러리를 사용하지 않고 기능을 구현하는 것이 장기적인 효율적 측면으로 좋다고 생각한다.</p>
 <h2>다른 사람의 코드를 많이 읽는다</h2>
 <p>나는 이 부분이 굉장히 중요하다고 생각된다. 나는 요즘 <a href="https://velog.io/@velopert">@velopert</a> 님의 사이드 프로젝트인 <a href="https://github.com/velopert/velofolio">velofolio</a>의 코드를 읽고 있다. 이처럼 다른 사람의 코드들을 많이 읽게 된다면 나의 코드 스타일도 좋아질뿐더러 프로그래밍 실력도 같이 증가하게 된다.</p>
@@ -88,10 +103,25 @@ inputElement.addEventListener('keydown', e =&gt;
 <h2>최대한 사용자의 관점에서 바라보고 개발한다</h2>
 <p>개발은 내가 구현하고 싶은 로직을 구현하고 싶어서 개발하는 것이 아니다. 또 내가 편하게 스타일 로직을 구현하고 싶어서 쉽게 마크업을 구성하는 것은 개발이 아니다. 그것은 그냥 내가 구현하고 싶은 기능과 레이아웃이며 사용자를 위한 로직과 레이아웃이 아니다. 모든 기능과 레이아웃 들은 사용자를 위해 개발되어야 한다. 만약, 사용자를 무시한 채로 개발된다면 그 프로덕트는 성공하지 못할 것이다. 만약 그 프로덕트가 성공하였다고 해도 그것과 기능적인 측면은 비슷하지만 사용자 친화적인 다른 프로덕트로 사용자들은 언젠가 넘어갈 것이다.</p>
 </article>
+                </div>
+            </main>
+
+            <footer class="post-footer">
+                <section>
+                    <p>&copy; 2025 Cha Haneum</p>
+                </section>
+                <section>
+                    <a href="https://github.com/chebread">
+                        <span>깃허브</span>
+                    </a>
+                    <a href="">
+                        <span>이메일</span>
+                    </a>
+                </section>
+            </footer>
         </div>
-        <footer class="post-footer">
-            &copy; 2025 Cha Haneum
-        </footer>
     </div>
+
+    <script src="/js/main.js"></script>
 </body>
 </html>

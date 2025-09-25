@@ -1,0 +1,1 @@
+(()=>{function t(){let e=document.querySelectorAll(".home-nav, .about-nav");e.length!==0&&window.addEventListener("scroll",()=>{e.forEach(n=>{window.scrollY>10?n.classList.add("scrolled"):n.classList.remove("scrolled")})})}document.addEventListener("DOMContentLoaded",()=>{t()});})();
