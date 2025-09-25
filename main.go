@@ -24,10 +24,6 @@ import (
 
 // TODO: SEO image 추가하기
 
-// TODO: css 스타일링 하기
-
-// TODO: layout 내부 파일 변경시 자동으로 pnpm run build 실행하기
-
 func main() {
 	// *** post data 처리
 	var contentDirPath string = "./content"
