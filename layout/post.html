@@ -50,20 +50,46 @@
 </head>
 <body>
     <div class="root">
-        <header class="post-header">
-            <button><a href="/posts.html">뒤로가기</a></button>
-            <h1>{{- .Title -}}</h1>
-            <h3><time datetime="{{- .Date -}}">{{- .Date -}}</time></h3>
-            <h3>{{- .Category -}}</h3>
-        </header>
-        <div class="post-content">
-            <article class="markdown-body">
-                {{- .Content -}}
-            </article>
+        <div class="post">
+           <nav class="post-nav">
+                <a href="/" class="{{if eq .CurrentURL "/"}}active{{end}}">
+                    <span>홈</span>
+                </a>
+                <a href="/about.html" class="{{if eq .CurrentURL "/about.html"}}active{{end}}">
+                    <span>어바웃</span>
+                </a>
+                <a href="/posts.html" class="{{if eq .CurrentURL "/posts.html"}}active{{end}}">
+                    <span>포스트</span>
+                </a>
+            </nav>
+            
+            <main class="post-content">
+                <header class="post-header">
+                    <h1 class="post-title">{{- .Title -}}</h1>
+                    <p class="post-date"><time datetime="{{- .Date -}}">{{- .FormattedDate -}}</time></p>
+                    <p class="post-category">{{- .Category -}}</p>
+                </header>
+                <div class="post-body">
+                    <article class="markdown-body">
+                        {{- .Content -}}
+                    </article>
+                </div>
+            </main>
+
+            <footer class="post-footer">
+                <section>
+                    <p>&copy; 2025 Cha Haneum</p>
+                </section>
+                <section>
+                    <a href="https://github.com/chebread">
+                        <span>깃허브</span>
+                    </a>
+                    <a href="">
+                        <span>이메일</span>
+                    </a>
+                </section>
+            </footer>
         </div>
-        <footer class="post-footer">
-            &copy; 2025 Cha Haneum
-        </footer>
     </div>
 
     <script src="/js/main.js"></script>

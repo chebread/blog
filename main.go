@@ -183,18 +183,27 @@ func main() {
 		for _, data := range postsData {
 			isFixed, _ := data["fixed"].(bool)
 			outputFilePath, _ := data["outputFilePath"].(string)
+			title, _ := data["title"].(string)
+			date, _ := data["date"].(string) // yyyy-mm-dd
+			description, _ := data["description"].(string)
+			category, _ := data["category"].(string)
 			permalink := filepath.Join("post", outputFilePath) // 블로그 링크
+			formattedDate, err := lib.FormatDateKorean(date)   // yyyy년 mm월 dd일
+			if err != nil {
+				fmt.Printf("날짜 변환 실패: %v\n", err)
+				return
+			}
 
 			if isFixed {
 				fixedTemplate := `<li>
 					<article class="post-item">
-						<h3 class="post-item-title"><a href="%s">[Fixed] %s</a></h3>
+						<h3 class="post-item-title"><a href="%s">[고정됨] %s</a></h3>
 						<p class="post-item-date"><time datetime="%s">%s</time></p>
 						<p class="post-item-description">%s</p>
 						<div class="post-item-category">%s</div>
 					</article>
 				</li>`
-				postList = append(postList, fmt.Sprintf(fixedTemplate, permalink, data["title"], data["date"], data["date"], data["description"], data["category"]))
+				postList = append(postList, fmt.Sprintf(fixedTemplate, permalink, title, date, formattedDate, description, category))
 			} else {
 				template := `<li>
 					<article class="post-item">
@@ -204,7 +213,7 @@ func main() {
 						<div class="post-item-category">%s</div>
 					</article>
 				</li>`
-				postList = append(postList, fmt.Sprintf(template, permalink, data["title"], data["date"], data["date"], data["description"], data["category"]))
+				postList = append(postList, fmt.Sprintf(template, permalink, title, date, formattedDate, description, category))
 			}
 		}
 		postList = append(postList, "</ul>")
@@ -316,13 +325,14 @@ func main() {
 	}
 
 	type PostPageTemplateData struct {
-		Title       string
-		Date        string
-		Category    []string
-		Description string
-		URL         string
-		Content     template.HTML
-		CurrentURL  string
+		Title         string
+		Date          string
+		FormattedDate string
+		Category      []string
+		Description   string
+		URL           string
+		Content       template.HTML
+		CurrentURL    string
 	}
 
 	for _, data := range postsData {
@@ -334,6 +344,12 @@ func main() {
 		permalink := filepath.Join("public", "post", outputFilePath)
 		url := filepath.Join("post", outputFilePath)
 		sourceFilePath, _ := data["sourceFilePath"].(string)
+
+		formattedDate, err := lib.FormatDateKorean(date) // yyyy년 mm월 dd일
+		if err != nil {
+			fmt.Printf("날짜 변환 실패: %v\n", err)
+			return
+		}
 
 		// goldmark
 		// TODO: inline code, code block hightlight 설정
@@ -368,13 +384,14 @@ func main() {
 		defer outputFile.Close()
 
 		page := PostPageTemplateData{
-			Title:       title,
-			Date:        date,
-			Category:    category,
-			Description: description,
-			URL:         url,
-			Content:     template.HTML(contentBuf.String()),
-			CurrentURL:  "/posts.html",
+			Title:         title,
+			Date:          date,
+			FormattedDate: formattedDate,
+			Category:      category,
+			Description:   description,
+			URL:           url,
+			Content:       template.HTML(contentBuf.String()),
+			CurrentURL:    "/posts.html",
 		}
 
 		if err := tmplPost.Execute(outputFile, page); err != nil {
