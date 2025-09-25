@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>바닐라 자바스크립트의 한계 | 차한음 블로그</title>
+    <meta name="description" content="저는 주로 Vanilla JavaScript로 Side project를 개발 중입니다.Vanilla JavaScript로 코딩하는 것이 어떤 방식으로 이루어지는 가에 대해 궁금하신...">
+    <meta name="author" content="차한음">
+    <link rel="canonical" href="https://chebread.github.io/">
+
+    <meta property="og:title" content="바닐라 자바스크립트의 한계 | 차한음 블로그">
+    <meta property="og:description" content="저는 주로 Vanilla JavaScript로 Side project를 개발 중입니다.Vanilla JavaScript로 코딩하는 것이 어떤 방식으로 이루어지는 가에 대해 궁금하신...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://chebread.github.io/post/바닐라-자바스크립트의-한계.html">
+    <meta property="og:site_name" content="차한음 블로그">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="바닐라 자바스크립트의 한계 | 차한음 블로그">
+    <meta name="twitter:description" content="저는 주로 Vanilla JavaScript로 Side project를 개발 중입니다.Vanilla JavaScript로 코딩하는 것이 어떤 방식으로 이루어지는 가에 대해 궁금하신...">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "바닐라 자바스크립트의 한계 | 차한음 블로그",
+        "author": {
+            "@type": "Person",
+            "name": "차한음"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "차한음",
+        },
+        "datePublished": "2022-08-30",
+        "description": "저는 주로 Vanilla JavaScript로 Side project를 개발 중입니다.Vanilla JavaScript로 코딩하는 것이 어떤 방식으로 이루어지는 가에 대해 궁금하신..."
+    }
+    </script>
+
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/color-palette.css">
+
+    <link rel="stylesheet" href="/styles/post.css">
+    <link rel="stylesheet" href="/styles/github-markdown.css">
+
+    <link rel="icon" href="/favicons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png">
+</head>
+<body>
+    <div class="root">
+        <div class="post">
+           <nav class="post-nav">
+                <a href="/" class="">
+                    <span>홈</span>
+                </a>
+                <a href="/about.html" class="">
+                    <span>어바웃</span>
+                </a>
+                <a href="/posts.html" class="active">
+                    <span>포스트</span>
+                </a>
+            </nav>
+            
+            <main class="post-content">
+                <header class="post-header">
+                    <h1 class="post-title">바닐라 자바스크립트의 한계</h1>
+                    <p class="post-date"><time datetime="2022-08-30">2022년 08월 30일</time></p>
+                    <p class="post-category">[자바스크립트]</p>
+                </header>
+                <div class="post-body">
+                    <article class="markdown-body"><blockquote>
+<p>저는 주로 Vanilla JavaScript로 Side project를 개발 중입니다.
+Vanilla JavaScript로 코딩하는 것이 어떤 방식으로 이루어지는 가에 대해 궁금하신 분들을 위해 이번 <a href="https://github.com/chebread/gitits">gitits</a>를 개발하면서 알게 된 Vanilla JavaScript의 한계에 대해 알려드리고자 합니다.</p>
+</blockquote>
+<h2>SPA(Single Page Application)을 구현하기 위해서는 꽤나 많은 코드가 필요하다</h2>
+<p>저는 Vanilla JavaScript로 코딩을 하기 때문에 모든 상태 관리와 컴포넌트는 직접 구현하여 프로젝트에 사용해야 합니다. 필수로 구현을 필요로 하는 기능들은 이와 같습니다. (이 기능들은 React와 React 라이브러리에 내장되어 있는 함수와 기능이 유사하기에 함수명을 빌렸습니다)</p>
+<ul>
+<li><code>render</code></li>
+<li><code>useState</code></li>
+<li><code>useEffect</code></li>
+<li><code>router</code></li>
+<li><code>useParams</code></li>
+</ul>
+<p>이러한 기존의 기능과 제가 구현할 기능은 기능적인 측면으로서는 같지만 저의 프로젝트의 따라서 각각의 기능들은 최적화가 필요합니다. 그러하여, 이런 식의 많은 기능을 구현할 때 많은 시간과 코드가 작성되게 됩니다. 이는 꽤나 힘들고 귀찮은 일입니다.</p>
+<h2>Bundler를 구성하기 위해선 각각의 필요로 하는 기능의 Config 파일을 작성해야 한다</h2>
+<p>대표적으로는 <code>webpack</code> 이 있는데요. 여기서 <code>webpack</code> 은 그저 JavaScript의 파일을 하나의 파일로 합치는 역할만을 하기에 JavaScript 코드를 각각의 Browser에 최적화 하기 위해서는 컴파일러가 필요합니다. 대표적으로는 <code>babel</code> 이 있습니다. (저는 <code>esbuild-loader</code> 를 사용합니다) 이러한 패키지들은 Config 파일을 필수로 필요로 합니다. 그러하여 프로젝트에 맞는 이러한 Config 파일을 작성하는 데에 시간이 많이 소요됩니다. (NodeJS 일 경우에만 이러한 현상이 지속되게 됩니다. 만약 Bun, Deno를 사용한다면 꽤나 편하게 구성이 가능합니다)</p>
+<h2>Vanilla JavaScript로 구현한 기능들은 코드를 상대적으로 매우 많이 필요로 한다</h2>
+<p>일반적으로 <code>Vue</code> 로 Counter 예제를 만들게 된다면 대충 이러한 코드로 구현하게 될 것입니다.</p>
+<pre><code class="language-html">&lt;template&gt;
+&lt;button @click=&quot;increase&quot;&gt;&lt;/button&gt;
+&lt;div&gt;{{ count }}&lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<pre><code class="language-html">&lt;script&gt;
+// options api
+export default {
+data() {
+count: 0
+},
+methods: {
+increase() {
+this.count++;
+}
+}
+}
+&lt;/script&gt;
+</code></pre>
+<p>그렇지만 Vanilla JavaScript로 Counter 예제를 구현하게 된다면 꽤나 많은 코드를 가지게 됩니다.</p>
+<pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;
+</code></pre>
+<pre><code class="language-js">const app = document.querySelector('#app');
+let count = 0;
+const component = () =&gt; {
+app.innerHTML = `
+&lt;button id=&quot;increase&quot;&gt;&lt;/button&gt;
+&lt;div&gt;${count}&lt;/div&gt;
+`;
+const increaseId = document.querySelector('#increase');
+increaseId.addEventListener('click', () =&gt; {
+count++;
+component();
+});
+};
+</code></pre>
+<p>Vanilla JavaScript에서 Counter 예제를 만들기 위해서는 상태 업데이트를 위해 컴포넌트를 만들고, 상태가 변경될때 마다 컴포넌트를 실행해야 하는 컴포넌트의 동작 방식을 숙지해야 이러한 코드를 구현할 수 있습니다. 그러하여 JavaScript의 기초적인 것만 아는 분이라면 Vanilla JavaScript는 굉장히 쉬운 것이지만, 어떤 것을 구현하기 위해선 그것을 구현하는 것의 난이도로 봤을 때는 Vanilla JavaScript는 진입장벽 높다고 볼 수 있다. 꽤나 기초적인 지식이 요구되기 때문입니다.</p>
+<p>이렇게 Vanila JavaScript는 코드가 상대적으로 읽기가 불편하고, 굉장히 코드를 작성하는 데에 피로감이 있으며, 꽤나 쉽지 않은 그러한 언어라고 볼 수 있을 것입니다.</p>
+<h2>Vanill JavaScript에서 Mark-up을 Styling 하는 것은 꽤나 귀찮게 이루어 진다</h2>
+<p>Vanilla JavaScript가 뜻하는 것이 아주 기본, 아무 것도 입혀지지 않은 그러한 것이기 때문에 Mark-up을 Styling 하기 위해서는 가장 기본적인 방법인 CSS 파일을 <code>import</code> 하여 사용하는 방법과, CSS in JS를 구현하여 사용하는 방법 이 두 가지가 존재합니다.</p>
+<p>저는 CSS 파일을 <code>import</code> 해서 Styling 하는 방법과 CSS in JS를 사용하는 방법 이 두 가지를 혼용하여 사용합니다. <code>h-30</code> 같이 먼저 <code>define.css</code> 에 정의하여 속성으로 Styling 하는 방법과 <code>&amp;:hover</code> 같은 동적인 것을 사용하기 위해서 CSS in JS를 사용하고 있습니다. (Dark mode도 CSS in JS를 사용하여 지원하고 있습니다)</p>
+<p>만약 CSS in JS 같이 이러한 방식을 사용해야 한다면 이 또한 구현해야 하니 엄청난 코드가 필요로 되게 됩니다. 이를 구현하는 과정에서 나오는 피로감과 귀찮음은 엄청나게 증가되게 됩니다.</p>
+<p>또한, Vanilla JavaScript에서 Styling 하는 것은 거의 HTML에서 Styling 하는 것과 별반 다르지 않기 때문에 그렇게 재밌게 이루어지는 과정은 아닙니다.</p>
+<h2>프로젝트의 크기가 커질 수록 유지 보수를 하는 것은 굉장히 어려워 진다</h2>
+<p>Vanilla JavaScript로 Side project나 어떤 것을 어느 정도 개발을 완료하여 리팩토링을 하거나 유지 보수를 한다면, 매우 끔찍한 일이 벌어지게 될 것입니다. 만약 테스트 코드 조차 없다면 더욱더 힘든 과정이 벌어지게 될 것 입니다. 저의 코드일 경우 HTML을 그저 render 하여 Mark-up을 해가는 그러한 코드이며, HTML의 코드는 직관성과 신속성도 없기 때문에 유지 보수는 매우 불편합니다.</p>
+</article>
+                </div>
+            </main>
+
+            <footer class="post-footer">
+                <section>
+                    <p>&copy; 2025 Cha Haneum</p>
+                </section>
+                <section>
+                    <a href="https://github.com/chebread">
+                        <span>깃허브</span>
+                    </a>
+                    <a href="">
+                        <span>이메일</span>
+                    </a>
+                </section>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
