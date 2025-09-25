@@ -24,7 +24,15 @@ import (
 
 // TODO: SEO image 추가하기
 
+// TODO: Email 추가하기
+
 func main() {
+	md := goldmark.New(
+		goldmark.WithRendererOptions(
+			html.WithUnsafe(), // markdown에서 html tag 사용할 수 있게 활성화함
+		),
+	) // goldmark
+
 	// *** post data 처리
 	var contentDirPath string = "./content"
 	var contentFilePaths []string = lib.GetFilePaths(contentDirPath)
@@ -218,14 +226,38 @@ func main() {
 	htmlPostList := strings.Join(postList, "")
 
 	// index.html 처리
-	// TODO: home-content에 content/home/home.md 정보 삽입하기
+	homeMdBytes, err := os.ReadFile("content/home/home.md")
+	if err != nil {
+		fmt.Printf("home.md 파일 읽기 실패: %v\n", err)
+		return
+	}
+
+	var homeBodyBytes []byte
+	if bytes.HasPrefix(homeMdBytes, []byte("---")) {
+		parts := bytes.SplitN(homeMdBytes, []byte("---"), 3)
+		if len(parts) >= 3 {
+			homeBodyBytes = parts[2]
+		} else {
+			homeBodyBytes = homeMdBytes
+		}
+	} else {
+		homeBodyBytes = homeMdBytes
+	}
+
+	var homeContentBuf bytes.Buffer
+	if err := md.Convert(homeBodyBytes, &homeContentBuf); err != nil {
+		fmt.Printf("home.md 변환 실패: %v\n", err)
+		return
+	}
+
 	sourceHomeFile := "layout/index.html"
-	destHomeFile := "public/index.html"
 	tmplHome, err := template.ParseFiles(sourceHomeFile)
 	if err != nil {
 		fmt.Printf("템플릿 파일 파싱 실패: %v\n", err)
 		return
 	}
+
+	destHomeFile := "public/index.html"
 	outputHomeFile, err := os.Create(destHomeFile)
 	if err != nil {
 		fmt.Printf("출력 파일 생성 실패: %v\n", err)
@@ -235,25 +267,53 @@ func main() {
 
 	type HomePageData struct {
 		CurrentURL string
+		Content    template.HTML
 	}
 	homePageData := HomePageData{
 		CurrentURL: "/",
+		Content:    template.HTML(homeContentBuf.String()),
 	}
+
 	if err := tmplHome.Execute(outputHomeFile, homePageData); err != nil {
 		fmt.Printf("템플릿 실행 실패: %v\n", err)
 		return
 	}
+
 	fmt.Printf("성공: %s 파일 생성\n", destHomeFile)
 
 	// about.html 처리
-	// TODO: about-content에 content/about/about.md 정보 삽입하기
+	aboutMdBytes, err := os.ReadFile("content/about/about.md")
+	if err != nil {
+		fmt.Printf("about.md 파일 읽기 실패: %v\n", err)
+		return
+	}
+
+	var aboutBodyBytes []byte
+	if bytes.HasPrefix(aboutMdBytes, []byte("---")) {
+		parts := bytes.SplitN(aboutMdBytes, []byte("---"), 3)
+		if len(parts) >= 3 {
+			aboutBodyBytes = parts[2]
+		} else {
+			aboutBodyBytes = aboutMdBytes
+		}
+	} else {
+		aboutBodyBytes = aboutMdBytes
+	}
+
+	var aboutContentBuf bytes.Buffer
+	if err := md.Convert(aboutBodyBytes, &aboutContentBuf); err != nil {
+		fmt.Printf("about.md 변환 실패: %v\n", err)
+		return
+	}
+
 	sourceAboutFile := "layout/about.html"
-	destAboutFile := "public/about.html"
-	tmplAbout, err := template.ParseFiles(sourceAboutFile)
+	tmplabout, err := template.ParseFiles(sourceAboutFile)
 	if err != nil {
 		fmt.Printf("템플릿 파일 파싱 실패: %v\n", err)
 		return
 	}
+
+	destAboutFile := "public/about.html"
 	outputAboutFile, err := os.Create(destAboutFile)
 	if err != nil {
 		fmt.Printf("출력 파일 생성 실패: %v\n", err)
@@ -263,14 +323,18 @@ func main() {
 
 	type AboutPageData struct {
 		CurrentURL string
+		Content    template.HTML
 	}
 	aboutPageData := AboutPageData{
 		CurrentURL: "/about.html",
+		Content:    template.HTML(aboutContentBuf.String()),
 	}
-	if err := tmplAbout.Execute(outputAboutFile, aboutPageData); err != nil {
+
+	if err := tmplabout.Execute(outputAboutFile, aboutPageData); err != nil {
 		fmt.Printf("템플릿 실행 실패: %v\n", err)
 		return
 	}
+
 	fmt.Printf("성공: %s 파일 생성\n", destAboutFile)
 
 	// *** Posts 처리
@@ -307,12 +371,6 @@ func main() {
 	} else {
 		fmt.Printf("성공: public/post 디렉토리 생성\n")
 	}
-
-	md := goldmark.New(
-		goldmark.WithRendererOptions(
-			html.WithUnsafe(), // markdown에서 html tag 사용할 수 있게 활성화함
-		),
-	) // goldmark
 
 	layoutFile := "layout/post.html"
 	tmplPost, err := template.ParseFiles(layoutFile)

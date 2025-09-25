@@ -63,7 +63,7 @@
     }
 
     .home-hero {
-        height: 20rem;
+        height: 20rem; /* TODO: height 유동적 조절 고려 해보기 */
 
         display: flex;
         flex-direction: column;
