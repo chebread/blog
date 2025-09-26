@@ -63,7 +63,10 @@
     }
 
     .home-hero {
-        height: 20rem; /* TODO: height 유동적 조절 고려 해보기 */
+        height: 17.5rem;
+        @media (max-width: 35rem) {
+            height: 15rem;
+        }
 
         display: flex;
         flex-direction: column;

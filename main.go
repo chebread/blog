@@ -18,6 +18,9 @@ import (
 	"github.com/yuin/goldmark/parser"
 	"github.com/yuin/goldmark/renderer/html"
 	"gopkg.in/yaml.v2"
+
+	chromahtml "github.com/alecthomas/chroma/v2/formatters/html"
+	highlighting "github.com/yuin/goldmark-highlighting/v2"
 )
 
 // TODO: IO 공부하기
@@ -30,6 +33,15 @@ func main() {
 	md := goldmark.New(
 		goldmark.WithRendererOptions(
 			html.WithUnsafe(), // markdown에서 html tag 사용할 수 있게 활성화함
+		),
+		goldmark.WithExtensions(
+			highlighting.NewHighlighting(
+				highlighting.WithStyle("github"),
+				highlighting.WithFormatOptions(
+					// chromahtml.WithLineNumbers(true),
+					chromahtml.WithClasses(true),
+				),
+			),
 		),
 	) // goldmark
 
@@ -190,7 +202,7 @@ func main() {
 			title, _ := data["title"].(string)
 			date, _ := data["date"].(string) // yyyy-mm-dd
 			description, _ := data["description"].(string)
-			category, _ := data["category"].(string)
+			category, _ := data["category"].([]string)
 			permalink := filepath.Join("post", outputFilePath) // 블로그 링크
 			formattedDate, err := lib.FormatDateKorean(date)   // yyyy년 mm월 dd일
 			if err != nil {
@@ -204,7 +216,7 @@ func main() {
 						<h3 class="post-item-title"><a href="%s">[고정됨] %s</a></h3>
 						<p class="post-item-date"><time datetime="%s">%s</time></p>
 						<p class="post-item-description">%s</p>
-						<div class="post-item-category">%s</div>
+						<p class="post-item-category">%s</p>
 					</article>
 				</li>`
 				postList = append(postList, fmt.Sprintf(fixedTemplate, permalink, title, date, formattedDate, description, category))
@@ -214,7 +226,7 @@ func main() {
 						<h3 class="post-item-title"><a href="%s">%s</a></h3>
 						<p class="post-item-date"><time datetime="%s">%s</time></p>
 						<p class="post-item-description">%s</p>
-						<div class="post-item-category">%s</div>
+						<p class="post-item-category">%s</p>
 					</article>
 				</li>`
 				postList = append(postList, fmt.Sprintf(template, permalink, title, date, formattedDate, description, category))
