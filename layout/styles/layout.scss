@@ -27,6 +27,11 @@ body {
     // padding: 0rem 2rem 0 2rem; /* trbl */
 }
 
+// Disable Tap Highlight
+a, button, input, select, textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
 // Code highlight
 .markdown-body {
     pre.chroma {

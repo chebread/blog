@@ -29,6 +29,10 @@ import (
 
 // TODO: Email 추가하기
 
+// FIX: safari에서 css 이상함. 링크 클릭시 줄어드는 오류 해결하기.
+
+// TODO: 다크모드
+
 func main() {
 	md := goldmark.New(
 		goldmark.WithRendererOptions(
