@@ -61,3 +61,7 @@ a, button, input, select, textarea {
         display: block;
     }
 }
+
+html, body {
+    -webkit-text-size-adjust: 100% !important; /* 또는 none !important; */
+}
