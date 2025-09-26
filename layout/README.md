@@ -1,5 +1,5 @@
 # layout
-blog의 레이아웃을 위한 디렉토리입니다.
+This is the directory for the blog's layout.
 
 ## LICENSE
 MIT LICENSE &copy; 2025 Cha Haneum

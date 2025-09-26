@@ -3,7 +3,7 @@ published: false
 ---
 
 # content
-blog의 포스트를 위한 디렉토리입니다.
+This is the directory for the blog's posts.
 
 ## LICENSE
 MIT LICENSE &copy; 2025 Cha Haneum

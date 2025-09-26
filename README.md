@@ -7,6 +7,7 @@ Website link: [https://chebread.github.io/](https://chebread.github.io/)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [How to Run](#how-to-run)
+- [How to Use devd](#how-to-use-devd)
 - [How to Deploy](#how-to-deploy)
 - [License](#license)
 
