@@ -11,8 +11,20 @@
         top: 0;
         z-index: 10;
         
+        transition: background-color 0.3s ease;
+        /*
+            스크롤 내릴 때: transparent → white로 배경색이 변합니다. 이 전환은 부드럽고 보기 좋습니다.
+            스크롤 올릴 때: white → transparent로 배경색이 변합니다. 이때 흰색이 서서히 사라지는 모습이 '잔상'처럼 보이는 것입니다.
+            
+            => 해결법은 transition을 .scrolled에게 포함시키기
+            => transition 속성을 기본 상태(.home-nav)가 아닌, 변화가 일어난 후의 상태(.scrolled)에만 적용하는 트릭을 사용하면 됩니다.
+        */
         &.scrolled {
-            transition: background-color 0.3s ease;
+            // transition: background-color 0.3s ease;
+            /*
+                스크롤 내릴 때: .scrolled 클래스가 추가됩니다. 이 클래스에는 transition 속성이 있으므로, background-color가 white로 변하는 과정이 0.3초 동안 부드럽게 진행됩니다.
+                스크롤 올릴 때: .scrolled 클래스가 제거됩니다. 이제 .home-nav에는 transition 속성이 없으므로, background-color가 transparent(기본값)로 즉시 돌아옵니다. 잔상이 남을 틈이 없습니다.
+            */
             background-color: white;
             
             a {
