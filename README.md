@@ -31,7 +31,7 @@ Website link: [https://chebread.github.io/](https://chebread.github.io/)
 - **Deployment**: GitHub Actions
 
 ## How to Run
-### 1. Install Dependencies
+### Install Dependencies
 ```shell
 go install github.com/cortesi/devd/cmd/devd@latest
 
@@ -42,17 +42,17 @@ chroma --html-styles --style=github > layout/styles/chroma.css
 pnpm install
 ```
 
-### 2. Build Project
+### Build Project
 ```shell
 pnpm run build
 ```
 
-### 3. Run the Development Server
+### Run the Development Server
 ```shell
 pnpm run serve
 ```
 
-### 4. Rebuild Project
+### Rebuild Project
 ```shell
 pnpm run watch
 ```
@@ -72,7 +72,7 @@ devd -ol DIR_NAME # Run the server and open a browser using livereload
 ## How to Deploy
 To publish a new post or deploy changes, you must push a specially formatted Git tag. The deployment is handled automatically by GitHub Actions.
 
-### 1. Commit Your Changes
+### Commit Your Changes
 First, make sure all your new content and changes are committed to the main branch.
 
 ```shell
@@ -86,7 +86,7 @@ git commit -m "post: foo: boo"
 git push origin main
 ```
 
-### 2. Create a Deploy Tag
+### Create a Deploy Tag
 The deployment workflow is triggered by a tag. Create a new tag based on the current date. The format is post/YYYY-MM-DD-XX, where XX is a two-digit number for posts on the same day (e.g., 01, 02).
 
 ```shell
@@ -94,7 +94,7 @@ The deployment workflow is triggered by a tag. Create a new tag based on the cur
 git tag post/2025-09-23-01
 ```
 
-### 3. Push the Tag to Deploy
+### Push the Tag to Deploy
 Push the newly created tag to GitHub. This is the final step that will trigger the automatic build and deployment process.
 
 ```shell
