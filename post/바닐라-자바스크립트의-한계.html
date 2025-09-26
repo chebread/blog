@@ -96,14 +96,14 @@ Vanilla JavaScript로 코딩하는 것이 어떤 방식으로 이루어지는 �
 </span></span></code></pre><pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="c1">// options api
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">count</span><span class="o">:</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">increase</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="o">++</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">count</span><span class="o">:</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">increase</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">this</span><span class="p">.</span><span class="nx">count</span><span class="o">++</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span></span></code></pre><p>그렇지만 Vanilla JavaScript로 Counter 예제를 구현하게 된다면 꽤나 많은 코드를 가지게 됩니다.</p>
@@ -111,15 +111,15 @@ Vanilla JavaScript로 코딩하는 것이 어떤 방식으로 이루어지는 �
 </span></span></code></pre><pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#app&#39;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="kd">let</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">component</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">app</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="sb">`
-</span></span></span><span class="line"><span class="cl"><span class="sb">        &lt;button id=&#34;increase&#34;&gt;&lt;/button&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">        &lt;div&gt;</span><span class="si">${</span><span class="nx">count</span><span class="si">}</span><span class="sb">&lt;/div&gt;
-</span></span></span><span class="line"><span class="cl"><span class="sb">    `</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">increaseId</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#increase&#39;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">increaseId</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">count</span><span class="o">++</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">component</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">app</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">    &lt;button id=&#34;increase&#34;&gt;&lt;/button&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">    &lt;div&gt;</span><span class="si">${</span><span class="nx">count</span><span class="si">}</span><span class="sb">&lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">  `</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">increaseId</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#increase&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">increaseId</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">count</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">component</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
 </span></span></code></pre><p>Vanilla JavaScript에서 Counter 예제를 만들기 위해서는 상태 업데이트를 위해 컴포넌트를 만들고, 상태가 변경될때 마다 컴포넌트를 실행해야 하는 컴포넌트의 동작 방식을 숙지해야 이러한 코드를 구현할 수 있습니다. 그러하여 JavaScript의 기초적인 것만 아는 분이라면 Vanilla JavaScript는 굉장히 쉬운 것이지만, 어떤 것을 구현하기 위해선 그것을 구현하는 것의 난이도로 봤을 때는 Vanilla JavaScript는 진입장벽 높다고 볼 수 있다. 꽤나 기초적인 지식이 요구되기 때문입니다.</p>
 <p>이렇게 Vanila JavaScript는 코드가 상대적으로 읽기가 불편하고, 굉장히 코드를 작성하는 데에 피로감이 있으며, 꽤나 쉽지 않은 그러한 언어라고 볼 수 있을 것입니다.</p>
