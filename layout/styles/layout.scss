@@ -26,3 +26,30 @@ body {
     margin: 0 auto;
     // padding: 0rem 2rem 0 2rem; /* trbl */
 }
+
+// Code highlight
+.markdown-body {
+    pre.chroma {
+        background-color: #f6f8fa;
+        border-radius: 6px;
+        padding: 1rem;
+        overflow: auto;
+        margin-bottom: 1rem;
+        font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+        font-size: 85%;
+        line-height: 1.45;
+        word-wrap: normal;
+    }
+  
+    pre.chroma > code {
+        padding: 0;
+        margin: 0;
+        font-size: 100%;
+        background-color: transparent;
+        border: 0;
+    }
+
+    pre.chroma .line {
+        display: block;
+    }
+}

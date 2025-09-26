@@ -11,6 +11,10 @@ pnpm run build
 ```shell
 go install github.com/cortesi/devd/cmd/devd@latest
 
+brew install chroma
+
+chroma --html-styles --style=github > layout/styles/chroma.css
+
 pnpm install
 ```
 
