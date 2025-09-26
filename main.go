@@ -31,7 +31,9 @@ import (
 
 // TODO: Email 추가하기
 
-// TODO: 다크모드
+// TODO: Apply darkmode using css media query
+
+// TODO: Refactor styles
 
 func main() {
 	md := goldmark.New(
