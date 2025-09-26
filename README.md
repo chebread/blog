@@ -12,23 +12,23 @@ Website link: [https://chebread.github.io/](https://chebread.github.io/)
 - [License](#license)
 
 ## Features
-- Custom Go SSG: The site is not built with off-the-shelf frameworks like Hugo or Jekyll. The entire build logic—from parsing Markdown files to rendering HTML—is handled by a custom Go application.
+- **Custom Go SSG**: The site is not built with off-the-shelf frameworks like Hugo or Jekyll. The entire build logic—from parsing Markdown files to rendering HTML—is handled by a custom Go.
 
-- Markdown-Based Content: All posts and pages are written in Markdown with YAML front matter for metadata.
+- **Markdown-Based Content**: All posts and pages are written in Markdown with YAML front matter for metadata.
 
-- Build-Time Syntax Highlighting: Code blocks are highlighted at build time using the pure-Go Chroma library, ensuring fast page loads with no client-side JavaScript dependency for styling.
+- **Build-Time Syntax Highlighting**: Code blocks are highlighted at build time using the pure-Go Chroma library, ensuring fast page loads with no client-side JavaScript dependency for styling.
 
-- Frontend Tooling: The project uses pnpm to manage a modern frontend pipeline featuring Sass for advanced styling and esbuild for fast TypeScript bundling and minification.
+- **Frontend Tooling**: The project uses pnpm to manage a modern frontend pipeline featuring Sass for advanced styling and esbuild for fast TypeScript bundling and minification.
 
-- Automated CI/CD Pipeline: The build and deployment process is fully automated with GitHub Actions. Pushing a specially formatted Git tag (post/...) triggers the workflow, which builds the site and deploys it to GitHub Pages.
+- **Automated CI/CD Pipeline**: The build and deployment process is fully automated with GitHub Actions. Pushing a specially formatted Git tag triggers the workflow, which builds the site and deploys it to GitHub Pages.
 
 ## Tech Stack
-- Static Site Generator: Go
-- Content: Markdown with YAML Front Matter parsed with Goldmark
-- Styling: SCSS compiled with Dart Sass
-- JavaScript: TypeScript (bundled with esbuild)
-- Package Manager: pnpm
-- Deployment: GitHub Actions
+- **Static Site Generator (SSG)**: Go
+- **Content**: Markdown with YAML Front Matter parsed with Goldmark
+- **Styling**: SCSS compiled with Dart Sass
+- **JavaScript**: TypeScript (bundled with esbuild)
+- **Package Manager**: pnpm
+- **Deployment**: GitHub Actions
 
 ## How to Run
 ### 1. Install Dependencies
@@ -66,7 +66,7 @@ devd -l DIR_NAME # Run the server using livereload
 
 devd -o DIR_NAME # Run the server and Open the browser
 
-devd -ol DIR_NAME # Run the server and open a browser using livereload.
+devd -ol DIR_NAME # Run the server and open a browser using livereload
 ```
 
 ## How to Deploy
