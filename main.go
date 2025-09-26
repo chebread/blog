@@ -15,6 +15,7 @@ import (
 	"strings"
 
 	"github.com/yuin/goldmark"
+	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
 	"github.com/yuin/goldmark/renderer/html"
 	"gopkg.in/yaml.v2"
@@ -41,6 +42,7 @@ func main() {
 			html.WithUnsafe(), // markdown에서 html tag 사용할 수 있게 활성화함
 		),
 		goldmark.WithExtensions(
+			extension.GFM,
 			highlighting.NewHighlighting(
 				highlighting.WithStyle("github"),
 				highlighting.WithFormatOptions(
