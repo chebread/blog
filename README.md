@@ -57,6 +57,17 @@ pnpm run watch
 ```
 This command checks for changes to layout directory files and executes `pnpm run build`.
 
+## How to Use devd
+```shell
+devd DIR_NAME # Run the server from the DIR_NAME directory
+
+devd -l DIR_NAME # Run the server using livereload
+
+devd -o DIR_NAME # Run the server and Open the browser
+
+devd -ol DIR_NAME # Run the server and open a browser using livereload.
+```
+
 ## How to Deploy
 To publish a new post or deploy changes, you must push a specially formatted Git tag. The deployment is handled automatically by GitHub Actions.
 

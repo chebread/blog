@@ -27,6 +27,8 @@ import (
 
 // TODO: SEO image 추가하기
 
+// TODO: assets 이미지 압축하기 (webp)
+
 // TODO: Email 추가하기
 
 // TODO: 다크모드
