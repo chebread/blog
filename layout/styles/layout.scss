@@ -28,17 +28,33 @@ body {
 
 a, button, input, select, textarea {
     -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none; 
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
 }
 a:active, button:active, input:active, select:active, textarea:active {
-      background-color: seagreen;
+    transform: none !important;
+    padding: inherit !important;
+    margin: inherit !important;
+    border-width: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    vertical-align: inherit !important;
+    outline: none !important;
 }
 
 a:hover, button:hover, input:hover, select:hover, textarea:hover  {
-    background-color: red;
+    transform: none !important;
+    padding: inherit !important;
+    margin: inherit !important;
+    border-width: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    vertical-align: inherit !important;
+    outline: none !important;
+    // FIX: 이게 아이패드 문제임.
 }
 
 
