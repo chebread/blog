@@ -26,9 +26,16 @@ body {
     margin: 0 auto;
 }
 
-// Disable Tap Highlight
 a, button, input, select, textarea {
-  -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: transparent;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+a:active, button:active, input:active, select:active, textarea:active {
+    transform: none !important;
+    transition: none !important;
 }
 
 // Code highlight
