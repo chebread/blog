@@ -14,7 +14,9 @@ body {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-text-size-adjust: 110%;
+    -webkit-text-size-adjust: 100%;
+
+
 }
 
 body {
@@ -62,6 +64,7 @@ a, button, input, select, textarea {
     }
 }
 
-html, body {
-    -webkit-text-size-adjust: 100% !important; /* 또는 none !important; */
-}
+/* fix: Failed to resolve iPad Safari mobile mode touch element shrinking issue */
+// html, body {
+//     -webkit-text-size-adjust: 100% !important; /* 또는 none !important; */
+// }
