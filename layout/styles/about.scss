@@ -1,16 +1,13 @@
 .about-nav {
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
     max-width: 35rem;
     margin: 0 auto;
-    
     z-index: 10;
+
     transition: background-color 0.3s ease;
     
     &.scrolled {
-        // transition: background-color 0.3s ease;
         background-color: white;
         
         a {
@@ -55,6 +52,10 @@
 }
 
 .about-header {
+    margin-top: -4rem;
+}
+
+.about-hero {
     background-image:
         linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)),
         url('/assets/profile.webp'),
@@ -62,30 +63,24 @@
     background-size: cover;
     background-position: center;
 
-    // 기존에는 header 자체에 이미지를 보여주고 있음.
-    // header hieght는 nav + hero인 17.5 + 4임.
-    // 그니까 Nav를 분리시키면, header height는 17.5로 작아짐.
+    height: 21.5rem;
+    @media (max-width: 35rem) {
+        height: 19.5rem;
+    }
 
-    .about-hero {
-        height: 21.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    
+    h1 {
+        font-size: 2rem;
+        line-height: 1.5;
+        font-weight: 800;
+        padding: 1rem;
         @media (max-width: 35rem) {
-            height: 19.5rem;
+            padding: 1rem 1.3rem 1rem 1.3rem;
         }
-
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-
-        h1 {
-            font-size: 2rem;
-            line-height: 1.5;
-            font-weight: 800;
-            padding: 1rem;
-            @media (max-width: 35rem) {
-                padding: 1rem 1.3rem 1rem 1.3rem;
-            }
-            color: var(--neutral-100);
-        }
+        color: var(--neutral-100);
     }
 }
 
