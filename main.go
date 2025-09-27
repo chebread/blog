@@ -28,13 +28,9 @@ import (
 
 // TODO: SEO image 추가하기
 
-// TODO: assets 이미지 압축하기 (webp)
+// TODO: assets 이미지 압축하기
 
 // TODO: Email 추가하기
-
-// TODO: Apply darkmode using css media query
-
-// TODO: Refactor styles
 
 func main() {
 	md := goldmark.New(

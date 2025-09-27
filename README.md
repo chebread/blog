@@ -19,6 +19,8 @@ Website link: [https://chebread.github.io/](https://chebread.github.io/)
 
 - **Build-Time Syntax Highlighting**: Code blocks are highlighted at build time using the pure-Go Chroma library, ensuring fast page loads with no client-side JavaScript dependency for styling.
 
+- **Image Zooming**: Integrated the medium-zoom library to allow users to click and zoom into images for a better viewing experience.
+
 - **Frontend Tooling**: The project uses pnpm to manage a modern frontend pipeline featuring Sass for advanced styling and esbuild for fast TypeScript bundling and minification.
 
 - **Automated CI/CD Pipeline**: The build and deployment process is fully automated with GitHub Actions. Pushing a specially formatted Git tag triggers the workflow, which builds the site and deploys it to GitHub Pages.
@@ -28,6 +30,7 @@ Website link: [https://chebread.github.io/](https://chebread.github.io/)
 - **Content**: Markdown with YAML Front Matter parsed with Goldmark
 - **Styling**: SCSS compiled with Dart Sass
 - **JavaScript**: TypeScript (bundled with esbuild)
+- **Image Zoom**: medium-zoom
 - **Package Manager**: pnpm
 - **Deployment**: GitHub Actions
 
