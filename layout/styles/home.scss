@@ -89,6 +89,9 @@
             line-height: 1.5;
             font-weight: 800;
             padding: 1rem;
+            @media (max-width: 35rem) {
+                padding: 1rem 1.5rem 1rem 1.5rem;
+            }
             color: var(--neutral-100);
         }
     }
@@ -97,7 +100,7 @@
 .home-content {
     padding: 1rem 0 1rem 0;
     @media (max-width: 35rem) {
-        padding: 1rem;
+        padding: 1rem 1.5rem 1rem 1.5rem;
     }
 }
 

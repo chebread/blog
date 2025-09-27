@@ -7,7 +7,7 @@
     "build:css": "sass layout/styles:public/styles --style=compressed",
     "build:js": "esbuild layout/js/main.ts --bundle --outfile=public/js/main.js --minify --target=es2017",
     "serve": "devd -ol public/",
-    "watch": "chokidar \"layout/**/*\" -c \"pnpm run build\""
+    "watch": "chokidar \"layout/**/*\" \"content/**/*\" -c \"pnpm run build\""
   },
   "keywords": [],
   "author": "",
