@@ -1,3 +1,59 @@
+.about-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    max-width: 35rem;
+    margin: 0 auto;
+    
+    z-index: 10;
+    transition: background-color 0.3s ease;
+    
+    &.scrolled {
+        // transition: background-color 0.3s ease;
+        background-color: white;
+        
+        a {
+            span {
+                color: black;
+            }
+            &::after {
+                background-color: black;
+            }
+        }
+    }
+    display: flex;
+    height: 4rem;
+    flex-direction: row;
+    a {
+        position: relative;
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span {
+            font-size: 1rem;
+            line-height: 1.5;
+            font-weight: 900;
+            color: var(--neutral-100);
+        }
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0.5rem;
+            height: 1.5px;
+            background-color: var(--neutral-100);
+            width: 50%;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            transform-origin: center;
+        }
+        &.active::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+    }
+}
+
 .about-header {
     background-image:
         linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)),
@@ -6,67 +62,14 @@
     background-size: cover;
     background-position: center;
 
-    .about-nav {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        transition: background-color 0.3s ease;
-        
-        &.scrolled {
-            // transition: background-color 0.3s ease;
-            background-color: white;
-            
-            a {
-                span {
-                    color: black;
-                }
-
-                &::after {
-                    background-color: black;
-                }
-            }
-        }
-
-        display: flex;
-        height: 4rem;
-        flex-direction: row;
-
-        a {
-            position: relative;
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            span {
-                font-size: 1rem;
-                line-height: 1.5;
-                font-weight: 900;
-                color: var(--neutral-100);
-            }
-
-            &::after {
-                content: '';
-                position: absolute;
-                bottom: 0.5rem;
-                height: 1.5px;
-                background-color: var(--neutral-100);
-                width: 50%;
-                left: 50%;
-                transform: translateX(-50%) scaleX(0);
-                transform-origin: center;
-            }
-            &.active::after {
-                transform: translateX(-50%) scaleX(1);
-            }
-
-        }
-    }
+    // 기존에는 header 자체에 이미지를 보여주고 있음.
+    // header hieght는 nav + hero인 17.5 + 4임.
+    // 그니까 Nav를 분리시키면, header height는 17.5로 작아짐.
 
     .about-hero {
-        height: 17.5rem;
+        height: 21.5rem;
         @media (max-width: 35rem) {
-            height: 15rem;
+            height: 19.5rem;
         }
 
         display: flex;

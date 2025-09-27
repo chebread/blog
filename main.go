@@ -245,7 +245,7 @@ func main() {
 	}
 	htmlPostList := strings.Join(postList, "")
 
-	// index.html 처리
+	// *** index.html 처리
 	homeMdBytes, err := os.ReadFile("content/home/home.md")
 	if err != nil {
 		fmt.Printf("home.md 파일 읽기 실패: %v\n", err)
@@ -301,7 +301,7 @@ func main() {
 
 	fmt.Printf("성공: %s 파일 생성\n", destHomeFile)
 
-	// about.html 처리
+	// *** about.html 처리
 	aboutMdBytes, err := os.ReadFile("content/about/about.md")
 	if err != nil {
 		fmt.Printf("about.md 파일 읽기 실패: %v\n", err)

@@ -1,3 +1,5 @@
+import mediumZoom from 'medium-zoom';
+
 function initializeStickyNav() {
   const navs = document.querySelectorAll('.home-nav, .about-nav');
 
@@ -17,4 +19,6 @@ function initializeStickyNav() {
 
 document.addEventListener('DOMContentLoaded', () => {
     initializeStickyNav();
+
+    mediumZoom('.markdown-body img');
 });

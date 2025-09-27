@@ -68,3 +68,21 @@ a, button, input, select, textarea {
 // html, body {
 //     -webkit-text-size-adjust: 100% !important; /* 또는 none !important; */
 // }
+
+// .root {
+//   position: relative;
+//   z-index: 0;
+// }
+
+.medium-zoom-overlay {
+    z-index: 9999;
+
+}
+.medium-zoom-image--opened {
+    z-index: 9999;
+
+}
+
+.medium-zoom-image--closing {
+    z-index: 9999;
+}

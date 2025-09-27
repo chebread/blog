@@ -51,18 +51,19 @@
 <body>
     <div class="root">
         <div class="about">
+            <nav class="about-nav">
+                <a href="/" class="{{if eq .CurrentURL "/"}}active{{end}}">
+                    <span>홈</span>
+                </a>
+                <a href="/about.html" class="{{if eq .CurrentURL "/about.html"}}active{{end}}">
+                    <span>어바웃</span>
+                </a>
+                <a href="/posts.html" class="{{if eq .CurrentURL "/posts.html"}}active{{end}}">
+                    <span>포스트</span>
+                </a>
+            </nav>
+
             <header class="about-header">
-                <nav class="about-nav">
-                    <a href="/" class="{{if eq .CurrentURL "/"}}active{{end}}">
-                        <span>홈</span>
-                    </a>
-                    <a href="/about.html" class="{{if eq .CurrentURL "/about.html"}}active{{end}}">
-                        <span>어바웃</span>
-                    </a>
-                    <a href="/posts.html" class="{{if eq .CurrentURL "/posts.html"}}active{{end}}">
-                        <span>포스트</span>
-                    </a>
-                </nav>
                 <div class="about-hero">
                     <h1>개발자 차한음</h1>
                 </div>

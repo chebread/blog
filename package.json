@@ -16,6 +16,7 @@
   "devDependencies": {
     "chokidar-cli": "^3.0.0",
     "esbuild": "^0.25.10",
+    "medium-zoom": "^1.1.0",
     "sass": "^1.93.2",
     "typescript": "^5.9.2"
   }

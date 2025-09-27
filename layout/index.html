@@ -51,22 +51,24 @@
 <body>
     <div class="root">
         <div class="home">
+            <nav class="home-nav">
+                <a href="/" class="{{if eq .CurrentURL "/"}}active{{end}}">
+                    <span>홈</span>
+                </a>
+                <a href="/about.html" class="{{if eq .CurrentURL "/about.html"}}active{{end}}">
+                    <span>어바웃</span>
+                </a>
+                <a href="/posts.html" class="{{if eq .CurrentURL "/posts.html"}}active{{end}}">
+                    <span>포스트</span>
+                </a>
+            </nav>
+
             <header class="home-header">
-                <nav class="home-nav">
-                    <a href="/" class="{{if eq .CurrentURL "/"}}active{{end}}">
-                        <span>홈</span>
-                    </a>
-                    <a href="/about.html" class="{{if eq .CurrentURL "/about.html"}}active{{end}}">
-                        <span>어바웃</span>
-                    </a>
-                    <a href="/posts.html" class="{{if eq .CurrentURL "/posts.html"}}active{{end}}">
-                        <span>포스트</span>
-                    </a>
-                </nav>
                 <div class="home-hero">
                     <h1>차한음 블로그</h1>
                 </div>
             </header>
+            
             <main class="home-content">
                 <article class="markdown-body">
                     {{- .Content -}}

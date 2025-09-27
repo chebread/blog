@@ -1,3 +1,70 @@
+.home-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    max-width: 35rem;
+    margin: 0 auto;
+
+    z-index: 10;
+    
+    transition: background-color 0.3s ease;
+    /*
+        스크롤 내릴 때: transparent → white로 배경색이 변합니다. 이 전환은 부드럽고 보기 좋습니다.
+        스크롤 올릴 때: white → transparent로 배경색이 변합니다. 이때 흰색이 서서히 사라지는 모습이 '잔상'처럼 보이는 것입니다.
+        
+        => 해결법은 transition을 .scrolled에게 포함시키기
+        => transition 속성을 기본 상태(.home-nav)가 아닌, 변화가 일어난 후의 상태(.scrolled)에만 적용하는 트릭을 사용하면 됩니다.
+    */
+    &.scrolled {
+        // transition: background-color 0.3s ease;
+        /*
+            스크롤 내릴 때: .scrolled 클래스가 추가됩니다. 이 클래스에는 transition 속성이 있으므로, background-color가 white로 변하는 과정이 0.3초 동안 부드럽게 진행됩니다.
+            스크롤 올릴 때: .scrolled 클래스가 제거됩니다. 이제 .home-nav에는 transition 속성이 없으므로, background-color가 transparent(기본값)로 즉시 돌아옵니다. 잔상이 남을 틈이 없습니다.
+        */
+        background-color: white;
+        
+        a {
+            span {
+                color: black;
+            }
+            &::after {
+                background-color: black;
+            }
+        }
+    }
+    display: flex;
+    height: 4rem;
+    flex-direction: row;
+    a {
+        position: relative;
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span {
+            font-size: 1rem;
+            line-height: 1.5;
+            font-weight: 900;
+            color: var(--neutral-100);
+        }
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0.5rem;
+            height: 1.5px;
+            background-color: var(--neutral-100);
+            width: 50%;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            transform-origin: center;
+        }
+        &.active::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+    }
+}
+
 .home-header {
     background-image:
         linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)),
@@ -6,78 +73,10 @@
     background-size: cover;
     background-position: center;
 
-    .home-nav {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        
-        transition: background-color 0.3s ease;
-        /*
-            스크롤 내릴 때: transparent → white로 배경색이 변합니다. 이 전환은 부드럽고 보기 좋습니다.
-            스크롤 올릴 때: white → transparent로 배경색이 변합니다. 이때 흰색이 서서히 사라지는 모습이 '잔상'처럼 보이는 것입니다.
-            
-            => 해결법은 transition을 .scrolled에게 포함시키기
-            => transition 속성을 기본 상태(.home-nav)가 아닌, 변화가 일어난 후의 상태(.scrolled)에만 적용하는 트릭을 사용하면 됩니다.
-        */
-        &.scrolled {
-            // transition: background-color 0.3s ease;
-            /*
-                스크롤 내릴 때: .scrolled 클래스가 추가됩니다. 이 클래스에는 transition 속성이 있으므로, background-color가 white로 변하는 과정이 0.3초 동안 부드럽게 진행됩니다.
-                스크롤 올릴 때: .scrolled 클래스가 제거됩니다. 이제 .home-nav에는 transition 속성이 없으므로, background-color가 transparent(기본값)로 즉시 돌아옵니다. 잔상이 남을 틈이 없습니다.
-            */
-            background-color: white;
-            
-            a {
-                span {
-                    color: black;
-                }
-
-                &::after {
-                    background-color: black;
-                }
-            }
-        }
-
-        display: flex;
-        height: 4rem;
-        flex-direction: row;
-
-        a {
-            position: relative;
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            span {
-                font-size: 1rem;
-                line-height: 1.5;
-                font-weight: 900;
-                color: var(--neutral-100);
-            }
-
-            &::after {
-                content: '';
-                position: absolute;
-                bottom: 0.5rem;
-                height: 1.5px;
-                background-color: var(--neutral-100);
-                width: 50%;
-                left: 50%;
-                transform: translateX(-50%) scaleX(0);
-                transform-origin: center;
-            }
-            &.active::after {
-                transform: translateX(-50%) scaleX(1);
-            }
-
-        }
-    }
-
     .home-hero {
-        height: 17.5rem;
+        height: 21.5rem;
         @media (max-width: 35rem) {
-            height: 15rem;
+            height: 19.5rem;
         }
 
         display: flex;
