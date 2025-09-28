@@ -65,6 +65,19 @@ a, button, input, select, textarea {
     pre.chroma .line {
         display: block;
     }
+
+    ul {
+        list-style: disc;
+    }
+    ol {
+        list-style: decimal;
+    }
+    ul ul, ol ul {
+        list-style-type: circle;
+    }
+    ul ul ul, ol ul ul, ul ol ul {
+        list-style-type: square;
+    }
 }
 
 /* fix: Failed to resolve iPad Safari mobile mode touch element shrinking issue */

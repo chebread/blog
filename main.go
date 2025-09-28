@@ -32,6 +32,8 @@ import (
 
 // TODO: Email 추가하기
 
+// TODO: Category fixed 기능 추가하기. posts list에서 category를 가장 윗쪽으로 올리는 기능임.
+
 func main() {
 	md := goldmark.New(
 		goldmark.WithRendererOptions(
