@@ -71,6 +71,8 @@ devd -l DIR_NAME # Run the server using livereload
 devd -o DIR_NAME # Run the server and Open the browser
 
 devd -ol DIR_NAME # Run the server and open a browser using livereload
+
+killall devd # Kill devd process
 ```
 
 ## How to Deploy
