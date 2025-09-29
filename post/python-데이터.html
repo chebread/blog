@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>[Python] 데이터 | 차한음 블로그</title>
+    <meta name="description" content="객체 파이썬에서 모든 데이터는 객체다. 객체는 타입(자료형) 정의, 다른 객체와 구별하기 위한 고유 ID, 타입과 연관된 값, 객체의 사용 빈도를 추적하는 참조 횟수를 포함하는 데...">
+    <meta name="author" content="차한음">
+    <link rel="canonical" href="https://chebread.github.io/">
+
+    <meta property="og:title" content="[Python] 데이터 | 차한음 블로그">
+    <meta property="og:description" content="객체 파이썬에서 모든 데이터는 객체다. 객체는 타입(자료형) 정의, 다른 객체와 구별하기 위한 고유 ID, 타입과 연관된 값, 객체의 사용 빈도를 추적하는 참조 횟수를 포함하는 데...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://chebread.github.io/post/python-데이터">
+    <meta property="og:site_name" content="차한음 블로그">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="[Python] 데이터 | 차한음 블로그">
+    <meta name="twitter:description" content="객체 파이썬에서 모든 데이터는 객체다. 객체는 타입(자료형) 정의, 다른 객체와 구별하기 위한 고유 ID, 타입과 연관된 값, 객체의 사용 빈도를 추적하는 참조 횟수를 포함하는 데...">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[Python] 데이터 | 차한음 블로그",
+        "author": {
+            "@type": "Person",
+            "name": "차한음"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "차한음",
+        },
+        "datePublished": "2025-05-01",
+        "description": "객체 파이썬에서 모든 데이터는 객체다. 객체는 타입(자료형) 정의, 다른 객체와 구별하기 위한 고유 ID, 타입과 연관된 값, 객체의 사용 빈도를 추적하는 참조 횟수를 포함하는 데..."
+    }
+    </script>
+
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/color-palette.css">
+    <link rel="stylesheet" href="/styles/chroma.css">
+
+    <link rel="stylesheet" href="/styles/github-markdown.css">
+    <link rel="stylesheet" href="/styles/post.css">
+
+    <link rel="icon" href="/favicons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png">
+</head>
+<body>
+    <div class="root">
+        <div class="post">
+           <nav class="post-nav">
+                <a href="/" class="">
+                    <span>홈</span>
+                </a>
+                <a href="/about" class="">
+                    <span>어바웃</span>
+                </a>
+                <a href="/posts" class="active">
+                    <span>포스트</span>
+                </a>
+            </nav>
+            
+            <main class="post-content">
+                <header class="post-header">
+                    <h1 class="post-title">[Python] 데이터</h1>
+                    <p class="post-date"><time datetime="2025-05-01">2025년 05월 01일</time></p>
+                    <p class="post-category">[Python 문법 정리]</p>
+                </header>
+                <div class="post-body">
+                    <article class="markdown-body"><h2>객체</h2>
+<p>파이썬에서 모든 데이터는 객체다.</p>
+<p>객체는 <code>타입(자료형) 정의, 다른 객체와 구별하기 위한 고유 ID, 타입과 연관된 값, 객체의 사용 빈도를 추적하는 참조 횟수</code>를 포함하는 데이터 덩어리다.</p>
+<p>클래스는 객체의 정의다.</p>
+<h2>불변과 가변</h2>
+<p>파이썬에서 타입에 따라 가변과 불변이 정해진다. 리스트, 바이트 배열, 셋, 딕셔너리 타입 빼고는 모두 불변이다.</p>
+<p>불변이라는 말은, 객체의 값을 변경할 수 없다는 것이다.</p>
+<p>가변이라는 말은 객체의 값을 변경할 수는 있으나, 객체의 타입은 변경할 수 없다는 것이다.</p>
+<h2>리터럴 값</h2>
+<p>리터럴 또는 리터럴 값은 데이터 값 자체를 선언하는 방식이자, 데이터 값 자체를 의미한다.</p>
+<p>파이썬에서는 리터럴 값을 명시할 때 리터럴과 변수를 사용한다.</p>
+<p>리터럴은 값을 직접 나타내며, 값에 대한 객체를 만든다.</p>
+<p>변수로 리터럴 값을 명시할 수 있는 이유는 변수는 객체를 참조하는 이름이기 때문이다.</p>
+<p>즉, 변수도 객체이다.</p>
+<h2>변수</h2>
+<p><code>변수명 = 변수값</code> 형태로 선언한다.</p>
+<p>변수명은 <code>_</code> 를 이용하여 구분하며(snake_case), 소문자를 사용한다.</p>
+<h2>할당</h2>
+<p>할당 연산자(<code>=</code>)는 같음이 아니라 할당을 의미한다.</p>
+<p>할당 연산자의 오른쪽에 있는 표현식을 먼저 계산한 다음, 왼쪽에 있는 변수에 할당한다.</p>
+<p>할당한다는 것은 어떤 객체에 식별가능한 이름을 붙인다는 것이다.</p>
+<p><strong>그리고 파이썬에서는 할당 연산자는 할당만 수행하지, 아무런 값을 반환하지 않는다.</strong></p>
+<p>즉, 할당 연산자는 표현식이 아니다. 문이다.</p>
+<p>그러나, 바다 코끼리 연산자(<code>:=</code>)는 할당과 반환을 동시에 수행한다.</p>
+<h2>변수는 장소가 아니라 이름이다</h2>
+<p>변수는 단지 이름이다.</p>
+<p>할당은 데이터를 포함하는 객체에 이름을 붙인다.</p>
+<p>이름은 객체 자체가 아닌 객체에 대한 참조다. 컴퓨터 메모리 어딘가에 있는 객체 상자에 문자열이 부착된 이름을 시각화한다.</p>
+<p>이름으로 객체를 참조하면, 참조 횟수가 증가하고, 객체에 대한 참조를 중단하면 참조 횟수가 감소한다.</p>
+<p>이름은 어떤 타입이든 가리킬 수 있다. 데이터 객체 자체에 의해 값과 타입을 얻는다.</p>
+<h2>재할당</h2>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+</span></span></code></pre><p><code>a = 3</code> 이렇게 하면 <code>a</code> 는 <code>3</code> 정수 객체를 가리킨다. 그리고 <code>a = 5</code> 이렇게 하면 <code>5</code> 정수 객체를 새롭게 가리키게 된다. 그리고 이전 정수 객체를 참조를 중단하게 된다.</p>
+<h2>복사</h2>
+<p><strong>복사는 여러 변수가 같은 객체를 가리키는 것을 의미한다.</strong></p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+</span></span></code></pre><p><strong>이렇게 하면 <code>a</code> , <code>b</code> 는 <code>3</code> 정수 객체를 동시에 같이 가리키게 된다.</strong></p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">9</span>
+</span></span></code></pre><p><strong>이렇게 하면 <code>a</code> , <code>b</code> 는 동시에 리스트 객체를 가리킨다.</strong></p>
+<p>리스트는 가변 객체이기 때문에 값이 변경가능하다.</p>
+<p>즉, <code>a[0]</code> 하면 리스트 객체에 0번째의 요소가 <code>9</code> 로 변경된다.</p>
+<p>즉, 그러면 리스트 객체는 값이 수정된다.</p>
+<p>그러면 리스트 객체를 참조하는 <code>a</code> , <code>b</code> 둘다 값이 변경되게 된다.</p>
+<p>즉, <code>b[0]</code> 도 값이 <code>9</code> 로 되게 된다.</p>
+<h2>얕은 복사</h2>
+<p>위 처럼, 주소값만 복사하여 독립성이 보장되지 않는 복사를 얕은 복사라고 한다.</p>
+<p>가변 객체는 모두 얕은 복사를 수행한다.</p>
+<p>가변 객체는 <code>deepcopy()</code> 를 사용하여 깊은 복사를 수행할 수 있다.</p>
+</article>
+                </div>
+            </main>
+
+            <footer class="post-footer">
+                <section>
+                    <p>&copy; 2025 Cha Haneum</p>
+                </section>
+                <section>
+                    <a href="https://github.com/chebread">
+                        <span>깃허브</span>
+                    </a>
+                    <a href="">
+                        <span>이메일</span>
+                    </a>
+                </section>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
