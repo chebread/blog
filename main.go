@@ -34,6 +34,8 @@ import (
 
 // TODO: Category fixed 기능 추가하기. posts list에서 category를 가장 윗쪽으로 올리는 기능임.
 
+// TODO: category 내부 fixed에서는 다중 fixed가 적용되었다면, 파일명으로 정렬됨.
+
 func main() {
 	var appEnv string = os.Getenv("APP_ENV")
 
