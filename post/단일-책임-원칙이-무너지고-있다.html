@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>단일 책임 원칙이 무너지고 있다 | 차한음 블로그</title>
+    <meta name="description" content="단일 책임 원칙: 하나의 것은 하나의 일만 해야 한다. 실용주의 프로그래머를 읽으며, 단일 책임 원칙을 알게 되었다. 근래 단일 책임 원칙이 부서지고 있는 듯하다. AI가 각광받음...">
+    <meta name="author" content="차한음">
+    <link rel="canonical" href="https://chebread.github.io/">
+
+    <meta property="og:title" content="단일 책임 원칙이 무너지고 있다 | 차한음 블로그">
+    <meta property="og:description" content="단일 책임 원칙: 하나의 것은 하나의 일만 해야 한다. 실용주의 프로그래머를 읽으며, 단일 책임 원칙을 알게 되었다. 근래 단일 책임 원칙이 부서지고 있는 듯하다. AI가 각광받음...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://chebread.github.io/post/단일-책임-원칙이-무너지고-있다">
+    <meta property="og:site_name" content="차한음 블로그">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="단일 책임 원칙이 무너지고 있다 | 차한음 블로그">
+    <meta name="twitter:description" content="단일 책임 원칙: 하나의 것은 하나의 일만 해야 한다. 실용주의 프로그래머를 읽으며, 단일 책임 원칙을 알게 되었다. 근래 단일 책임 원칙이 부서지고 있는 듯하다. AI가 각광받음...">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "단일 책임 원칙이 무너지고 있다 | 차한음 블로그",
+        "author": {
+            "@type": "Person",
+            "name": "차한음"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "차한음",
+        },
+        "datePublished": "2025-09-13",
+        "description": "단일 책임 원칙: 하나의 것은 하나의 일만 해야 한다. 실용주의 프로그래머를 읽으며, 단일 책임 원칙을 알게 되었다. 근래 단일 책임 원칙이 부서지고 있는 듯하다. AI가 각광받음..."
+    }
+    </script>
+
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/color-palette.css">
+    <link rel="stylesheet" href="/styles/chroma.css">
+
+    <link rel="stylesheet" href="/styles/github-markdown.css">
+    <link rel="stylesheet" href="/styles/post.css">
+
+    <link rel="icon" href="/favicons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png">
+</head>
+<body>
+    <div class="root">
+        <div class="post">
+           <nav class="post-nav">
+                <a href="/" class="">
+                    <span>홈</span>
+                </a>
+                <a href="/about" class="">
+                    <span>어바웃</span>
+                </a>
+                <a href="/posts" class="active">
+                    <span>포스트</span>
+                </a>
+            </nav>
+            
+            <main class="post-content">
+                <header class="post-header">
+                    <h1 class="post-title">단일 책임 원칙이 무너지고 있다</h1>
+                    <p class="post-date"><time datetime="2025-09-13">2025년 09월 13일</time></p>
+                    <p class="post-category">[에세이]</p>
+                </header>
+                <div class="post-body">
+                    <article class="markdown-body"><blockquote>
+<p>단일 책임 원칙: 하나의 것은 하나의 일만 해야 한다.</p>
+</blockquote>
+<p>실용주의 프로그래머를 읽으며, 단일 책임 원칙을 알게 되었다.</p>
+<p>근래 단일 책임 원칙이 부서지고 있는 듯하다. AI가 각광받음에 따라, 개발자들이 모든 제품에 AI를 다 갖다 붙이는 중이다.</p>
+<p>Apple도 Xcode 26에 AI를 붙여놓았고, T월드에도 AI 추천이 있으며, 카카오 뱅크에도 AI 챗봇이 있고, 한컴에도 AI가 있고, JetBrains IDE에도 AI가 범벅되어 있다.</p>
+<p>나는 이렇게 생각한다. 모든 것은 '단일 책임 원칙'을 지켜야 한다. 도대체 왜 IDE에 AI 어시스트가 들어가야 하는가? 코드 작성에만 완전히 집중되어야 하는 것 아닌가? 개발 환경에만 완전히 집중되어야 하는 것 아닌가? 왜 굳이 쓸데없는, 이미 다른 환경을 통해 충분히 사용 가능한 AI를 거기에 굳이 붙여놓는 건가?</p>
+<p>나는 이해가 되지 않는다. 프로그램은 계속해서 가벼워지고, 빨라지고, 버그가 fix 되어야 하며, 기능은 더욱더 간단해져야 한다. 근데 왜 요즘의 프로그램들은 기능은 점점 불어나며, 이로 인해 버그는 계속해서 증가하고, 앱은 느려지며, 프로그램은 기하급수적으로 큰 용량을 차지하게 되는가? 이는 결국 기능 블로트로 이어진다.</p>
+<p>그리고 웃긴 것은, AI 랍시고 갖다 붙여 놓았으나, 막상 사용해 보면 LLM 모델에 대한 API 호출이다. 그냥 호출하고 필요에 맞게 조작해놓은 것을 AI랍시고 갖다 붙여놓은 거다. 자체 모델을 구축하려는 시도조차 하지 않는 데, 이게 뭔 AI 기능인가?</p>
+<p>시대가 아무리 봐도 역행하는 듯하다. 단일 책임 원칙은 아마 10년 전이 더 잘 지켜진 듯하다. 하나의 것은 하나의 일만 해야 한다. 하나의 것들이 모여 새로운 일을 해야 한다.</p>
+</article>
+                </div>
+            </main>
+
+            <footer class="post-footer">
+                <section>
+                    <p>&copy; 2025 Cha Haneum</p>
+                </section>
+                <section>
+                    <a href="https://github.com/chebread">
+                        <span>깃허브</span>
+                    </a>
+                    <a href="">
+                        <span>이메일</span>
+                    </a>
+                </section>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
