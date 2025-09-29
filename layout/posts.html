@@ -53,10 +53,10 @@
                 <a href="/" class="{{if eq .CurrentURL "/"}}active{{end}}">
                     <span>홈</span>
                 </a>
-                <a href="/about.html" class="{{if eq .CurrentURL "/about.html"}}active{{end}}">
+                <a href="/about{{if not .IsProduction}}.html{{end}}" class="{{if eq .CurrentURL "/about"}}active{{end}}">
                     <span>어바웃</span>
                 </a>
-                <a href="/posts.html" class="{{if eq .CurrentURL "/posts.html"}}active{{end}}">
+                <a href="/posts{{if not .IsProduction}}.html{{end}}" class="{{if eq .CurrentURL "/posts"}}active{{end}}">
                     <span>포스트</span>
                 </a>
             </nav>

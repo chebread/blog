@@ -8,6 +8,12 @@
     background-color: white;
 
     a {
+        -webkit-tap-highlight-color: transparent;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        
         position: relative;
         flex: 1;
         display: flex;

@@ -38,7 +38,7 @@ jobs:
 
       # 정적 사이트 빌드
       - name: Build
-        run: pnpm run build
+        run: pnpm run build:prod
 
       # 4. 빌드 결과물(public 디렉터리)을 gh-pages 브랜치에 배포
       - name: Deploy

@@ -35,6 +35,8 @@ import (
 // TODO: Category fixed 기능 추가하기. posts list에서 category를 가장 윗쪽으로 올리는 기능임.
 
 func main() {
+	var appEnv string = os.Getenv("APP_ENV")
+
 	md := goldmark.New(
 		goldmark.WithRendererOptions(
 			html.WithUnsafe(), // markdown에서 html tag 사용할 수 있게 활성화함
@@ -109,7 +111,7 @@ func main() {
 
 		if fm.Published {
 			var title string = path[strings.LastIndex(path, "/")+1 : strings.LastIndex(path, ".")]
-			var outputFilePath string = fmt.Sprintf("%s.html", lib.SlugifyPath(title)) // filepath.Join("public", "post", ...)  이거 않하고 그냥 따로 처리
+			var outputFilePath string = lib.SlugifyPath(title) // filepath.Join("public", "post", ...)  이거 않하고 그냥 따로 처리, .html 확장자 추가 따로 처리
 
 			var description string
 			if fm.Desc != "" {
@@ -158,7 +160,8 @@ func main() {
 	}
 	fmt.Printf("성공: 정적 파일 준비 완료\n")
 
-	// *** category 기반 post list 처리
+	// *** category 기반
+	// *** post list 처리
 	var postList []string
 
 	// 정렬: 이름순(한글 -> 영어)
@@ -204,13 +207,20 @@ func main() {
 
 		for _, data := range postsData {
 			isFixed, _ := data["fixed"].(bool)
-			outputFilePath, _ := data["outputFilePath"].(string)
 			title, _ := data["title"].(string)
 			date, _ := data["date"].(string) // yyyy-mm-dd
 			description, _ := data["description"].(string)
 			category, _ := data["category"].([]string)
-			permalink := filepath.Join("post", outputFilePath) // 블로그 링크
-			formattedDate, err := lib.FormatDateKorean(date)   // yyyy년 mm월 dd일
+			outputFilePath, _ := data["outputFilePath"].(string)
+
+			var permalink string // 블로그 링크는 Production에서는 .html가 없음
+			if appEnv == "production" {
+				permalink = filepath.ToSlash(filepath.Join("post", outputFilePath))
+			} else {
+				permalink = filepath.ToSlash(filepath.Join("post", fmt.Sprintf("%s.html", outputFilePath)))
+			}
+
+			formattedDate, err := lib.FormatDateKorean(date) // yyyy년 mm월 dd일
 			if err != nil {
 				fmt.Printf("날짜 변환 실패: %v\n", err)
 				return
@@ -284,12 +294,14 @@ func main() {
 	defer outputHomeFile.Close()
 
 	type HomePageData struct {
-		CurrentURL string
-		Content    template.HTML
+		IsProduction bool
+		CurrentURL   string
+		Content      template.HTML
 	}
 	homePageData := HomePageData{
-		CurrentURL: "/",
-		Content:    template.HTML(homeContentBuf.String()),
+		IsProduction: appEnv == "production",
+		CurrentURL:   "/",
+		Content:      template.HTML(homeContentBuf.String()),
 	}
 
 	if err := tmplHome.Execute(outputHomeFile, homePageData); err != nil {
@@ -340,12 +352,14 @@ func main() {
 	defer outputAboutFile.Close()
 
 	type AboutPageData struct {
-		CurrentURL string
-		Content    template.HTML
+		IsProduction bool
+		CurrentURL   string
+		Content      template.HTML
 	}
 	aboutPageData := AboutPageData{
-		CurrentURL: "/about.html",
-		Content:    template.HTML(aboutContentBuf.String()),
+		IsProduction: appEnv == "production",
+		CurrentURL:   "/about",
+		Content:      template.HTML(aboutContentBuf.String()),
 	}
 
 	if err := tmplabout.Execute(outputAboutFile, aboutPageData); err != nil {
@@ -355,14 +369,16 @@ func main() {
 
 	fmt.Printf("성공: %s 파일 생성\n", destAboutFile)
 
-	// *** Posts 처리
+	// *** Posts 파일 처리
 	type PostsPageTemplateData struct {
-		PostList   template.HTML
-		CurrentURL string
+		IsProduction bool
+		PostList     template.HTML
+		CurrentURL   string
 	}
 	postsPageTemplateData := PostsPageTemplateData{
-		PostList:   template.HTML(htmlPostList),
-		CurrentURL: "/posts.html",
+		IsProduction: appEnv == "production",
+		PostList:     template.HTML(htmlPostList),
+		CurrentURL:   "/posts",
 	}
 
 	tmpl, err := template.ParseFiles("./layout/posts.html")
@@ -397,6 +413,7 @@ func main() {
 	}
 
 	type PostPageTemplateData struct {
+		IsProduction  bool
 		Title         string
 		Date          string
 		FormattedDate string
@@ -413,8 +430,15 @@ func main() {
 		category, _ := data["category"].([]string)
 		description, _ := data["description"].(string)
 		outputFilePath, _ := data["outputFilePath"].(string)
-		permalink := filepath.Join("public", "post", outputFilePath)
-		url := filepath.Join("post", outputFilePath)
+		savedFilePath := filepath.Join("public", "post", fmt.Sprintf("%s.html", outputFilePath)) // public post에 저장될 고유 저장 path
+		// outputFilePath는 그냥 이름만 있으므로, .html 확장자 추가함
+		var url string // 배포된 path
+		if appEnv == "production" {
+			url = filepath.ToSlash(filepath.Join("post", outputFilePath))
+		} else {
+			url = filepath.ToSlash(filepath.Join("post", fmt.Sprintf("%s.html", outputFilePath)))
+		}
+
 		sourceFilePath, _ := data["sourceFilePath"].(string)
 
 		formattedDate, err := lib.FormatDateKorean(date) // yyyy년 mm월 dd일
@@ -448,7 +472,7 @@ func main() {
 			continue
 		}
 
-		outputFile, err := os.Create(permalink)
+		outputFile, err := os.Create(savedFilePath)
 		if err != nil {
 			fmt.Printf("출력 파일 생성 실패\n")
 			continue
@@ -456,6 +480,7 @@ func main() {
 		defer outputFile.Close()
 
 		page := PostPageTemplateData{
+			IsProduction:  appEnv == "production",
 			Title:         title,
 			Date:          date,
 			FormattedDate: formattedDate,
@@ -463,7 +488,7 @@ func main() {
 			Description:   description,
 			URL:           url,
 			Content:       template.HTML(contentBuf.String()),
-			CurrentURL:    "/posts.html",
+			CurrentURL:    "/posts",
 		}
 
 		if err := tmplPost.Execute(outputFile, page); err != nil {
@@ -471,7 +496,9 @@ func main() {
 			continue
 		}
 
-		fmt.Printf("성공: %s 파일 생성\n", outputFilePath)
+		fmt.Printf("성공: %s 파일 생성\n", savedFilePath)
 	}
+
+	fmt.Println(appEnv, appEnv == "production")
 
 }

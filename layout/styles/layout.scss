@@ -31,15 +31,6 @@ body {
     padding-right: env(safe-area-inset-right);
 }
 
-a, button, input, select, textarea {
-    -webkit-tap-highlight-color: transparent;
-
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
 // Code highlight
 .markdown-body {
     pre.chroma {
