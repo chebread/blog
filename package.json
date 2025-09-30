@@ -3,10 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "go run . && pnpm run build:css && pnpm run build:js",
-    "build:css": "sass layout/styles:public/styles --style=compressed",
-    "build:js": "esbuild layout/js/main.ts --bundle --outfile=public/js/main.js --minify --target=es2017",
-    "build:prod": "cross-env APP_ENV=production go run . && pnpm run build:css && pnpm run build:js",
+    "build": "bash ./build.sh",
+    "build:prod": "bash ./build.sh production",
     "serve": "devd -ol public/",
     "watch": "chokidar \"layout/**/*\" \"content/**/*\" -c \"pnpm run build\" --initial --debounce=1000",
     "dev": "concurrently \"pnpm run watch\" \"pnpm run serve\""

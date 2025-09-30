@@ -36,6 +36,49 @@ import (
 
 // TODO: category 내부 fixed에서는 다중 fixed가 적용되었다면, 파일명으로 정렬됨.
 
+// Refactor TODO:
+/*
+0. CI/CD
+	1. pnpm run build 하면 build.sh 먼저 실행 및 go run .
+	2. pnpm run build:prod 하면 build.sh 먼저 실행 및 cross-env APP_ENV=production go run .
+
+1. data 처리:
+	1. build.sh:
+		1. unix 명령어로 public 디렉토리 초기화(없으면 생성, 있으면 초기화)
+			DOCS: public 디렉토리 자체는 이제 main.go에서 처리하지 않음(즉, 생성 및 초기화 안함)
+		2. sass 명령어로 public/styles 디렉토리 생성 및 scss 컴파일
+		3. esbuild 명령어로 public/js 디렉토리 생성 및 js 컴파일
+		4. unix 명령어로 .nojekyll 파일 생성
+		5. unix 명령어로 robots.txt 파일 복사해서 붙여넣기
+		6. content/assets 속 모든 파일 public/assets에 붙여넣기
+	2. main.go:
+		1. 포스트 관련 처리
+			1. PostsData 처리
+				- title string
+				- date string
+				- description string
+				- category []string
+				- fixedPost bool
+				- fixedCategory bool
+				- contentPath string <- 실제 블로그가 저장된 위치
+					e.g. content/tgpl/go 정리법
+				- URL <- 실제 URL로 참조되는 블로그 URL <- env: production 이면 .html 안함, 그게 아니면 .html 추가
+					e.g. post/go-정리법
+					e.g. post/go-정리법.html
+			2. post.html 생성
+				href: posts/category-foo, /, about, posts
+				DOCS: href는 해당 html에 포함된 hyperlink임
+			3. posts.html 생성
+				href: posts/category-foo, /, about, posts
+			4. posts/category-foo.html 생성
+				href: /, about, posts
+		2. 블로그 관련 처리
+			1. index.html 생성
+			2. about.html 생성
+2.
+
+*/
+
 func main() {
 	var appEnv string = os.Getenv("APP_ENV")
 
