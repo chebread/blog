@@ -1,18 +1,15 @@
 package main
 
 import (
-	"blog/build"
 	"blog/lib"
-
 	"bytes"
 	"fmt"
 	"html/template"
 	"io"
-	"log"
 	"os"
 	"path/filepath"
-	"sort"
 	"strings"
+	"unicode"
 
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark/extension"
@@ -23,18 +20,6 @@ import (
 	chromahtml "github.com/alecthomas/chroma/v2/formatters/html"
 	highlighting "github.com/yuin/goldmark-highlighting/v2"
 )
-
-// TODO: IO 공부하기
-
-// TODO: SEO image 추가하기
-
-// TODO: assets 이미지 압축하기
-
-// TODO: Email 추가하기
-
-// TODO: Category fixed 기능 추가하기. posts list에서 category를 가장 윗쪽으로 올리는 기능임.
-
-// TODO: category 내부 fixed에서는 다중 fixed가 적용되었다면, 파일명으로 정렬됨.
 
 // Refactor TODO:
 /*
@@ -60,11 +45,11 @@ import (
 				- category []string
 				- fixedPost bool
 				- fixedCategory bool
-				- contentPath string <- 실제 블로그가 저장된 위치
+				- sourceFilePath string <- 실제 블로그가 저장된 위치
 					e.g. content/tgpl/go 정리법
-				- URL <- 실제 URL로 참조되는 블로그 URL <- env: production 이면 .html 안함, 그게 아니면 .html 추가
-					e.g. post/go-정리법
-					e.g. post/go-정리법.html
+				- slug <- 그냥 가공된 PATH로 활용될 이름임
+					e.g. go-정리법
+					-> 여기에 .html, post/, public/ 붙여서 활용하기
 			2. post.html 생성
 				href: posts/category-foo, /, about, posts
 				DOCS: href는 해당 html에 포함된 hyperlink임
@@ -80,9 +65,12 @@ import (
 */
 
 func main() {
+	// Get env
 	var appEnv string = os.Getenv("APP_ENV")
+	_ = appEnv
 
-	md := goldmark.New(
+	// Set goldmark
+	var md = goldmark.New(
 		goldmark.WithRendererOptions(
 			html.WithUnsafe(), // markdown에서 html tag 사용할 수 있게 활성화함
 		),
@@ -96,81 +84,80 @@ func main() {
 				),
 			),
 		),
-	) // goldmark
+	)
+	_ = md
 
-	// *** post data 처리
+	// PostsData
+	fmt.Println()
+	fmt.Println("-- PostsData 처리 --")
 	var contentDirPath string = "./content"
 	var contentFilePaths []string = lib.GetFilePaths(contentDirPath)
 	_ = contentFilePaths
 
-	var postsData []map[string]any                              // published된 모든 post의 정보
-	var postsDataByCategory = make(map[string][]map[string]any) // 카테고리로 분류한 published된 모든 post의 정보
+	var postsData []map[string]any
+	var postsDataByCategory = make(map[string][]map[string]any)
 	_ = postsData
 	_ = postsDataByCategory
 
 	type PostFrontMatter struct {
-		Date      string   `yaml:"date"`
-		Desc      string   `yaml:"desc"`
-		Category  []string `yaml:"category"`
-		Published bool     `yaml:"published"`
-		Fixed     bool     `yaml:"fixed"`
+		Date          string   `yaml:"date"`
+		Desc          string   `yaml:"desc"`
+		Category      []string `yaml:"category"`
+		Published     bool     `yaml:"published"`
+		FixedPost     bool     `yaml:"fixedPost"`
+		FixedCategory bool     `yaml:"fixedCategory"`
 	}
 
 	for _, path := range contentFilePaths {
 		file, err := os.Open(path)
 		if err != nil {
-			fmt.Println("파일 열기 실패")
+			fmt.Printf("error: %s - 파일 열기 실패\n", path)
 			continue
 		}
 		defer file.Close()
-
 		buffer := make([]byte, 4096)
 		n, err := file.Read(buffer)
 		if err != nil && err != io.EOF {
-			fmt.Printf("%s - 파일 읽기 실패\n", path)
-			fmt.Println()
+			fmt.Printf("error: %s - 파일 읽기 실패\n", path)
 			continue
 		}
 		content := buffer[:n]
-
 		if !bytes.HasPrefix(content, []byte("---")) {
-			fmt.Printf("%s - 프론트 매터를 찾을 수 없습니다\n", path)
-			fmt.Println()
+			fmt.Printf("error: %s - 프론트 매터를 찾을 수 없습니다\n", path)
 			continue
 		}
-
 		parts := bytes.SplitN(content, []byte("---"), 3)
 		if len(parts) < 3 {
-			fmt.Printf("%s - 프론트 매터의 끝을 찾을 수 없습니다\n", path)
-			fmt.Println()
+			fmt.Printf("error: %s - 프론트 매터의 끝을 찾을 수 없습니다\n", path)
 			continue
 		}
 		frontMatterBytes := parts[1]
-
 		var fm PostFrontMatter
 		if err := yaml.Unmarshal(frontMatterBytes, &fm); err != nil {
-			fmt.Printf("%s - YAML 파싱 실패\n", path)
-			fmt.Println()
+			fmt.Printf("error: %s - YAML 파싱 실패\n", path)
 			continue
 		}
 
+		// published된 것만 PostsData에 추가한다
 		if fm.Published {
+			// title
 			var title string = path[strings.LastIndex(path, "/")+1 : strings.LastIndex(path, ".")]
-			var outputFilePath string = lib.SlugifyPath(title) // filepath.Join("public", "post", ...)  이거 않하고 그냥 따로 처리, .html 확장자 추가 따로 처리
 
+			// URL
+			var slug string = lib.SlugifyPath(title)
+
+			// description
 			var description string
 			if fm.Desc != "" {
 				description = fm.Desc
 			} else {
 				bodyContent := bytes.TrimSpace(parts[2])
-
 				plainText, err := lib.MarkdownToPlainText(bodyContent)
 				if err != nil {
-					log.Printf("Markdown 변환 실패: %v", err)
+					fmt.Printf("error: %s - Markdown 변환 실패\n", path)
 					description = ""
 				} else {
 					normalizedText := strings.Join(strings.Fields(plainText), " ")
-
 					runes := []rune(normalizedText)
 					if len(runes) > 100 {
 						description = string(runes[:100]) + "..."
@@ -180,323 +167,77 @@ func main() {
 				}
 			}
 
+			// PostsData 처리
 			var data = map[string]any{
 				"title":          title,
-				"outputFilePath": outputFilePath, // dash만 되어 있고, 비인코딩되어 있어야 함.
-				"sourceFilePath": path,
-				"category":       fm.Category,
 				"date":           fm.Date,
-				"fixed":          fm.Fixed,
-				"description":    description, // 만약 desc가 없으면 공백("")이 저장됨.
+				"description":    description,
+				"category":       fm.Category,
+				"fixedPost":      fm.FixedCategory,
+				"fixedCategory":  fm.FixedCategory,
+				"sourceFilePath": path,
+				"slug":           slug,
 			}
 
 			postsData = append(postsData, data)
 
 			for _, category := range fm.Category {
-				// map -> slice -> map
 				postsDataByCategory[category] = append(postsDataByCategory[category], data)
 			}
 		}
 	}
 
-	// *** 정적 파일 준비
-	if err := build.SetupStaticAssets(); err != nil {
-		log.Fatalf("정적 파일 준비 중 에러 발생: %v", err)
-	}
-	fmt.Printf("성공: 정적 파일 준비 완료\n")
-
-	// *** category 기반
-	// *** post list 처리
-	var postList []string
-
-	// 정렬: 이름순(한글 -> 영어)
-	var categories []string
-	for category := range postsDataByCategory {
-		categories = append(categories, category)
-	}
-	sort.Slice(categories, func(i, j int) bool {
-		keyI := categories[i]
-		keyJ := categories[j]
-		isKoreanI := lib.IsKorean(keyI)
-		isKoreanJ := lib.IsKorean(keyJ)
-
-		if isKoreanI != isKoreanJ {
-			return isKoreanI
-		}
-
-		return keyI < keyJ
-	})
-
-	for _, category := range categories {
-		postsData := postsDataByCategory[category]
-		postList = append(postList, "<section class=\"category-group\">")
-		postList = append(postList, fmt.Sprintf("<h2 class=\"category-group-title\">[%s]</h2>", category))
-		postList = append(postList, "<ul class=\"category-group-list\">")
-
-		// 정렬: fixed, date
-		sort.Slice(postsData, func(i, j int) bool {
-			postI := postsData[i]
-			postJ := postsData[j]
-
-			fixedI, _ := postI["fixed"].(bool)
-			fixedJ, _ := postJ["fixed"].(bool)
-
-			if fixedI != fixedJ {
-				return fixedI
-			}
-
-			dateI, _ := postI["date"].(string)
-			dateJ, _ := postJ["date"].(string)
-			return dateI > dateJ
-		})
-
-		for _, data := range postsData {
-			isFixed, _ := data["fixed"].(bool)
-			title, _ := data["title"].(string)
-			date, _ := data["date"].(string) // yyyy-mm-dd
-			description, _ := data["description"].(string)
-			category, _ := data["category"].([]string)
-			outputFilePath, _ := data["outputFilePath"].(string)
-
-			var permalink string // 블로그 링크는 Production에서는 .html가 없음
-			if appEnv == "production" {
-				permalink = filepath.ToSlash(filepath.Join("post", outputFilePath))
-			} else {
-				permalink = filepath.ToSlash(filepath.Join("post", fmt.Sprintf("%s.html", outputFilePath)))
-			}
-
-			formattedDate, err := lib.FormatDateKorean(date) // yyyy년 mm월 dd일
-			if err != nil {
-				fmt.Printf("날짜 변환 실패: %v\n", err)
-				return
-			}
-
-			if isFixed {
-				fixedTemplate := `<li>
-					<article class="post-item">
-						<h3 class="post-item-title"><a href="%s">[고정됨] %s</a></h3>
-						<p class="post-item-date"><time datetime="%s">%s</time></p>
-						<p class="post-item-description">%s</p>
-						<p class="post-item-category">%s</p>
-					</article>
-				</li>`
-				postList = append(postList, fmt.Sprintf(fixedTemplate, permalink, title, date, formattedDate, description, category))
-			} else {
-				template := `<li>
-					<article class="post-item">
-						<h3 class="post-item-title"><a href="%s">%s</a></h3>
-						<p class="post-item-date"><time datetime="%s">%s</time></p>
-						<p class="post-item-description">%s</p>
-						<p class="post-item-category">%s</p>
-					</article>
-				</li>`
-				postList = append(postList, fmt.Sprintf(template, permalink, title, date, formattedDate, description, category))
-			}
-		}
-		postList = append(postList, "</ul>")
-		postList = append(postList, "</section>")
-	}
-	htmlPostList := strings.Join(postList, "")
-
-	// *** index.html 처리
-	homeMdBytes, err := os.ReadFile("content/home/home.md")
-	if err != nil {
-		fmt.Printf("home.md 파일 읽기 실패: %v\n", err)
-		return
-	}
-
-	var homeBodyBytes []byte
-	if bytes.HasPrefix(homeMdBytes, []byte("---")) {
-		parts := bytes.SplitN(homeMdBytes, []byte("---"), 3)
-		if len(parts) >= 3 {
-			homeBodyBytes = parts[2]
-		} else {
-			homeBodyBytes = homeMdBytes
-		}
-	} else {
-		homeBodyBytes = homeMdBytes
-	}
-
-	var homeContentBuf bytes.Buffer
-	if err := md.Convert(homeBodyBytes, &homeContentBuf); err != nil {
-		fmt.Printf("home.md 변환 실패: %v\n", err)
-		return
-	}
-
-	sourceHomeFile := "layout/index.html"
-	tmplHome, err := template.ParseFiles(sourceHomeFile)
-	if err != nil {
-		fmt.Printf("템플릿 파일 파싱 실패: %v\n", err)
-		return
-	}
-
-	destHomeFile := "public/index.html"
-	outputHomeFile, err := os.Create(destHomeFile)
-	if err != nil {
-		fmt.Printf("출력 파일 생성 실패: %v\n", err)
-		return
-	}
-	defer outputHomeFile.Close()
-
-	type HomePageData struct {
-		IsProduction bool
-		CurrentURL   string
-		Content      template.HTML
-	}
-	homePageData := HomePageData{
-		IsProduction: appEnv == "production",
-		CurrentURL:   "/",
-		Content:      template.HTML(homeContentBuf.String()),
-	}
-
-	if err := tmplHome.Execute(outputHomeFile, homePageData); err != nil {
-		fmt.Printf("템플릿 실행 실패: %v\n", err)
-		return
-	}
-
-	fmt.Printf("성공: %s 파일 생성\n", destHomeFile)
-
-	// *** about.html 처리
-	aboutMdBytes, err := os.ReadFile("content/about/about.md")
-	if err != nil {
-		fmt.Printf("about.md 파일 읽기 실패: %v\n", err)
-		return
-	}
-
-	var aboutBodyBytes []byte
-	if bytes.HasPrefix(aboutMdBytes, []byte("---")) {
-		parts := bytes.SplitN(aboutMdBytes, []byte("---"), 3)
-		if len(parts) >= 3 {
-			aboutBodyBytes = parts[2]
-		} else {
-			aboutBodyBytes = aboutMdBytes
-		}
-	} else {
-		aboutBodyBytes = aboutMdBytes
-	}
-
-	var aboutContentBuf bytes.Buffer
-	if err := md.Convert(aboutBodyBytes, &aboutContentBuf); err != nil {
-		fmt.Printf("about.md 변환 실패: %v\n", err)
-		return
-	}
-
-	sourceAboutFile := "layout/about.html"
-	tmplabout, err := template.ParseFiles(sourceAboutFile)
-	if err != nil {
-		fmt.Printf("템플릿 파일 파싱 실패: %v\n", err)
-		return
-	}
-
-	destAboutFile := "public/about.html"
-	outputAboutFile, err := os.Create(destAboutFile)
-	if err != nil {
-		fmt.Printf("출력 파일 생성 실패: %v\n", err)
-		return
-	}
-	defer outputAboutFile.Close()
-
-	type AboutPageData struct {
-		IsProduction bool
-		CurrentURL   string
-		Content      template.HTML
-	}
-	aboutPageData := AboutPageData{
-		IsProduction: appEnv == "production",
-		CurrentURL:   "/about",
-		Content:      template.HTML(aboutContentBuf.String()),
-	}
-
-	if err := tmplabout.Execute(outputAboutFile, aboutPageData); err != nil {
-		fmt.Printf("템플릿 실행 실패: %v\n", err)
-		return
-	}
-
-	fmt.Printf("성공: %s 파일 생성\n", destAboutFile)
-
-	// *** Posts 파일 처리
-	type PostsPageTemplateData struct {
-		IsProduction bool
-		PostList     template.HTML
-		CurrentURL   string
-	}
-	postsPageTemplateData := PostsPageTemplateData{
-		IsProduction: appEnv == "production",
-		PostList:     template.HTML(htmlPostList),
-		CurrentURL:   "/posts",
-	}
-
-	tmpl, err := template.ParseFiles("./layout/posts.html")
-	if err != nil {
-		fmt.Printf("layout/posts.html 템플릿 파일 파싱 실패\n")
-	}
-
-	outputFile, err := os.Create("public/posts.html") // 파일이 없으면 새로 생성. 파일이 이미 있으면 초기화.
-	if err != nil {
-		fmt.Printf("출력 파일 생성 실패\n")
-	}
-	defer outputFile.Close()
-
-	if err := tmpl.Execute(outputFile, postsPageTemplateData); err != nil {
-		fmt.Printf("템플릿 실행 실패\n")
-	}
-	fmt.Printf("성공: public/posts.html 파일 생성\n")
-
-	// *** post 처리
-	// public/post 디렉토리 생성
+	// Post
+	fmt.Println()
+	fmt.Println("-- Post 처리 --")
 	var postDirPath string = "public/post"
 	if err := os.MkdirAll(postDirPath, 0755); err != nil {
-		fmt.Printf("public/post 디렉토리 생성 실패\n")
-	} else {
-		fmt.Printf("성공: public/post 디렉토리 생성\n")
+		fmt.Printf("error: public/post - 디렉토리 생성 실패\n")
 	}
 
 	layoutFile := "layout/post.html"
-	tmplPost, err := template.ParseFiles(layoutFile)
+	postTemplate, err := template.ParseFiles(layoutFile)
 	if err != nil {
-		fmt.Printf("layout/post.html 템플릿 파싱 실패\n")
+		fmt.Printf("error: layout/post.html - 템플릿 파싱 실패\n")
 	}
 
-	type PostPageTemplateData struct {
+	type PostTemplateData struct {
 		IsProduction  bool
 		Title         string
 		Date          string
 		FormattedDate string
 		Category      []string
 		Description   string
-		URL           string
+		Permalink     string
 		Content       template.HTML
-		CurrentURL    string
+		CurrentURL    string // for nav tag
 	}
 
 	for _, data := range postsData {
+		// Post 데이터 처리
 		title, _ := data["title"].(string)
 		date, _ := data["date"].(string)
 		category, _ := data["category"].([]string)
 		description, _ := data["description"].(string)
-		outputFilePath, _ := data["outputFilePath"].(string)
-		savedFilePath := filepath.Join("public", "post", fmt.Sprintf("%s.html", outputFilePath)) // public post에 저장될 고유 저장 path
-		// outputFilePath는 그냥 이름만 있으므로, .html 확장자 추가함
-		var url string // 배포된 path
+		sourceFilePath, _ := data["sourceFilePath"].(string) // content에 저장된 파일명
+		slug, _ := data["slug"].(string)
+		publicPath := filepath.Join("public", "post", fmt.Sprintf("%s.html", slug)) // public에 저장된 파일명
+		var permalink string                                                        // 블로그의 고유 링크임
 		if appEnv == "production" {
-			url = filepath.ToSlash(filepath.Join("post", outputFilePath))
+			permalink = filepath.ToSlash(filepath.Join("post", slug))
 		} else {
-			url = filepath.ToSlash(filepath.Join("post", fmt.Sprintf("%s.html", outputFilePath)))
+			permalink = filepath.ToSlash(filepath.Join("post", fmt.Sprintf("%s.html", slug)))
 		}
-
-		sourceFilePath, _ := data["sourceFilePath"].(string)
-
 		formattedDate, err := lib.FormatDateKorean(date) // yyyy년 mm월 dd일
 		if err != nil {
-			fmt.Printf("날짜 변환 실패: %v\n", err)
+			fmt.Printf("error: %s - 날짜 변환 실패\n", sourceFilePath)
 			return
 		}
 
-		// goldmark
-		// TODO: inline code, code block hightlight 설정
+		// Post 생성
 		sourceBytes, err := os.ReadFile(sourceFilePath)
 		if err != nil {
-			fmt.Printf("파일 읽기 실패\n")
+			fmt.Printf("error: %s - 파일 읽기 실패\n", sourceFilePath)
 			continue
 		}
 		var bodyBytes []byte
@@ -513,37 +254,50 @@ func main() {
 		var contentBuf bytes.Buffer
 		context := parser.NewContext()
 		if err := md.Convert(bodyBytes, &contentBuf, parser.WithContext(context)); err != nil {
-			fmt.Printf("Markdown 변환 실패\n")
+			fmt.Printf("error: %s - Markdown 변환 실패\n", sourceFilePath)
 			continue
 		}
 
-		outputFile, err := os.Create(savedFilePath)
+		outputFile, err := os.Create(publicPath)
 		if err != nil {
-			fmt.Printf("출력 파일 생성 실패\n")
+			fmt.Printf("error: %s - 출력 파일 생성 실패\n", sourceFilePath)
 			continue
 		}
 		defer outputFile.Close()
 
-		page := PostPageTemplateData{
+		page := PostTemplateData{
 			IsProduction:  appEnv == "production",
 			Title:         title,
 			Date:          date,
 			FormattedDate: formattedDate,
 			Category:      category,
 			Description:   description,
-			URL:           url,
+			Permalink:     permalink,
 			Content:       template.HTML(contentBuf.String()),
 			CurrentURL:    "/posts",
 		}
 
-		if err := tmplPost.Execute(outputFile, page); err != nil {
-			fmt.Printf("템플릿 실행 실패\n")
+		if err := postTemplate.Execute(outputFile, page); err != nil {
+			fmt.Printf("error: layoutpost.html - 템플릿 실행 실패\n")
 			continue
 		}
 
-		fmt.Printf("성공: %s 파일 생성\n", savedFilePath)
+		fmt.Printf("sucess: %s 파일 생성\n", publicPath)
 	}
 
-	fmt.Println(appEnv, appEnv == "production")
+	// Post list 처리
+	fmt.Println()
+	fmt.Println("-- Post List 처리 --")
 
+}
+
+func isKorean(r rune) bool { return unicode.Is(unicode.Hangul, r) }
+
+func compareKoreanEnglish(s1, s2 string) bool {
+	isKorean1 := isKorean([]rune(s1)[0])
+	isKorean2 := isKorean([]rune(s2)[0])
+	if isKorean1 != isKorean2 {
+		return isKorean1 // 한글이 true이므로 앞으로 온다
+	}
+	return s1 < s2
 }

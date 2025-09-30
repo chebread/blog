@@ -62,7 +62,31 @@
             </nav>
             
             <main class="posts-list">
-                {{ .PostList }}
+                {{range .CategoryGroups}}
+                    <section class="category-group">
+                        <h2 class="category-group-title">[{{.Name}}]</h2>
+                        <ul class="category-group-list">
+                            {{range .Posts}}
+                            <li class="post-item">
+                                <article>
+                                    <h3 class="post-item-title">
+                                        <a href="{{.URL}}">{{if .FixedPost}}[고정됨] {{end}}{{.Title}}</a>
+                                    </h3>
+                                    <p class="post-item-date"><time datetime="{{.Date}}">{{.FormattedDate}}</time></p>
+                                    <p class="post-item-description">{{.Description}}</p>
+                                    <div class="post-item-category">{{range .Category}}<span>[{{.}}</span>] {{end}}</div>
+                                </article>
+                            </li>
+                            {{end}}
+                        </ul>
+
+                        {{if .ShowMoreLink}}
+                        <div class="more-link">
+                            <a href="/posts/{{.Slug}}">[{{.Name}}] 더보기 (총 {{.TotalCount}}개)</a>
+                        </div>
+                        {{end}}
+                    </section>
+                {{end}}
             </main>
             <footer class="posts-footer">
                 <section>
