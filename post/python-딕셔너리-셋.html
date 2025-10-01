@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>[Python] 딕셔너리, 셋 | 차한음 블로그</title>
+    <meta name="description" content="딕셔너리 딕셔너리는 리스트와 비슷하다. 리스트와 다른 점은 항목의 순서를 따지지 않으며, 오프셋으로 항목을 선택할 수 없다. 대신 값에 상응하는 고유한 키를 지정한다. 키는 모든 ...">
+    <meta name="author" content="차한음">
+    <link rel="canonical" href="https://chebread.github.io/">
+
+    <meta property="og:title" content="[Python] 딕셔너리, 셋 | 차한음 블로그">
+    <meta property="og:description" content="딕셔너리 딕셔너리는 리스트와 비슷하다. 리스트와 다른 점은 항목의 순서를 따지지 않으며, 오프셋으로 항목을 선택할 수 없다. 대신 값에 상응하는 고유한 키를 지정한다. 키는 모든 ...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://chebread.github.io/post/python-딕셔너리-셋">
+    <meta property="og:site_name" content="차한음 블로그">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="[Python] 딕셔너리, 셋 | 차한음 블로그">
+    <meta name="twitter:description" content="딕셔너리 딕셔너리는 리스트와 비슷하다. 리스트와 다른 점은 항목의 순서를 따지지 않으며, 오프셋으로 항목을 선택할 수 없다. 대신 값에 상응하는 고유한 키를 지정한다. 키는 모든 ...">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[Python] 딕셔너리, 셋 | 차한음 블로그",
+        "author": {
+            "@type": "Person",
+            "name": "차한음"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "차한음",
+        },
+        "datePublished": "2025-05-11",
+        "description": "딕셔너리 딕셔너리는 리스트와 비슷하다. 리스트와 다른 점은 항목의 순서를 따지지 않으며, 오프셋으로 항목을 선택할 수 없다. 대신 값에 상응하는 고유한 키를 지정한다. 키는 모든 ..."
+    }
+    </script>
+
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/color-palette.css">
+    <link rel="stylesheet" href="/styles/chroma.css">
+
+    <link rel="stylesheet" href="/styles/github-markdown.css">
+    <link rel="stylesheet" href="/styles/post.css">
+
+    <link rel="icon" href="/favicons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png">
+</head>
+<body>
+    <div class="root">
+        <div class="post">
+           <nav class="post-nav">
+                <a href="/" class="">
+                    <span>홈</span>
+                </a>
+                <a href="/about" class="">
+                    <span>어바웃</span>
+                </a>
+                <a href="/posts" class="active">
+                    <span>포스트</span>
+                </a>
+            </nav>
+            
+            <main class="post-content">
+                <header class="post-header">
+                    <h1 class="post-title">[Python] 딕셔너리, 셋</h1>
+                    <p class="post-date"><time datetime="2025-05-11">2025년 05월 11일</time></p>
+                    <p class="post-category"><a href="/posts/python-%eb%ac%b8%eb%b2%95-%ec%a0%95%eb%a6%ac">[Python 문법 정리]</a></p>
+                </header>
+                <div class="post-body">
+                    <article class="markdown-body"><h2>딕셔너리</h2>
+<p>딕셔너리는 리스트와 비슷하다.</p>
+<p>리스트와 다른 점은 항목의 순서를 따지지 않으며, 오프셋으로 항목을 선택할 수 없다.</p>
+<p><strong>대신 값에 상응하는 고유한 키를 지정한다.</strong></p>
+<p><strong>키는 모든 불변 타입(불리언, 정수, 부동소수점, 튜플, 문자열 등)이 될 수 있다.</strong></p>
+<p>딕셔너리는 변경 가능하므로 요소를 추가, 삭제, 수정할 수 있다.</p>
+<p>딕셔너리를 연관 배열(associative array), 해시(hash), 해시맵(hashmap), 딕트(dict)라고도 부른다.</p>
+<h2>딕셔너리 생성하기: {}</h2>
+<p>딕셔너리를 만드려면 중괄호 안에 콤마로 구분한 <code>키:값</code> 쌍을 지정한다.</p>
+<p><code>{}</code> 는 키:값 쌍이 없는 빈 딕셔너리다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;a&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;b&#34;</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span></code></pre><p><strong>딕셔너리의 변수 이름을 입력하면 모든 키와 값을 출력한다.</strong></p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;a&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="s2">&#34;b&#34;</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nb">dict</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s2">&#34;a&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&#34;b&#34;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+</span></span></code></pre><p>리스트, 튜플, 딕셔너리의 마지막 항목에는 콤마를 입력하지 않아도 된다.</p>
+<p><strong>파이썬에서 들여쓰기는 중요하지만, 키와 값을 입력할 때 중괄호 내에 반드시 들여쓰기를 할 필요는 없다.</strong></p>
+<p>그러나 중괄호 내부에 들여쓰기를 하는 이유는, 가독성을 좋게 만들기 때문이다.</p>
+<h2>딕셔너리 생성하기: dict()</h2>
+<p><strong>키와 값을 dict() 함수 인수에 키워드 인자 형식으로 전달하여 딕셔너리를 생성할 수 있다.</strong></p>
+<p>키워드 인자 형식으로 딕셔너리를 생성할 때는 키워드 인자는 오로지 문자열만 가능하기에 딕셔너리의 키는 문자열만 가능하다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">acme_customer</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">first</span><span class="o">=</span><span class="s2">&#34;Wile&#34;</span><span class="p">,</span> <span class="n">middle</span><span class="o">=</span><span class="s2">&#34;E&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s2">&#34;first&#34;</span><span class="p">:</span> <span class="s2">&#34;Wile&#34;</span><span class="p">,</span> <span class="s2">&#34;middle&#34;</span><span class="p">:</span> <span class="s2">&#34;E&#34;</span><span class="p">}</span>
+</span></span></code></pre><p>키워드 인자란,</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">age</span><span class="si">}</span><span class="s2"> years old&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">greet</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;Alice&#34;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>  <span class="c1"># ← 여기가 키워드 인자</span>
+</span></span></code></pre><p><code>name=&quot;Alice&quot;</code>, <code>age=30</code></p>
+<p>이런 형식이 키워드 인자이다.</p>
+<h2>변환하기: dict()</h2>
+<p>dict() 함수를 사용해서 <strong>두 값으로 이루어진 시퀀스</strong>를 딕셔너리로 변환할 수 있다.</p>
+<p>각 시퀀스의 첫 번째 항목은 키로, 두 번째 항목은 값으로 사용된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">lol</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">dict</span><span class="p">(</span><span class="n">lol</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">:</span> <span class="s1">&#39;f&#39;</span><span class="p">}</span>
+</span></span></code></pre><p>두 항목의 리스트를 딕셔너리로 변환하는 예제이다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">lot</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">dict</span><span class="p">(</span><span class="n">lot</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">:</span> <span class="s1">&#39;f&#39;</span><span class="p">}</span>
+</span></span></code></pre><p>리스트, 튜플로 구성된 시퀀스를 딕셔너리로 변환할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">tol</span> <span class="o">=</span> <span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="nb">dict</span><span class="p">(</span><span class="n">tol</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">:</span> <span class="s1">&#39;f&#39;</span><span class="p">}</span>
+</span></span></code></pre><p>두 항목의 리스트로 구성된 튜플을 딕셔너리로 변환할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">tos</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="s1">&#39;cd&#39;</span><span class="p">,</span> <span class="s1">&#39;ef&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">dict</span><span class="p">(</span><span class="n">tos</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">:</span> <span class="s1">&#39;f&#39;</span><span class="p">}</span>
+</span></span></code></pre><p>두 문자열로 구성된 리스트를 딕셔너리로 변환할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">tos</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="s1">&#39;cd&#39;</span><span class="p">,</span> <span class="s1">&#39;ef&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">dict</span><span class="p">(</span><span class="n">tos</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">:</span> <span class="s1">&#39;f&#39;</span><span class="p">}</span>
+</span></span></code></pre><p>두 문자열로 구성된 튜플을 딕셔너리로 변환할 수 있다.</p>
+<p>zip() 함수를 사용해서 두 항목의 시퀀스를 쉽게 생성할 수 있다.</p>
+<h2>항목 추가/변경: <code>[key]</code></h2>
+<p><code>dict[key] = value</code> 의 형태로 항목을 추가 또는 변경할 수 있다.</p>
+<p>딕셔너리에 이미 존재하는 키라면 그 값은 새로운 값으로 대체된다.</p>
+<p>키가 존재하지 않는다면 새 값과 키가 딕셔너리에 추가도니다.</p>
+<p>리스트와 달리 딕셔너리를 할당할 때는 인덱스 범위가 벗어나는 예외에 대해 걱정할 필요가 없다.</p>
+<p>단, 딕셔너리의 키를 변경할 수는 없으며, 기존에 존재하는 <code>키:값</code> 을 삭제하고 새로운 <code>키:값</code> 을 만들어야 한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">dic</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;pey&#39;</span><span class="p">,</span> <span class="s1">&#39;phone&#39;</span><span class="p">:</span> <span class="s1">&#39;010-9999-1234&#39;</span><span class="p">,</span> <span class="s1">&#39;birth&#39;</span><span class="p">:</span> <span class="s1">&#39;1118&#39;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;fey&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">dic</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;fey&#39;</span><span class="p">,</span> <span class="s1">&#39;phone&#39;</span><span class="p">:</span> <span class="s1">&#39;010-9999-1234&#39;</span><span class="p">,</span> <span class="s1">&#39;birth&#39;</span><span class="p">:</span> <span class="s1">&#39;1118&#39;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl"><span class="n">dic</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;fey&#39;</span><span class="p">,</span> <span class="s1">&#39;phone&#39;</span><span class="p">:</span> <span class="s1">&#39;010-9999-1234&#39;</span><span class="p">,</span> <span class="s1">&#39;birth&#39;</span><span class="p">:</span> <span class="s1">&#39;1118&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+</span></span></code></pre><p><strong>딕셔너리의 키들은 반드시 고유해야 한다.</strong></p>
+<p><strong>같은 키를 두 번 이상 사용하면 마지막 키:값으로 저장된다.</strong></p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">	<span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span> <span class="p">}</span>
+</span></span></code></pre><h2>항목 얻기: <code>[key]</code></h2>
+<p><code>dict[key]</code> 로 키에 상응하는 값을 얻을 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nb">dict</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2</span>
+</span></span></code></pre><p>만약 <code>dict[key]</code> 로 값을 얻을 때 딕셔너리에 해당 키가 없으면, 예외가 발생한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nb">dict</span><span class="p">[</span><span class="s1">&#39;l&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">  <span class="n">File</span> <span class="s2">&#34;&lt;python-input-50&gt;&#34;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">dict</span><span class="p">[</span><span class="s1">&#39;l&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~~~~^^^^^</span>
+</span></span><span class="line"><span class="cl"><span class="ne">KeyError</span><span class="p">:</span> <span class="s1">&#39;l&#39;</span>
+</span></span></code></pre><p>이 문제를 피하는 좋은 방법은, <code>in</code> 으로 해당 키가 존재하는지 확인하는 것이다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="s1">&#39;l&#39;</span> <span class="ow">in</span> <span class="nb">dict</span>
+</span></span><span class="line"><span class="cl"><span class="kc">False</span>
+</span></span></code></pre><h2>항목 얻기: <code>get()</code></h2>
+<p><code>dict.get(키)</code> 함수를 사용하여 값을 얻을 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nb">dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2</span>
+</span></span></code></pre><p><code>dict.get(키, 옵션 값)</code> 처럼 옵션 값을 따로 지정하여 키가 존재하지 않을 때 옵션 값을 출력하게 할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;foo&#39;</span>
+</span></span></code></pre><p>만약 옵션 값을 지정하지 않고 존재하지 않는 키의 값을 가져오면 <code>None</code>을 얻는다.</p>
+<p>단, 대화식 인터프리터에서는 <code>None</code> 이 아니라 아무것도 출력하지 않는다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kc">None</span>
+</span></span></code></pre><h2>모든 키 얻기: keys()</h2>
+<p>딕셔너리의 모든 키를 가져오기 위해 <code>dict.keys()</code> 를 사용한다.</p>
+<p><strong>keys() 는 이터러블 객체인 <code>dict_keys()</code> 를 반환한다.</strong></p>
+<p><code>dict_keys()</code> 이터러블 객체를 <code>list()</code> 변환 함수를 사용하여 리스트로 만들 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;pey&#39;</span><span class="p">,</span> <span class="s1">&#39;phone&#39;</span><span class="p">:</span> <span class="s1">&#39;010-9999-1234&#39;</span><span class="p">,</span> <span class="s1">&#39;birth&#39;</span><span class="p">:</span> <span class="s1">&#39;1118&#39;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">dict_keys</span><span class="p">([</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;phone&#39;</span><span class="p">,</span> <span class="s1">&#39;birth&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">keys</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;phone&#39;</span><span class="p">,</span> <span class="s1">&#39;birth&#39;</span><span class="p">]</span>
+</span></span></code></pre><p>파이썬 3에서는 이터러블 값을 일반적인 리스트로 변환하기 위해 <code>list()</code> 함수를 사용한다.</p>
+<p><code>list()</code> 함수는 이터러블 객체를 리스트 타입으로 변환해주는 변환 함수이기 때문이다.</p>
+<h2>모든 값 얻기: values()</h2>
+<p>딕셔너리의 모든 값을 가져오기 위해 <code>dict.values()</code> 를 사용한다.</p>
+<p>values() 는 이터러블 객체인 <code>dict_values()</code> 를 반환한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;pey&#39;</span><span class="p">,</span> <span class="s1">&#39;phone&#39;</span><span class="p">:</span> <span class="s1">&#39;010-9999-1234&#39;</span><span class="p">,</span> <span class="s1">&#39;birth&#39;</span><span class="p">:</span> <span class="s1">&#39;1118&#39;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">dict_values</span><span class="p">([</span><span class="s1">&#39;pey&#39;</span><span class="p">,</span> <span class="s1">&#39;010-9999-1234&#39;</span><span class="p">,</span> <span class="s1">&#39;1118&#39;</span><span class="p">])</span>
+</span></span></code></pre><h2>모든 키-값 얻기: items()</h2>
+<p>딕셔너리의 모든 키/값을 얻기 위해 <code>dic.items()</code> 을 사용한다.</p>
+<p>items() 는 이터러블 객체인 <code>dict_items()</code> 를 반환한다.</p>
+<p>각 키와 값은 튜플로 반환된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">dict_items</span><span class="p">([(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;pey&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;phone&#39;</span><span class="p">,</span> <span class="s1">&#39;010-9999-1234&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;birth&#39;</span><span class="p">,</span> <span class="s1">&#39;1118&#39;</span><span class="p">)])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="p">[(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;pey&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;phone&#39;</span><span class="p">,</span> <span class="s1">&#39;010-9999-1234&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;birth&#39;</span><span class="p">,</span> <span class="s1">&#39;1118&#39;</span><span class="p">)]</span>
+</span></span></code></pre><h2>길이 얻기: len()</h2>
+<p><code>len()</code> 함수로 딕셔너리에 있는 키-값 쌍의 개수를 구할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">3</span>
+</span></span></code></pre><p>빈 딕셔너리는 <code>0</code> 을 반환한다.</p>
+<h2>결합하기: <code>{**a, **b}</code></h2>
+<p><strong><code>**</code> 를 사용하여 딕셔너리를 두 개 이상 결합할 수 있다.</strong></p>
+<p>여기서 <code>**</code> 는 제곱 연산자가 아니라 다른 용도로 사용된다.</p>
+<p><code>**</code> 연산자는 딕셔너리 <code>a</code>와 <code>b</code>를 푼 다음, 그 내용들을 새로운 딕셔너리에 넣는다.</p>
+<p>결합하는 딕셔너리에 같은 키가 존재한다면 마지막 <code>키:값</code>이 저장된다.</p>
+<p>이는 <code>같은 키를 두 번 이상 사용하면 마지막 키:값으로 저장된다.</code> 와 같은 원리이다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">c</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">b</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">c</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
+</span></span></code></pre><p><code>**</code> 연산자를 사용하는 방법으로 두 개 이상 딕셔너리를 결합하게 되면,
+얕은 복사를 수행하게 된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]}</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">c</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">b</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">c</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">99</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">99</span><span class="p">]}</span> <span class="c1"># a도 바뀜</span>
+</span></span></code></pre><p>딕셔너리 키/값 전체 사본을 깊은 복사하고 싶다면 <code>deepcopy()</code> 를 수행한다.</p>
+<h2>결합하기: update()</h2>
+<p><code>update()</code> 함수는 한 딕셔너리의 키와 값들을 복사해서 다른 딕셔너리에 붙여준다.</p>
+<p><code>dict_a.update(dict_b)</code> 처럼 사용하며, <code>dict_b</code> 딕셔너리를 <code>dict_a</code> 에 삽입한다.</p>
+<p>만약 삽입한 값 중에 기존 키:값이 있다면 마지막 <code>키:값</code>(두 번째 딕셔너리 값, 삽입한 딕셔너리 값)으로 변경된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">sample_dict</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;수학&#39;</span><span class="p">:</span><span class="mi">80</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;국어&#39;</span><span class="p">:</span><span class="mi">90</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="c1">## 수학 성적을 95로 수정, 영어 성적 70점 추가</span>
+</span></span><span class="line"><span class="cl"><span class="n">sample_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;수학&#39;</span><span class="p">:</span><span class="mi">95</span><span class="p">,</span> <span class="s1">&#39;영어&#39;</span><span class="p">:</span><span class="mi">70</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">sample_dict</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;수학&#39;</span><span class="p">:</span><span class="mi">95</span><span class="p">,</span> <span class="s1">&#39;국어&#39;</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span> <span class="s1">&#39;영어&#39;</span><span class="p">:</span><span class="mi">70</span><span class="p">}</span>
+</span></span></code></pre><h2>키와 del로 항목 삭제하기</h2>
+<p><code>del dict[key]</code> 로 특정 <code>키:값</code> 항목을 삭제할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;pey&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;pey&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>
+</span></span></code></pre><h2>키로 항목 가져온 뒤 삭제하기: pop()</h2>
+<p><code>pop()</code> 은 <code>get()</code> 과 <code>del</code> 을 함께 사용하는 것과 같다.</p>
+<p>딕셔너리에 있는 키와 <code>pop()</code> 의 인수가 일치한다면</p>
+<p>해당 값을 반환한 뒤, 딕셔너리에서 해당 <code>키-값</code> 을 삭제한다.</p>
+<p>만약 딕셔너리에 키가 존재하지 않으면 예외가 발생한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="err">```</span><span class="n">null</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">sample_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">sample_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">sample_dict</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
+</span></span></code></pre><p>pop() 에 두 번째 인수를 지정하면 get() 과 같이 작동한다.</p>
+<p>딕셔너리에 키가 존재하지 않으면 두 번째 인수가 출력된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">sample_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s2">&#34;딕셔너리에서 해당 key가 없습니다&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">딕셔너리에서</span> <span class="n">해당</span> <span class="n">key가</span> <span class="n">없습니다</span>
+</span></span></code></pre><h2>모든 항목 삭제하기: clear()</h2>
+<p>딕셔너리에 있는 키와 값을 모두 삭제하기 위해서는 <code>dict.clear()</code>를 사용하면 된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span>
+</span></span><span class="line"><span class="cl"><span class="p">{}</span>
+</span></span></code></pre><p>또는, 빈 딕셔너리(<code>{}</code>)를 변수에 할당하면 모두 삭제할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span>
+</span></span><span class="line"><span class="cl"><span class="p">{}</span>
+</span></span></code></pre><h2>키 맴버십 테스트: <code>in</code></h2>
+<p>딕셔너리에 키가 존재하는지 알고 싶다면 <code>in</code> 을 사용한다.</p>
+<p><strong>&quot;값이 존재하는가&quot;가 아님을 주의한다.</strong>
+<strong>&quot;키가 존재하는 가&quot;를 묻는 것이다.</strong>**</p>
+<p><code>x in dict</code> 은 dict 딕셔너리에 <code>x</code> 라는 키가 존재하는가를 불리언 값으로 반환한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;a&#39;</span> <span class="ow">in</span> <span class="n">a</span>
+</span></span><span class="line"><span class="cl"><span class="kc">True</span>
+</span></span></code></pre><h2>할당하기: <code>=</code></h2>
+<p>리스트와 마찬가지로, 한 딕셔너리를 변수 두 곳에 할당했을 때, 한 딕셔너리를 변경하면 다른 딕셔너리도 같이 변경된다.</p>
+<p>이를 얕은 복사라고 부른다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">signals</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;green&#39;</span><span class="p">:</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">:</span> <span class="s1">&#39;go faster&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">:</span> <span class="s1">&#39;smile for the camera&#39;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">save_signals</span> <span class="o">=</span> <span class="n">signals</span>
+</span></span><span class="line"><span class="cl"><span class="n">signals</span><span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;confuse everyone&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">save_singals</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span> <span class="s1">&#39;green&#39;</span><span class="p">:</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">:</span> <span class="s1">&#39;go faster&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">:</span> <span class="s1">&#39;smile for the camera&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">:</span> <span class="s1">&#39;confuse everyone&#39;</span> <span class="p">}</span>
+</span></span></code></pre><h2>복사: copy(), deepcopy()</h2>
+<p>copy() 를 사용하면 리스트와 마찬가지로 표면적으로는 깊은 복사인 것 처럼 동작하지만, 종속된 객체에 대해서는 얕은 복사가 수행된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">signals</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;green&#39;</span><span class="p">:</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">:</span> <span class="s1">&#39;go faster&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="s1">&#39;smile&#39;</span><span class="p">]}</span>
+</span></span><span class="line"><span class="cl"><span class="n">signals_copy</span> <span class="o">=</span> <span class="n">signals</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">signals</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span> <span class="s1">&#39;green&#39;</span><span class="p">:</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">:</span> <span class="s1">&#39;go faster&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="s1">&#39;smile&#39;</span><span class="p">]}</span>
+</span></span><span class="line"><span class="cl"><span class="n">signals_copy</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span> <span class="s1">&#39;green&#39;</span><span class="p">:</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">:</span> <span class="s1">&#39;go faster&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="s1">&#39;smile&#39;</span><span class="p">]}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">signals</span><span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;sweat&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">signals</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span> <span class="s1">&#39;green&#39;</span><span class="p">:</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">:</span> <span class="s1">&#39;go faster&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="s1">&#39;sweat&#39;</span><span class="p">]}</span>
+</span></span><span class="line"><span class="cl"><span class="n">signals_copy</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span> <span class="s1">&#39;green&#39;</span><span class="p">:</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">:</span> <span class="s1">&#39;go faster&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="s1">&#39;sweat&#39;</span><span class="p">]}</span> <span class="c1"># 얕은 복사 발생</span>
+</span></span></code></pre><p>깊은 복사를 위해서는 deepcopy()를 사용해야 한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">copy</span>
+</span></span><span class="line"><span class="cl"><span class="n">signals</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;green&#39;</span><span class="p">:</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">:</span> <span class="s1">&#39;go faster&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="s1">&#39;smile&#39;</span><span class="p">]}</span>
+</span></span><span class="line"><span class="cl"><span class="n">signals_copy</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">signals</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">signals</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span> <span class="s1">&#39;green&#39;</span><span class="p">:</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">:</span> <span class="s1">&#39;go faster&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="s1">&#39;smile&#39;</span><span class="p">]}</span>
+</span></span><span class="line"><span class="cl"><span class="n">signals_copy</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span> <span class="s1">&#39;green&#39;</span><span class="p">:</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">:</span> <span class="s1">&#39;go faster&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="s1">&#39;smile&#39;</span><span class="p">]}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">signals</span><span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;sweat&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">signals</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span> <span class="s1">&#39;green&#39;</span><span class="p">:</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">:</span> <span class="s1">&#39;go faster&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="s1">&#39;sweat&#39;</span><span class="p">]}</span>
+</span></span><span class="line"><span class="cl"><span class="n">signals_copy</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span> <span class="s1">&#39;green&#39;</span><span class="p">:</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">:</span> <span class="s1">&#39;go faster&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="s1">&#39;smile&#39;</span><span class="p">]}</span> <span class="c1"># 깊은 복사 발생</span>
+</span></span></code></pre><h2>딕셔너리 비교</h2>
+<p>비교 연산자(<code>==, !=</code>)를 사용하여 딕셔너리를 비교할 수 있다.</p>
+<p>단, 비교 연산자 <code>==, !=</code> 그 외의 비교 연산자는 사용할 수 없다.</p>
+<p>파이썬은 키/값의 순서에 상관없이 딕셔너리의 키/값을 하나씩 비교한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
+</span></span><span class="line"><span class="cl"><span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span>
+</span></span><span class="line"><span class="cl"><span class="n">Traceback</span><span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">a</span> <span class="o">!=</span> <span class="n">b</span>
+</span></span><span class="line"><span class="cl"><span class="kc">False</span>
+</span></span></code></pre><h2>순회하기: for in</h2>
+<p><strong>딕셔너리를 순회하면 키가 반환된다.</strong></p>
+<p>즉, keys() 메서드 순회한 것과 같은 결과를 낸다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">accusation</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">accusation</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">accusation</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span>
+</span></span></code></pre><p>키가 아닌 값을 순회하려면 values() 메서드를 사용한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">accusation</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2</span>
+</span></span></code></pre><p>키와 값을 모두 튜플로 반환하려면 items() 메서드를 사용한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">accusation</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span></code></pre><p>튜플 언패킹을 이용할 수도 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">for</span> <span class="n">card</span><span class="p">,</span> <span class="n">contents</span> <span class="ow">in</span> <span class="n">accusation</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">card</span><span class="p">,</span> <span class="n">contents</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span><span class="p">,</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span><span class="p">,</span> <span class="mi">2</span>
+</span></span></code></pre><h2>딕셔너리 컴프리헨션</h2>
+<p>리스트 컴프리헨션과 같이 딕셔너리 컴프리헨션이 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="p">{</span><span class="n">키</span> <span class="n">표현식</span> <span class="p">:</span> <span class="n">값</span> <span class="n">표현식</span> <span class="k">for</span> <span class="n">표현식</span> <span class="ow">in</span> <span class="n">이터러블</span><span class="p">}</span>
+</span></span></code></pre><pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">word</span> <span class="o">=</span> <span class="s1">&#39;letters&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">letter_counts</span> <span class="o">=</span> <span class="p">{</span> <span class="n">letter</span><span class="p">:</span> <span class="n">word</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">word</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">letter_counts</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;l&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">letter_counts</span> <span class="o">=</span> <span class="p">{</span> <span class="n">letter</span><span class="p">:</span> <span class="n">word</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">word</span><span class="p">)}</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;l&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+</span></span></code></pre><p>리스트 컴프리헨션과 같이 딕셔너리 컴프리헨션 또한 if 문과 다중 for 문을 사용할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="p">{</span><span class="n">키</span> <span class="n">표현식</span><span class="p">:</span> <span class="n">값</span> <span class="n">표현식</span> <span class="k">for</span> <span class="n">표현식</span> <span class="ow">in</span> <span class="n">이터러블</span> <span class="k">if</span> <span class="n">테스트</span><span class="p">}</span>
+</span></span></code></pre><pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">v</span> <span class="o">=</span> <span class="s1">&#39;aeiou&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">w</span> <span class="o">=</span> <span class="s1">&#39;onomatopoeia&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">v_counts</span> <span class="o">=</span> <span class="p">{</span><span class="n">letter</span><span class="p">:</span> <span class="n">word</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">if</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">v</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">v_counts</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
+</span></span></code></pre><h2>셋(집합)</h2>
+<p>셋은 값은 버리고 키만 남은 딕셔너리와 같다.</p>
+<p>셋의 각 요소는 유일해야 한다.</p>
+<p><strong>셋에서 중복된 값은 자동으로 제거한다.</strong>
+<strong>셋은 수학적 집합과 같은 개념이다.</strong></p>
+<h2>셋 생성하기</h2>
+<p>셋을 생성할 때는 <code>{}</code> 안에 콤마로 구분된 값을 넣는다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">even_numbers</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">even_numbers</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
+</span></span></code></pre><p>set() 함수로 빈 셋을 생성할 수 있다.</p>
+<p><code>{}</code> 는 빈 셋을 생성하지 않는다.</p>
+<p><code>{}</code> 는 빈 딕셔너리를 생성한다.</p>
+<p>그래서 인터프리터는 빈 셋을 set()로 출력한다.</p>
+<p>왜 그럴까? 파이썬에서 딕셔너리가 셋 보다 먼저 등장했기 때문이다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">empty_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">empty_set</span>
+</span></span><span class="line"><span class="cl"><span class="nb">set</span><span class="p">()</span>
+</span></span></code></pre><h2>변환하기: set()</h2>
+<p>set() 함수를 사용하여 리스트, 문자열, 튜플, 딕셔너리 등 이터러블 객체의 중복된 값을 삭제하여 셋을 생성할 수 있다.</p>
+<p>문자열을 set() 함수로 셋으로 만들어보자.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">set</span><span class="p">(</span><span class="s1">&#39;letters&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">}</span>
+</span></span></code></pre><p>'e'와 't'가 두 개씩 있어도 셋에는 하나만 저장된다.</p>
+<p>셋에서 중복된 값은 자동으로 제거하기 때문이다.</p>
+<p>리스트를 셋으로 만들어보자.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">set</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">}</span>
+</span></span></code></pre><p>튜플을 셋으로 만들어보자.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">set</span><span class="p">((</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">}</span>
+</span></span></code></pre><p>딕셔너리에 set()을 사용하면 키만 셋으로 만들어진다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">set</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">}</span>
+</span></span></code></pre><h2>길이 얻기: len()</h2>
+<p>len() 함수는 셋의 원소의 개수를 반환한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}))</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2</span>
+</span></span></code></pre><p>빈 셋은 0개를 반환한다.</p>
+<h2>항목 추가하기: add()</h2>
+<p>add()를 활용하여 셋에 항목을 추가한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
+</span></span></code></pre><h2>항목 삭제하기: remove()</h2>
+<p><code>remove(값)</code> 함수는 값으로 셋의 항목 삭제한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">s</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
+</span></span></code></pre><h2>순회하기: for in</h2>
+<p>딕셔너리처럼 셋에 있는 모든 항목을 순회할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="mi">3</span>
+</span></span></code></pre><h2>맴버십 테스트: in</h2>
+<p><code>x in set</code> 으로 <code>set</code> 셋에 <code>x</code> 요소가 있는지에 대한 결과를 불리언 값으로 반환한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">s</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="mi">1</span> <span class="ow">in</span> <span class="n">s</span>
+</span></span><span class="line"><span class="cl"><span class="kc">True</span>
+</span></span></code></pre><h2>교집합(intersection)</h2>
+<p>&amp; 연산자와 intersection() 메서드를 사용해서 교집합을 구할 수 있다.</p>
+<h2>합집합(union)</h2>
+<p>| 연산자와 union() 메서드를 사용해서 합집합을 구할 수 있다.</p>
+<h2>차집합(difference)</h2>
+<p><code>-</code> 연산자와 difference() 메서드를 사용해서 차집합을 구할 수 있다.</p>
+<h2>대칭 차집합(exclusive)</h2>
+<p><code>^</code> 연산자나 symmertric_difference() 메서드를 사용해서 대칭 차집합을 구할 수 있다.</p>
+<h2>부분집합(subset)</h2>
+<p>&lt;= 연산자나 Issubset() 메서드를 사용해서 부분집합을 구할 수 있다.</p>
+<h2>상위집합(superset)</h2>
+<p><code>&gt;=</code> 연산자나 issuperset() 메서드를 사용해서 상위집합을 구할 수 있다.</p>
+<h2>진부분집합(proper subset)</h2>
+<p><code>&lt;</code> 연산자를 사용해서 진부분집합을 구할 수 있다.</p>
+<h2>진상위집합(proper superset)</h2>
+<p><code>&gt;</code> 연산자를 사용해서 진상위집합을 구할 수 있다.</p>
+<h2>셋 컴프리헨션</h2>
+<p>셋 컴프리헨션은 리스트, 딕셔너리 컴프리헨션과 같은 모양이다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="p">{</span><span class="n">표현식</span> <span class="k">for</span> <span class="n">표현식</span> <span class="ow">in</span> <span class="n">이터러블</span><span class="p">}</span>
+</span></span></code></pre><p>또한 셋 컴프리헨션에 for 문과 if 문을 사용할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="p">{</span><span class="n">표현식</span> <span class="k">for</span> <span class="n">표현식</span> <span class="ow">in</span> <span class="n">이터러블</span> <span class="k">if</span> <span class="n">테스트</span><span class="p">}</span>
+</span></span></code></pre><pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">a_set</span> <span class="o">=</span> <span class="p">{</span><span class="n">number</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="k">if</span> <span class="n">number</span> <span class="o">&amp;</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">1</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">a_set</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span>
+</span></span></code></pre><h2>불변 셋 생성하기: frozenset()</h2>
+<p>셋은 가변 객체이다.</p>
+<p>불변 객체인 셋을 생성하려면 frozenset() 함수와 인수로 순회 가능한 객체(이터러블)을 사용한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">frozenset</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="nb">frozenset</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="nb">frozenset</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl"><span class="n">fs</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">fs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Traceback</span><span class="o">...</span>
+</span></span></code></pre><h2>지금까지 배운 자료구조</h2>
+<p>지금까지 다음과 같은 자료구조를 배웠다.</p>
+<ul>
+<li>대괄호를 사용한 리스트</li>
+<li>콤마와 괄호를 사용한 튜플(괄호는 옵션이다)</li>
+<li>중괄호를 이용한 딕셔너리 또는 셋</li>
+</ul>
+<p>셋을 제외하고 모두 대괄호로 항목에 접근할 수 있다.</p>
+<p>리스트와 튜플의 경우 대괄호에 들어가는 값이 정수 오프셋이고,
+딕셔너리는 키다.</p>
+<p><strong>셋은 오프셋과 키가 없다.</strong></p>
+<h2>자료구조 결합하기</h2>
+<p>다양한 자료구조를 결합해서 자료구조를 확장할 수 있다.</p>
+<p>자료구조의 제한 사항은 데이터 타입 자체에 있다.</p>
+<p>예를 들어 딕셔너리의 키는 불변흐기 때문에 리스트, 딕셔너리, 셋은 딕셔너리의 키가 될 수 없다.</p>
+<p>그러나 튜플은 딕셔너리의 키가 될 수 있다.</p>
+<p>예를 들면 어떤 장소를 GPS 좌표로 인덱싱할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">houses</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="mi">44</span><span class="p">,</span> <span class="o">-</span><span class="mi">93</span><span class="p">,</span> <span class="mi">285</span><span class="p">):</span> <span class="s1">&#39;My house&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></article>
+                </div>
+            </main>
+
+            <footer class="post-footer">
+                <section>
+                    <p>&copy; 2025 Cha Haneum</p>
+                </section>
+                <section>
+                    <a href="https://github.com/chebread">
+                        <span>깃허브</span>
+                    </a>
+                    <a href="">
+                        <span>이메일</span>
+                    </a>
+                </section>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

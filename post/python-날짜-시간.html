@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>[Python] 날짜, 시간 | 차한음 블로그</title>
+    <meta name="description" content="날짜, 시간 파이썬 표준 라이브러리 개발자는 날짜와 시간에 많은 노력을 기울인다.이번 2장에서는 프로그래머들이 부딪히는 몇 가지 문제에 대해 살펴보고, 이를 좀 더 단순하게 만드는...">
+    <meta name="author" content="차한음">
+    <link rel="canonical" href="https://chebread.github.io/">
+
+    <meta property="og:title" content="[Python] 날짜, 시간 | 차한음 블로그">
+    <meta property="og:description" content="날짜, 시간 파이썬 표준 라이브러리 개발자는 날짜와 시간에 많은 노력을 기울인다.이번 2장에서는 프로그래머들이 부딪히는 몇 가지 문제에 대해 살펴보고, 이를 좀 더 단순하게 만드는...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://chebread.github.io/post/python-날짜-시간">
+    <meta property="og:site_name" content="차한음 블로그">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="[Python] 날짜, 시간 | 차한음 블로그">
+    <meta name="twitter:description" content="날짜, 시간 파이썬 표준 라이브러리 개발자는 날짜와 시간에 많은 노력을 기울인다.이번 2장에서는 프로그래머들이 부딪히는 몇 가지 문제에 대해 살펴보고, 이를 좀 더 단순하게 만드는...">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[Python] 날짜, 시간 | 차한음 블로그",
+        "author": {
+            "@type": "Person",
+            "name": "차한음"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "차한음",
+        },
+        "datePublished": "2025-06-20",
+        "description": "날짜, 시간 파이썬 표준 라이브러리 개발자는 날짜와 시간에 많은 노력을 기울인다.이번 2장에서는 프로그래머들이 부딪히는 몇 가지 문제에 대해 살펴보고, 이를 좀 더 단순하게 만드는..."
+    }
+    </script>
+
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/color-palette.css">
+    <link rel="stylesheet" href="/styles/chroma.css">
+
+    <link rel="stylesheet" href="/styles/github-markdown.css">
+    <link rel="stylesheet" href="/styles/post.css">
+
+    <link rel="icon" href="/favicons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png">
+</head>
+<body>
+    <div class="root">
+        <div class="post">
+           <nav class="post-nav">
+                <a href="/" class="">
+                    <span>홈</span>
+                </a>
+                <a href="/about" class="">
+                    <span>어바웃</span>
+                </a>
+                <a href="/posts" class="active">
+                    <span>포스트</span>
+                </a>
+            </nav>
+            
+            <main class="post-content">
+                <header class="post-header">
+                    <h1 class="post-title">[Python] 날짜, 시간</h1>
+                    <p class="post-date"><time datetime="2025-06-20">2025년 06월 20일</time></p>
+                    <p class="post-category"><a href="/posts/python-%eb%ac%b8%eb%b2%95-%ec%a0%95%eb%a6%ac">[Python 문법 정리]</a></p>
+                </header>
+                <div class="post-body">
+                    <article class="markdown-body"><h2>날짜, 시간 파이썬 표준 라이브러리</h2>
+<p>개발자는 날짜와 시간에 많은 노력을 기울인다.
+이번 2장에서는 프로그래머들이 부딪히는 몇 가지 문제에 대해 살펴보고, 이를 좀 더 단순하게 만드는 트릭과 모범 사례에 대해 살펴본다.
+파이썬 표준 라이브러리는 datetime, time, calendar, dateutil 등 시간과 날짜에 대한 여러 가지 모듈이 있다.
+일부 중복되는 기능이 있어서 조금 헷갈린다.</p>
+<h2>윤년</h2>
+<p>윤년(leap year)은 특정한 시간 주기다.
+윤년은 4년에 한 번씩 온다.
+100년 마다 오는 해는 윤년이 아니지만, 400년 마다 오는 해는 윤년이라는 사실을 알고 있는가?</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">calendar</span>
+</span></span><span class="line"><span class="cl"><span class="n">calendar</span><span class="o">.</span><span class="n">isleap</span><span class="p">(</span><span class="mi">1900</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">calendar</span><span class="o">.</span><span class="n">isleap</span><span class="p">(</span><span class="mi">1996</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">calendar</span><span class="o">.</span><span class="n">isleap</span><span class="p">(</span><span class="mi">1999</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">calendar</span><span class="o">.</span><span class="n">isleap</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kc">True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">calendar</span><span class="o">.</span><span class="n">isleap</span><span class="p">(</span><span class="mi">2002</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">calendar</span><span class="o">.</span><span class="n">isleap</span><span class="p">(</span><span class="mi">2004</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kc">True</span>
+</span></span></code></pre><ul>
+<li>1년은 365.242196일이다.
+<ul>
+<li>지구가 태양 주위를 한 번 돈 후, 시작된 지점의 축에서 약 1/4 회전한다.</li>
+</ul>
+</li>
+<li>4년마다 하루씩 추가한다.
+<ul>
+<li>약 365.242196 - 0.25 = 364.992196일이다.</li>
+</ul>
+</li>
+<li>100년마다 하루씩 뺀다.
+<ul>
+<li>약 364.992196 + 0.01 = 365.002196일이다.</li>
+</ul>
+</li>
+<li>400년마다 하루씩 추가한다.
+<ul>
+<li>약 365.002196 - 0.0025 = 364.999696
+거의 365일에 가깝다. 윤초(leap seconds)라는 개념도 있다.</li>
+</ul>
+</li>
+</ul>
+<h2>datetime 모듈</h2>
+<p>표준 datetime 모듈은 날짜와 시간을 처리한다
+datetime 모듈은 여러 메서드를 가진 4개의 클래스를 제공한다.</p>
+<ul>
+<li>date: 년, 월, 일</li>
+<li>time: 시, 분, 초, 마이크로초</li>
+<li>datetime 날짜, 시간</li>
+<li>timedelta: 날짜 및 시간 간격</li>
+</ul>
+<h2>date 클래스</h2>
+<p>datetime 모듈의 date 클래스는 day, month, year를 인자로 받으며, datetime.date 객체(date 객체)를 반환한다.
+<code>datetime.date(...)</code> 객체는 여러 속성을 제공한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+</span></span><span class="line"><span class="cl"><span class="n">halloween</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2019</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span> <span class="c1"># 객체</span>
+</span></span><span class="line"><span class="cl"><span class="n">halloween</span>
+</span></span><span class="line"><span class="cl"><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2019</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">halloween</span><span class="o">.</span><span class="n">day</span>
+</span></span><span class="line"><span class="cl"><span class="mi">31</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">halloween</span><span class="o">.</span><span class="n">month</span>
+</span></span><span class="line"><span class="cl"><span class="mi">10</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">halloween</span><span class="o">.</span><span class="n">year</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2019</span>
+</span></span></code></pre><h2>date 객체.isoformat() 메서드</h2>
+<p>date 객체는 isoformat() 메서드를 사용하여 <code>yyyy-mm-dd</code> 형식의 날짜를 출력할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+</span></span><span class="line"><span class="cl"><span class="n">halloween</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2019</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span> <span class="c1"># 객체</span>
+</span></span><span class="line"><span class="cl"><span class="n">halloween</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2019</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">31</span>
+</span></span></code></pre><h2>date 클래스.today() 메서드</h2>
+<p>date.today() 메서드는 오늘 날짜를 출력한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+</span></span><span class="line"><span class="cl"><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2019</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span></span></code></pre><h2>date 객체.weekday() 메서드</h2>
+<p>datetime.date 객체의 weekday() 메서드를 사용하면 해당 날짜에 대한 요일을 가져올 수 있다.
+weekday() 메서드에서는 0이 월요일이고, 6이 일요일이다.</p>
+<h2>date 객체.isoweekday() 메서드</h2>
+<p>isoweekday() 메서드에서는 1이 월요일이고, 7이 일요일이다.</p>
+<h2>timedelta 객체</h2>
+<p>datetime 모듈의 timedelta 객체를 사용하여 date 객체에 시간 간격을 더할 수 있다.
+날짜의 범위는 date.min 부터 date.max 까지다.
+결과적으로 천문학적인 날짜는 계산할 수 없다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">now</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">one_day</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">tomorrow</span> <span class="o">=</span> <span class="n">now</span> <span class="o">+</span> <span class="n">one_day</span>
+</span></span><span class="line"><span class="cl"><span class="n">tomorrow</span>
+</span></span><span class="line"><span class="cl"><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2019</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">now</span> <span class="o">+</span> <span class="mi">17</span> <span class="o">*</span> <span class="n">one_day</span>
+</span></span><span class="line"><span class="cl"><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2019</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">22</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">yesterday</span> <span class="o">=</span> <span class="n">now</span> <span class="o">-</span> <span class="n">one_day</span>
+</span></span><span class="line"><span class="cl"><span class="n">yesterday</span>
+</span></span><span class="line"><span class="cl"><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2019</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span></span></code></pre><h2>time 객체</h2>
+<p>datetime 모듈의 time 객체는 하루의 시간을 나타내는 데 사용된다.
+time 클래스는 인자로 hour, minute, second, microsecond 를 받고, <code>datetime.time</code> 객체(time 객체)를 반환한다.
+<code>datetime.time(...)</code> 객체는 여러 속성을 제공한다.
+만약, time 클래스의 인자를 입력하지 않으면 초기 인수는 0으로 간주된다.
+주의할 점은, 컴퓨터는 ms를 정확히 계산할 수 없다.
+ms 측정의 정확성은 hw와 os의 많은 요소에 따라 달라진다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">time</span>
+</span></span><span class="line"><span class="cl"><span class="n">noon</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># ms는 0으로 간주</span>
+</span></span><span class="line"><span class="cl"><span class="n">noon</span>
+</span></span><span class="line"><span class="cl"><span class="n">datetime</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">noon</span><span class="o">.</span><span class="n">hour</span>
+</span></span><span class="line"><span class="cl"><span class="mi">12</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">noon</span><span class="o">.</span><span class="n">minute</span>
+</span></span><span class="line"><span class="cl"><span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">noon</span><span class="o">.</span><span class="n">second</span>
+</span></span><span class="line"><span class="cl"><span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">noon</span><span class="o">.</span><span class="n">microsecond</span>
+</span></span><span class="line"><span class="cl"><span class="mi">0</span>
+</span></span></code></pre><h2>datetime 클래스</h2>
+<p>datetime 모듈의 datetime 객체는 날짜와 시간을 모두 포함한다.
+datetime 클래스는 인수로 year, month, day, hour, minute, second, microsecond 를 받으며,  datetime.datetime 객체(datetime 객체)를 반환한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+</span></span><span class="line"><span class="cl"><span class="n">some_day</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2019</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">some_day</span>
+</span></span><span class="line"><span class="cl"><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2019</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+</span></span></code></pre><h2>datetime 객체.isoformat() 메서드</h2>
+<p>datetime 객체에도 isoformat() 메서드가 있다.
+isoformat() 메서드의 결과값의 <code>T</code> 는 날짜와 시간을 구분한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+</span></span><span class="line"><span class="cl"><span class="n">some_day</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2019</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">some_day</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;2019-01-02T03:04:05.0000006&#39;</span>
+</span></span></code></pre><h2>datetime 클래스.now() 메서드</h2>
+<p>datetime 클래스의 now() 메서드로 현재 날짜와 시간을 얻을 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+</span></span><span class="line"><span class="cl"><span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">now</span>
+</span></span><span class="line"><span class="cl"><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2019</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">now</span><span class="o">.</span><span class="n">year</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2019</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">now</span><span class="o">.</span><span class="n">microsecond</span>
+</span></span><span class="line"><span class="cl"><span class="mi">580562</span>
+</span></span></code></pre><h2>datetime 클래스.combine() 메서드</h2>
+<p>datetime 클래스의 combine(date 객체, time 객체) 메서드로 date 객체와 time 객체를 datetime 객체로 병합할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">date</span> <span class="c1"># 한꺼번에 모듈을 불러올 수 있다</span>
+</span></span><span class="line"><span class="cl"><span class="n">noon</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">this_day</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">noon_today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">this_day</span><span class="p">,</span> <span class="n">noon</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">noon_today</span>
+</span></span><span class="line"><span class="cl"><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</span></span></code></pre><h2>time 모듈</h2>
+<p>datetime 모듈의 time 객체와 별도의 time 모듈이 존재한다.
+헷갈림을 주의해야 한다.</p>
+<p><strong>절대 시간을 나타내는 한 가지 방법은 어떤 시작점 이후 부터 초를 계속 세는 것이다.</strong>
+유닉스 시간은 1970년 1월 1일 자정(이 날짜는 유닉스가 탄생한 시점이다.) 이후 시간의 초를 사용한다.
+이 값을 에폭(epoch)이라 부르며, 에폭은 시스템 간의 날짜와 시간을 교환하는 아주 간단한 방식이다.
+에폭 값은 JavaScript와 같은 다른 시스템에서 날짜와 시간을 교환하기 위한 유용한 공통분모다.</p>
+<h2>time() 함수</h2>
+<p>time 모듈의 time() 함수는 현재 시간을 에폭 값으로 반환한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">now</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>
+</span></span></code></pre><p>1970년 1월 1일부터 현재까지 10억초가 넘는다.</p>
+<h2>ctime() 함수</h2>
+<p>time 모듈의 ctime() 함수를 사용하여 에폭 값을 문자열로 변환할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">now</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;Fri Apr 5 19:55:32 2019&#39;</span>
+</span></span></code></pre><h2>struct_time 객체</h2>
+<p><code>time.struct_time</code> 객체는 <code>time</code> 모듈에서 시간을 표현하기 위한 표준적인 데이터 구조이다.
+<code>gmtime()</code>, <code>localtime()</code>, <code>strptime()</code>과 같은 여러 <code>time</code> 모듈 함수들이 이 <code>struct_time</code> 객체를 반환한다.</p>
+<ul>
+<li><strong>튜플(Tuple)처럼 동작</strong>: <code>struct_time</code> 객체는 인덱스 번호를 통해 각 시간 요소에 접근할 수 있다.</li>
+<li><strong>객체(Object)처럼 동작</strong>: <code>struct_time</code> 객체는 점과 속성 이름을 통해 각 시간 요소에 더 명확하게 접근할 수 있다</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>인덱스</th>
+<th>속성 이름</th>
+<th>값의 범위</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>tm_year</td>
+<td>0000~9999</td>
+<td>년</td>
+</tr>
+<tr>
+<td>1</td>
+<td>tm_mon</td>
+<td>1~12</td>
+<td>월</td>
+</tr>
+<tr>
+<td>2</td>
+<td>tm_mday</td>
+<td>1~31</td>
+<td>일</td>
+</tr>
+<tr>
+<td>3</td>
+<td>tm_hour</td>
+<td>0~23</td>
+<td>시</td>
+</tr>
+<tr>
+<td>4</td>
+<td>tm_min</td>
+<td>0~59</td>
+<td>분</td>
+</tr>
+<tr>
+<td>5</td>
+<td>tm_sec</td>
+<td>0~59</td>
+<td>초</td>
+</tr>
+<tr>
+<td>6</td>
+<td>tm_wday</td>
+<td>0=월요일 ~ 6=일요일</td>
+<td>요일</td>
+</tr>
+<tr>
+<td>7</td>
+<td>tm_yday</td>
+<td>1~365</td>
+<td>년일자</td>
+</tr>
+<tr>
+<td>8</td>
+<td>tm_isdst</td>
+<td>0=아니오 1=예 -1=모름</td>
+<td>일광 시간 절약제</td>
+</tr>
+</tbody>
+</table>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">now</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">struct_time</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">now</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># 네임드 튜플 처럼 인덱스 사용 가능</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2019</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">now</span><span class="o">.</span><span class="n">time_year</span> <span class="c1"># 속성 가져오는 것처럼 값 접근 가능</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2019</span>
+</span></span></code></pre><h2>localtime() 메서드</h2>
+<p>time 모듈의 localtime() 메서드는 시간을 시스템의 표준 시간대로 반환하며, time 모듈의 struct_time 객체로서 반환한다.</p>
+<blockquote>
+<p>참고로, 표준 시간대 대신 UTC를 사용하는 것을 추천한다.
+일광 절약 시간은 사용하지 않는 것이 좋다.</p>
+</blockquote>
+<p>localtime() 메서드는 인자로 에폭 값을 받을 수 있으며, 인자가 주어진 경우에는 주어진 에폭 값을 struct_time 객체로서 반환하게 된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">now</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">struct_time</span><span class="p">(</span><span class="n">tm_year</span><span class="o">...</span><span class="p">)</span>
+</span></span></code></pre><p>만약 localtime() 메서드의 인자가 제공되지 않거나 <code>None</code>이라면 <code>time.localtime(time.time())</code>과 동일하게 동작한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">struct_time</span><span class="p">(</span><span class="n">tm_year</span><span class="o">...</span><span class="p">)</span>
+</span></span></code></pre><h2>gmtime() 메서드</h2>
+<p>time 모듈의 gmtime() 메서드는 시간을 UTC로 반환하며, time 모듈의 struct_time 객체로서 반환한다.</p>
+<p>gmtime() 메서드는 인자로 에폭 값을 받을 수 있으며, 인자가 주어진 경우에는 주어진 에폭 값을 struct_time 객체로서 반환하게 된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">gmtime</span><span class="p">(</span><span class="n">now</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">struct_time</span><span class="p">(</span><span class="n">tm_year</span><span class="o">...</span><span class="p">)</span>
+</span></span></code></pre><p>만약 gmtime() 메서드의 인자가 제공되지 않거나 <code>None</code>이라면 <code>time.localtime(time.time())</code>과 동일하게 동작한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">gmtime</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">struct_time</span><span class="p">(</span><span class="n">tm_year</span><span class="o">...</span><span class="p">)</span>
+</span></span></code></pre><h2>mktime() 메서드</h2>
+<p>time 모듈의 mktime() 메서드는 struct_time 객체를 에폭 초로 변환한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">tm</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">now</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">tm</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>
+</span></span></code></pre><p>이 값은 now() 의 에폭 값과 정확하게 일치하지 않는다.
+struct_time 객체는 시간을 초까지만 유지하기 때문이다.</p>
+<h2>strftime() 메서드, 함수</h2>
+<p>strftime() 는 날짜와 시간을 특정 포맷 문자열의 형태로 출력할 수 있다.
+strftime() 메서드는 datetime, date, time 객체에서 제공된다.
+strftime() 함수는 time 모듈에서 제공된다.
+strftime() 메서드, 함수는 문자열의 출력 포맷을 지정할 수 있다.
+먼저 포맷 문자열 <code>fmt</code> 을 정의하고, 이를 사용하자.
+숫자는 자릿수에 맞춰 왼쪽에 0이 채워진다.</p>
+<table>
+<thead>
+<tr>
+<th>문자열 포맷</th>
+<th>날짜/시간 단위</th>
+<th>범위</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%Y</td>
+<td>년</td>
+<td>1900-...</td>
+</tr>
+<tr>
+<td>%m</td>
+<td>월</td>
+<td>01-12</td>
+</tr>
+<tr>
+<td>%B</td>
+<td>월 이름</td>
+<td>January, ...</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>월 축약 이름</td>
+<td>Jan, ...</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>울의 일자</td>
+<td>01-31</td>
+</tr>
+<tr>
+<td>%A</td>
+<td>요일 이름</td>
+<td>Sunday, ...</td>
+</tr>
+<tr>
+<td>%a</td>
+<td>요일 축약 이름</td>
+<td>Sun, ...</td>
+</tr>
+<tr>
+<td>%H</td>
+<td>24시간</td>
+<td>00-23</td>
+</tr>
+<tr>
+<td>%I</td>
+<td>12시간</td>
+<td>01-12</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>오전/오후</td>
+<td>AM, PM</td>
+</tr>
+<tr>
+<td>%M</td>
+<td>분</td>
+<td>00-59</td>
+</tr>
+<tr>
+<td>%S</td>
+<td>초</td>
+<td>00-59</td>
+</tr>
+<tr>
+<td>이런 특정 포맷을 '형식 지시어'라고 부른다.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>참고로, 이 형식 지시어들은 Python에서만 사용하는 것이 아니라, C 언어 라이브러리에서 유래한 <strong>ISO C89 표준</strong>에 기반하고 있다.</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>time 모듈의 strftime() 함수는 struct_time 객체를 포맷 문자열로서 출력한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="n">fmt</span> <span class="o">=</span> <span class="s2">&#34;It&#39;s %A, %B </span><span class="si">%d</span><span class="s2">, %Y, local time %I:%M:%S%p&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;It&#39;s Wednesday, March 13, 2019, local time 03:23:46PM&#34;</span>
+</span></span></code></pre><p>만약 date 객체에 사용하면, 날짜 부분만 변환되게 된다.
+그리고 시간은 기본값으로 지정된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+</span></span><span class="line"><span class="cl"><span class="n">some_day</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2019</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">fmt</span> <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&#34;It&#39;s %A, %B </span><span class="si">%d</span><span class="s2">, %Y, local time %I:%M:%S%p&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">some_day</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;It&#39;s Thursday, July 04, 2019, local time 12:00:00AM&#34;</span>
+</span></span></code></pre><p>time 객체는 시간 부분만 변환한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">time</span>
+</span></span><span class="line"><span class="cl"><span class="n">some_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">fmt</span> <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&#34;It&#39;s %A, %B </span><span class="si">%d</span><span class="s2">, %Y, local time %I:%M:%S%p&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">some_time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;It&#39;s Monday, January 01, 1900, local time 10:35:00AM&#34;</span>
+</span></span></code></pre><h2>strptime()</h2>
+<p>time 모듈의 strptime() 함수를 사용하여 특정 포맷 형태의 문자열을 날짜/시간을 담은 time.struct_time 객체로 반환한다.
+특정 포맷 형태의 문자열은 strftime() 에서 사용하는 포맷 문자열이다.
+특정 포맷 형태는 사용자가 임의로 지정할 수 있다.
+인자로 전달하는 문자열은 특정 포맷 형태에 맞게 전달되어야 한다.
+만약 문자열이 특정 포맷 형태가 아닌데 strptime() 함수의 인자로 전달시, 예외가 발생한다.
+문자열 포맷은 맞는데, 값 범위가 벗어나면 예외가 발생한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="n">fmt</span> <span class="o">=</span> <span class="s2">&#34;%Y-%m-</span><span class="si">%d</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&#34;2019-01-19&#34;</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">struct_time</span><span class="p">(</span><span class="n">tm_year</span><span class="o">...</span><span class="p">)</span>
+</span></span></code></pre><p>만약 문자열이 특정 포맷 형태가 아닌데 strptime() 함수의 인자로 전달시, 예외가 발생한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="n">fmt</span> <span class="o">=</span> <span class="s2">&#34;%Y-%m-</span><span class="si">%d</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&#34;2019 01 19&#34;</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Traceback</span><span class="o">...</span>
+</span></span></code></pre><p>위의 경우 특정 포맷 형태를 만약 수정하면 해결된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="n">fmt</span> <span class="o">=</span> <span class="s2">&#34;%Y %m </span><span class="si">%d</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&#34;2019 01 19&#34;</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">struct_time</span><span class="p">(</span><span class="n">tm_year</span><span class="o">...</span><span class="p">)</span>
+</span></span></code></pre><p>문자열 포맷은 맞는데, 값 범위가 벗어나면 예외가 발생한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="n">fmt</span> <span class="o">=</span> <span class="s2">&#34;%Y-%m-</span><span class="si">%d</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">time</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s2">&#34;2019-13-19&#34;</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Traceback</span><span class="o">...</span>
+</span></span></code></pre><h2>형식 지시어 로케일</h2>
+<table>
+<thead>
+<tr>
+<th>문자열 포맷</th>
+<th>날짜/시간 단위</th>
+<th>범위</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%Y</td>
+<td>년</td>
+<td>1900-...</td>
+</tr>
+<tr>
+<td>%m</td>
+<td>월</td>
+<td>01-12</td>
+</tr>
+<tr>
+<td>%B</td>
+<td>월 이름</td>
+<td>January, ...</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>월 축약 이름</td>
+<td>Jan, ...</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>울의 일자</td>
+<td>01-31</td>
+</tr>
+<tr>
+<td>%A</td>
+<td>요일 이름</td>
+<td>Sunday, ...</td>
+</tr>
+<tr>
+<td>%a</td>
+<td>요일 축약 이름</td>
+<td>Sun, ...</td>
+</tr>
+<tr>
+<td>%H</td>
+<td>24시간</td>
+<td>00-23</td>
+</tr>
+<tr>
+<td>%I</td>
+<td>12시간</td>
+<td>01-12</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>오전/오후</td>
+<td>AM, PM</td>
+</tr>
+<tr>
+<td>%M</td>
+<td>분</td>
+<td>00-59</td>
+</tr>
+<tr>
+<td>%S</td>
+<td>초</td>
+<td>00-59</td>
+</tr>
+<tr>
+<td>형식 지시어가 만들어내는 결과 문자열은 운영체제의 국제화 설정인 로케일(locale)에 따라 다르다.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>다른 월, 일의 이름을 출력하려면 setlocale() 을 사용하여 로케일을 바꿔야 한다.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>setlocale() 의 첫 번째 인수는 날짜와 시간을 위한 locale.LC_TIME 이고, 두 번째 인수는 언어와 국가 약어가 결합된 문자열이다.</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">locale</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+</span></span><span class="line"><span class="cl"><span class="n">halloween</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2019</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">lang_country</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;en_us, &#39;</span><span class="n">fr_fr</span><span class="s1">&#39;, &#39;</span><span class="n">de_de</span><span class="s1">&#39;, &#39;</span><span class="n">es_es</span><span class="s1">&#39;, &#39;</span><span class="n">is_is</span><span class="s1">&#39;]:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_TIME</span><span class="p">,</span> <span class="n">lang_country</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="n">halloween</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%A, %B </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span></code></pre><p><code>lang_country</code> 값은</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">locale</span>
+</span></span><span class="line"><span class="cl"><span class="n">locale</span><span class="o">.</span><span class="n">locale_alias</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</span></span></code></pre><p>에서 찾을 수 있다.</p>
+<h2>시간 모듈 변환</h2>
+<p><img src="/assets/introduce-python-calc.png" alt="시간 상호 변환 요약도">
+이는 시간 상호 변환 요약도이다.</p>
+<h2>대체 모듈</h2>
+<ul>
+<li>arrow</li>
+<li>dateutil</li>
+<li>iso8601</li>
+<li>fleming</li>
+<li>maya</li>
+<li>dateinfer</li>
+</ul>
+</article>
+                </div>
+            </main>
+
+            <footer class="post-footer">
+                <section>
+                    <p>&copy; 2025 Cha Haneum</p>
+                </section>
+                <section>
+                    <a href="https://github.com/chebread">
+                        <span>깃허브</span>
+                    </a>
+                    <a href="">
+                        <span>이메일</span>
+                    </a>
+                </section>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

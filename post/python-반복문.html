@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>[Python] 반복문 | 차한음 블로그</title>
+    <meta name="description" content="반복문 코드를 한 번 이상 실행하려고 할 때 반복문(loop)가 필요하다.파이썬은 두 개의 반복문 while과 for이 있다. while문 while 조건: ... 형태로 쓰며, ...">
+    <meta name="author" content="차한음">
+    <link rel="canonical" href="https://chebread.github.io/">
+
+    <meta property="og:title" content="[Python] 반복문 | 차한음 블로그">
+    <meta property="og:description" content="반복문 코드를 한 번 이상 실행하려고 할 때 반복문(loop)가 필요하다.파이썬은 두 개의 반복문 while과 for이 있다. while문 while 조건: ... 형태로 쓰며, ...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://chebread.github.io/post/python-반복문">
+    <meta property="og:site_name" content="차한음 블로그">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="[Python] 반복문 | 차한음 블로그">
+    <meta name="twitter:description" content="반복문 코드를 한 번 이상 실행하려고 할 때 반복문(loop)가 필요하다.파이썬은 두 개의 반복문 while과 for이 있다. while문 while 조건: ... 형태로 쓰며, ...">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[Python] 반복문 | 차한음 블로그",
+        "author": {
+            "@type": "Person",
+            "name": "차한음"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "차한음",
+        },
+        "datePublished": "2025-05-06",
+        "description": "반복문 코드를 한 번 이상 실행하려고 할 때 반복문(loop)가 필요하다.파이썬은 두 개의 반복문 while과 for이 있다. while문 while 조건: ... 형태로 쓰며, ..."
+    }
+    </script>
+
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/color-palette.css">
+    <link rel="stylesheet" href="/styles/chroma.css">
+
+    <link rel="stylesheet" href="/styles/github-markdown.css">
+    <link rel="stylesheet" href="/styles/post.css">
+
+    <link rel="icon" href="/favicons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png">
+</head>
+<body>
+    <div class="root">
+        <div class="post">
+           <nav class="post-nav">
+                <a href="/" class="">
+                    <span>홈</span>
+                </a>
+                <a href="/about" class="">
+                    <span>어바웃</span>
+                </a>
+                <a href="/posts" class="active">
+                    <span>포스트</span>
+                </a>
+            </nav>
+            
+            <main class="post-content">
+                <header class="post-header">
+                    <h1 class="post-title">[Python] 반복문</h1>
+                    <p class="post-date"><time datetime="2025-05-06">2025년 05월 06일</time></p>
+                    <p class="post-category"><a href="/posts/python-%eb%ac%b8%eb%b2%95-%ec%a0%95%eb%a6%ac">[Python 문법 정리]</a></p>
+                </header>
+                <div class="post-body">
+                    <article class="markdown-body"><h2>반복문</h2>
+<p>코드를 한 번 이상 실행하려고 할 때 반복문(loop)가 필요하다.
+파이썬은 두 개의 반복문 while과 for이 있다.</p>
+<h2>while문</h2>
+<p><code>while 조건: ...</code> 형태로 쓰며, 조건이 참이면 while문을 실행하고, 조건이 거짓이면 while문이 종료된다.
+while 문이 종료되면 그 다음 줄이 실행된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># count++ 같이 증감 연산자는 파이썬에서 없다.</span>
+</span></span></code></pre><h2>while문 break</h2>
+<p>while문에서 break를 사용하면 while문을 중단하여 탈출할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">stuff</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="n">stuff</span> <span class="o">==</span> <span class="s1">&#39;q&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="k">break</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">stuff</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span>
+</span></span></code></pre><h2>while문 continue</h2>
+<p>다음 반복으로 즉시 건너뛸 때 continue를 사용한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">value</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;q&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="k">break</span>
+</span></span><span class="line"><span class="cl">	<span class="n">number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="c1"># 짝수</span>
+</span></span><span class="line"><span class="cl">		<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="s2">&#34;squared is&#34;</span><span class="p">,</span> <span class="n">number</span> <span class="o">*</span> <span class="n">number</span><span class="p">)</span>
+</span></span></code></pre><h2>while-else문</h2>
+<p>while 문을 작성하고, 그 아래에 else 문을 작성할 수 있다.
+반복문이 break를 쓰지 않고 자연스럽게 종료됬다면 else문이 실행된다.
+반복문이 break에 의해 종료되었다면 else문이 실행되지 않는다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">countdown</span> <span class="o">=</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="k">while</span> <span class="n">countdown</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>     <span class="nb">print</span><span class="p">(</span><span class="n">countdown</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>     <span class="n">countdown</span> <span class="o">-=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>     <span class="k">if</span> <span class="nb">input</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;중단&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>         <span class="k">break</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;발사!&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> 
+</span></span><span class="line"><span class="cl"><span class="mi">5</span>
+</span></span><span class="line"><span class="cl"><span class="mi">4</span>
+</span></span><span class="line"><span class="cl"><span class="mi">3</span>
+</span></span><span class="line"><span class="cl"><span class="n">중단</span>
+</span></span></code></pre><p>else문은 break 문에 의해 반복문이 중단되지 않고 모든 항목을 순회했는지 확인할 때 유용하다.</p>
+<p>while 문을 무언가를 찾는 것으로 생각하고, 찾지 못했다면 else문이 호출된다고 생각하면 좀 더 이해하기 쉬울 것이다.</p>
+<h2>for (in) 문</h2>
+<p>파이썬에서 이터레이터(iterator)는 유용하게 자주 쓰인다.
+이터레이터는 자료구조를 순회할 수 있도록 해준다.
+이터레이터는 데이터가 메모리에 맞지 않더라도 데이터 스트림을 처리할 수 있도록 허용해준다. =&gt; 터레이터가 모든 데이터를 한 번에 메모리에 올리지 않고, 필요할 때마다(요청할 때마다) 하나씩 값을 생성해서 반환한다는 뜻</p>
+<p>일단, 문자열을 순회하는 방법만 살펴보자.</p>
+<p>for (in) 문으로 문자열을 쉽게 순회할 수 있다.</p>
+<p>for (in) 문은 <code>for 변수 in 리스트(또는 튜플, 문자열): ...</code> 형태이다.</p>
+<p>for in 문이라고 부르는 이유는, 항상 for 문은 in을 사용하기 때문이다.</p>
+<p>그러나 for 문에서 활용되는 in은 맴버십 연산자가 아니다.</p>
+<p>for문에서의 in은 단순히 멤버십 연산자처럼 True/False를 반환하는 게 아니다.</p>
+<p><strong><code>for x in a:</code> 라고 작성하게 되면, &quot;a의 모든 요소를 하나씩 x에 대입하며 반복한다&quot;는 특별한 의미로 작동하게 된다.</strong></p>
+<p><strong>문법적으로는 같은 in 이지만, for 문에서는 반복을 위한 키워드로 쓰이는 것이다.</strong></p>
+<p><code>in</code> 좌변에 오는 변수에 <code>in</code> 우변에 오는 변수의 각 요소가 전달되어 for in 반복문 내부에서 해당 변수가 활용된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">word</span> <span class="o">=</span> <span class="s2">&#34;abcd&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span>
+</span></span><span class="line"><span class="cl"><span class="n">c</span>
+</span></span><span class="line"><span class="cl"><span class="n">d</span>
+</span></span></code></pre><p>이것은 while 문으로는 이렇게 나타낸다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">word</span> <span class="o">=</span> <span class="s2">&#34;abcd&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="n">offset</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">	<span class="n">offset</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span>
+</span></span><span class="line"><span class="cl"><span class="n">c</span>
+</span></span><span class="line"><span class="cl"><span class="n">d</span>
+</span></span></code></pre><p>while 문 보다는 for in 문의 방법이 더 파이써닉한 방법이다.</p>
+<h2>for 문 break</h2>
+<p>break 문을 사용하여 for 문을 중단할 수 있다.</p>
+<h2>for 문 continue</h2>
+<p>continue 문을 사용하여 for 문을 다음 반복으로 즉시 건너뛸 수 있다.</p>
+<h2>for-else 문</h2>
+<p>for 문을 작성하고, 그 아래에 else 문을 작성할 수 있다.
+반복문이 break를 쓰지 않고 자연스럽게 종료됬다면 else문이 실행된다.
+반복문이 break에 의해 종료되었다면 else문이 실행되지 않는다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>     <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;리스트의 원소를 모두 출력했어요&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> 
+</span></span><span class="line"><span class="cl"><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="mi">3</span>
+</span></span><span class="line"><span class="cl"><span class="mi">4</span>
+</span></span><span class="line"><span class="cl"><span class="n">리스트의</span> <span class="n">원소를</span> <span class="n">모두</span> <span class="n">출력했어요</span>
+</span></span></code></pre><p>else문은 break 문에 의해 반복문이 중단되지 않고 모든 항목을 순회했는지 확인할 때 유용하다.</p>
+<p>for 문을 무언가를 찾는 것으로 생각하고, 찾지 못했다면 else문이 호출된다고 생각하면 좀 더 이해하기 쉬울 것이다.</p>
+<h2>range() 함수</h2>
+<p><code>range(start, stop, step)</code> 의 형태로 숫자 시퀀스를 생성할 수 있다.</p>
+<p>range() 함수는 순회 가능한(이터러블) 객체를 반환한다.</p>
+<blockquote>
+<p>range() 함수의 반환값이 이터러블이라서, list(range(...)) 하면 리스트가 생성되는 거다.</p>
+</blockquote>
+<p>start, start + step, start + step + step, ... 처럼 step 만큼 start에 더해져서 stop과 더해진 값이 같아지면 중단하고, start 부터 stop과 같아지기 직전의 step이 더해진 값 까지를 숫자 시퀀스로 반환한다.</p>
+<blockquote>
+<p>range() 함수를 &quot;특정 구간의 숫자의 범위를 만들어주는 함수&quot;라고 이해하는 것보다, &quot;start 부터 step을 계속 더해가서 stop 까지 간 시퀀스 값을 반환하는 함수&quot;라고 이해하는 것이 낫다.</p>
+</blockquote>
+<p>start == stop 이면 빈 시퀀스 반환한다.
+start &gt; stop이고 step &gt; 0 이면 빈 시퀀스 반환한다.
+step = 0 이면 예외가 발생한다.
+start를 생략시 0으로 취급된다.
+step을 생략시 1으로 취급된다.</p>
+<p><strong>start &gt; 0 이면 start ~ stop - 1 까지, step은 1 이상</strong>
+<strong>start &lt;= 0 이면 start ~ stop + 1 까지, step은 1 이하</strong></p>
+<p>range(2, -1, 1) 이면 2, 2 + 1, 2 + 1 + 1, 2 + 1 + 1 + 1, ... 이렇게 계속해서 step 만큼 더해져도 stop 까지 가지를 못한다.
+그래서 start &gt; stop 이면 step은 음수여야 한다는 것이다.
+range(2, -1, -1) 이면 2, 2 - 1, 2 - 1 - 1, ... 이렇게 계속해서 step 만큼 더해지면 stop(-1) 까지 갈 수 있다.</p>
+<p>step이 꼭 1 or -1일 필요는 없다.
+step이 2면 2씩 더해지는 거고, -2면 -2씩 더해지는 거다.</p>
+</article>
+                </div>
+            </main>
+
+            <footer class="post-footer">
+                <section>
+                    <p>&copy; 2025 Cha Haneum</p>
+                </section>
+                <section>
+                    <a href="https://github.com/chebread">
+                        <span>깃허브</span>
+                    </a>
+                    <a href="">
+                        <span>이메일</span>
+                    </a>
+                </section>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>[Python] 함수 | 차한음 블로그</title>
+    <meta name="description" content="함수 코드 재사용을 위해 함수를 사용한다. 함수는 이름이 붙여진 코드 조각이다. 코드 스니펫(Code Snipet) 또는 코드 조각은 재사용 가능한 소스 코드, 기계어, 텍스트의 ...">
+    <meta name="author" content="차한음">
+    <link rel="canonical" href="https://chebread.github.io/">
+
+    <meta property="og:title" content="[Python] 함수 | 차한음 블로그">
+    <meta property="og:description" content="함수 코드 재사용을 위해 함수를 사용한다. 함수는 이름이 붙여진 코드 조각이다. 코드 스니펫(Code Snipet) 또는 코드 조각은 재사용 가능한 소스 코드, 기계어, 텍스트의 ...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://chebread.github.io/post/python-함수">
+    <meta property="og:site_name" content="차한음 블로그">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="[Python] 함수 | 차한음 블로그">
+    <meta name="twitter:description" content="함수 코드 재사용을 위해 함수를 사용한다. 함수는 이름이 붙여진 코드 조각이다. 코드 스니펫(Code Snipet) 또는 코드 조각은 재사용 가능한 소스 코드, 기계어, 텍스트의 ...">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[Python] 함수 | 차한음 블로그",
+        "author": {
+            "@type": "Person",
+            "name": "차한음"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "차한음",
+        },
+        "datePublished": "2025-05-11",
+        "description": "함수 코드 재사용을 위해 함수를 사용한다. 함수는 이름이 붙여진 코드 조각이다. 코드 스니펫(Code Snipet) 또는 코드 조각은 재사용 가능한 소스 코드, 기계어, 텍스트의 ..."
+    }
+    </script>
+
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/color-palette.css">
+    <link rel="stylesheet" href="/styles/chroma.css">
+
+    <link rel="stylesheet" href="/styles/github-markdown.css">
+    <link rel="stylesheet" href="/styles/post.css">
+
+    <link rel="icon" href="/favicons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png">
+</head>
+<body>
+    <div class="root">
+        <div class="post">
+           <nav class="post-nav">
+                <a href="/" class="">
+                    <span>홈</span>
+                </a>
+                <a href="/about" class="">
+                    <span>어바웃</span>
+                </a>
+                <a href="/posts" class="active">
+                    <span>포스트</span>
+                </a>
+            </nav>
+            
+            <main class="post-content">
+                <header class="post-header">
+                    <h1 class="post-title">[Python] 함수</h1>
+                    <p class="post-date"><time datetime="2025-05-11">2025년 05월 11일</time></p>
+                    <p class="post-category"><a href="/posts/python-%eb%ac%b8%eb%b2%95-%ec%a0%95%eb%a6%ac">[Python 문법 정리]</a></p>
+                </header>
+                <div class="post-body">
+                    <article class="markdown-body"><h2>함수</h2>
+<p>코드 재사용을 위해 함수를 사용한다.</p>
+<p>함수는 이름이 붙여진 코드 조각이다.</p>
+<p>코드 스니펫(Code Snipet) 또는 코드 조각은 재사용 가능한 소스 코드, 기계어, 텍스트의 작은 부분을 의미한다.</p>
+<p>함수를 사용하여 코드를 재사용할 수 있게 해줌으로써, 반복 타이핑을 회피할 수 있게 도와준다.</p>
+<p>함수는 입력 매개변수로 모든 타입을 취할 수 있다.
+함수는 모든 타입을 반환할 수 있다.</p>
+<p>함수는 두 가지 작업을 수행한다.</p>
+<ul>
+<li>정의하기(define): 0개 이상의 매개변수를 갖는다.</li>
+<li>호출하기(call): 0개 이상의 결과를 얻는다.</li>
+</ul>
+<p>피호출함수(callee)란 호출된 함수를 말한다.
+호출자(caller)란 함수를 호출한 쪽을 의미한다.</p>
+<h2>반환</h2>
+<p>반환한다는 것은 함수가 호출자에게 값을 돌려주는 것(반환하는 것)을 의미한다.
+함수는 <code>return</code> 문을 사용하여 값을 반환한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl"><span class="n">n</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="c1"># 7</span>
+</span></span></code></pre><h2>함수 변수 자체 출력</h2>
+<p>함수 객체 <code>a</code>를 print()하면 → <code>a.__repr__()</code> 결과가 출력된다.
+<code>a.__repr__()</code>는   함수 객체 <code>a</code>를 개발자에게 보여줄 용도로 문자열로 표현해주는 함수이다.
+<code>print(a)</code>는 사실상 내부적으로 <code>repr(a)</code> 또는 <code>a.__repr__()</code>을 호출해서 출력한다.</p>
+<h2>함수 정의하기: def</h2>
+<p>파이썬 함수는 <code>def 함수 이름():</code> 으로 정의한다.
+괄호 안에는 옵션으로 매개변수(parameter)를 입력할 수 있다.
+매개변수는 꼭 괄호 안에 지정해야 한다. 이때의 괄호는 생략해선 안된다.
+함수 이름은 변수 이름과 동일한 규칙으로 작성한다.</p>
+<p>매개변수가 없는 함수를 정의하고 호출해보자.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">do_nothing</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">	<span class="k">pass</span>
+</span></span></code></pre><p>pass문은 코드는 필요하지만, 아무 작업도 하지 않기를 원할 때 사용한다.
+나중에 코드를 추가 할 계획이거나 , 예외가 발생했을 때 처리하되, 아무 수행을 하지 않고 무시하는 데 사용할 수 있다.</p>
+<h2>함수 호출하기: ()</h2>
+<p>함수 이름과 괄호를 입력해서 함수를 호출할 수 있다.</p>
+<p>매개변수가 없는 함수를 정의하고 호출해보자.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">make_a_sound</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;quack&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">make_a_sound</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;quack&#39;</span>
+</span></span></code></pre><p>make_a_sound() 함수를 호출하면 파이썬은 함수 내의 코드를 실행한다.</p>
+<p>매개변수는 없지만 True를 반환하는 함수를 정의해보자.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">agree</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="kc">True</span>
+</span></span></code></pre><p><strong>if 문에서 이 agree() 함수를 호출하여 반환되는 값으로 조건 테스트를 할 수 있다.</strong></p>
+<p><strong>함수를 조건문과 반복문의 조건 부분에 사용한다면, 이전에 못했던 많은 일을 수행할 수 있다.</strong></p>
+<h2>인수와 매개변수</h2>
+<p>함수로 전달한 값을 인수(argument) 또는 인자(argument)라고 부른다.
+인수는 함수를 호출할 때 전달하는 값이다.
+인수는 함수 호출부의 전달값이다.</p>
+<p>함수 외부에서는 인수라고 하지만 내부에서는 매개변수(parameter)라고 한다.
+매개변수는 함수를 정의할 때 외부로부터 값을 받는 변수이다.
+매개변수는 함수 선언부의 변수이다.</p>
+<p><strong>즉, 인수(매개변수)는 함수에서 사용되는 변수이다.</strong></p>
+<p>인수의 값은 함수 내부에서 해당하는 매개변수에 복사된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="o">...</span>
+</span></span><span class="line"><span class="cl">	<span class="c1"># 여기서 arg는 매개변수다</span>
+</span></span><span class="line"><span class="cl"><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># 여기서 3은 인수다</span>
+</span></span></code></pre><p>함수의 인수는 개수에 상관없이 모든 유형의 인수를 취할 수 있다.
+반환값도 마찬가지로 개수에 상관없이 모든 유형을 반환할 수 있다.</p>
+<p><strong>함수가 명시적으로 return을 호출하지 않으면, 호출자는 반환값으로 None을 얻는다.</strong></p>
+<h2>유용한 None</h2>
+<p><code>None</code> 은 아무것도 없다는 것을 뜻하는 파이썬의 특별한 값이다.
+불리언 값의 False 처럼 보이지만 다른 값을 의미한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">thing</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">thing</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">0</span>
+</span></span></code></pre><p><strong>is 연산자를 사용하여 해당 값이 None인지를 알 수 있다.</strong>
+<code>is</code> 연산자는 두 개의 객체가 메모리 상에서 같은 위치에 있는지 확인할 때 사용하는 연산자이다.
+ <code>True</code>, <code>False</code>, <code>None</code>과 비교할 때는 <code>is</code> 연산자를 쓰도록 권고한다.
+ 왜냐하면 이 3개의 특수 객체는 항상 고정된 메모리 주소를 갖기 때문이다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">thing</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">thing</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">1</span>
+</span></span></code></pre><p>None은 빈 값을 구분하기 위해서 사용한다.
+<strong>정수 0, 부동소수점 0.0, 빈 문자열, 빈 리스트, 빈 튜플, 빈 딕셔너리, 빈 셋은 모두 False만, None은 아니다라는 것을 꼭 기억하자.</strong></p>
+<h2>위치 인수(positional argument)</h2>
+<p>위치 인수란 전달 받은 값을 순서대로 상응하는 매개변수에 복사하는 것이다.
+위치 인수의 단점은 각 위치의 의미(역할)을 알고 있어야 한다는 것이다.
+위치가 달라지면 이상한 결과가 도출될 수도 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">menu</span><span class="p">(</span><span class="n">wine</span><span class="p">,</span> <span class="n">entree</span><span class="p">,</span> <span class="n">dessert</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="p">{</span> <span class="s1">&#39;wine&#39;</span><span class="p">:</span> <span class="n">wine</span><span class="p">,</span> <span class="s1">&#39;entree&#39;</span><span class="p">:</span> <span class="n">entree</span><span class="p">,</span> <span class="s1">&#39;dessert&#39;</span><span class="p">:</span> <span class="n">dessert</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">menu</span><span class="p">(</span><span class="s2">&#34;chardonnay&#39;, &#39;chicken&#39;, &#39;cake&#39;)</span>
+</span></span></code></pre><h2>키워드 인수(keyword argument)</h2>
+<p>위치 인수의 혼란을 피하기 위해 매개변수에 상응하는 이름을 인수에 지정할 수 있다.
+인수를 함수에 정의된 인수의 순서와 다르게 지정할 수도 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">menu</span><span class="p">(</span><span class="n">wine</span><span class="p">,</span> <span class="n">entree</span><span class="p">,</span> <span class="n">dessert</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="p">{</span> <span class="s1">&#39;wine&#39;</span><span class="p">:</span> <span class="n">wine</span><span class="p">,</span> <span class="s1">&#39;entree&#39;</span><span class="p">:</span> <span class="n">entree</span><span class="p">,</span> <span class="s1">&#39;dessert&#39;</span><span class="p">:</span> <span class="n">dessert</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">menu</span><span class="p">(</span><span class="n">dessert</span><span class="o">=</span><span class="s2">&#34;bagel&#39;, wine=&#34;</span><span class="n">bordeaux</span><span class="s2">&#34;, entree=&#34;</span><span class="n">beef</span><span class="s2">&#34;)</span>
+</span></span></code></pre><p>위치 인수와 키워드 인수를 섞어서 사용할 수도 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">menu</span><span class="p">(</span><span class="s1">&#39;frontenac&#39;</span><span class="p">,</span> <span class="n">dessert</span><span class="o">=</span><span class="s2">&#34;flan&#34;</span><span class="p">,</span> <span class="n">entree</span><span class="o">=</span><span class="s2">&#34;fist&#34;</span><span class="p">)</span>
+</span></span></code></pre><p>wine을 첫 번째 인수로, entree와 dessert를 키워드 인수로 지정했다.</p>
+<p><strong>단, 위치 인수와 키워드 인수를 함께 사용하여 함수를 호출하려면 위치 인수를 먼저 사용해야 한다.</strong></p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">menu</span><span class="p">(</span><span class="n">dessert</span><span class="o">=</span><span class="s2">&#34;flan&#34;</span><span class="p">,</span> <span class="n">entree</span><span class="o">=</span><span class="s2">&#34;fist&#34;</span><span class="p">,</span> <span class="s1">&#39;frontenac&#39;</span><span class="p">)</span>
+</span></span></code></pre><p>이렇게 사용하면 에러가 난다.
+오직,</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">menu</span><span class="p">(</span><span class="s1">&#39;frontenac&#39;</span><span class="p">,</span> <span class="n">dessert</span><span class="o">=</span><span class="s2">&#34;flan&#34;</span><span class="p">,</span> <span class="n">entree</span><span class="o">=</span><span class="s2">&#34;fist&#34;</span><span class="p">)</span>
+</span></span></code></pre><p>이렇게 위치 인수 먼저 와야 한다.</p>
+<h2>기본 매개변수 값 지정하기</h2>
+<p>함수를 정의할 때 매개변수에 기본값을 지정할 수 있다.
+호출자가 대응하는 인수를 제공하지 않으면 기본값을 사용한다.
+호출자가 대응하는 인수를 제공하면 입력한 인수를 사용한다.
+주의할 점은, 기본 인수는 함수가 실행될 때 계산되지 않고, 함수를 정의할 때 계산된다.
+즉, 함수의 정의시에만 변수를 만들어서 해당 변수를 계속하여 실행할때마다 재사용하는 거다. 즉 &quot;기본 인수는 함수가 실행될 때 계산되지 않고, 함수를 정의할 때 계산된다.&quot;는 거다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">menu</span><span class="p">(</span><span class="n">wine</span><span class="p">,</span> <span class="n">entree</span><span class="p">,</span> <span class="n">dessert</span><span class="o">=</span><span class="s2">&#34;pudding&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">menu</span><span class="p">(</span><span class="s1">&#39;chardonnay&#39;</span><span class="p">,</span> <span class="s1">&#39;chicken&#39;</span><span class="p">)</span> <span class="c1"># dessert=&#34;pudding&#34; 이 기본인수로 쓰임</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">menu</span><span class="p">(</span><span class="s1">&#39;duckelfelder&#39;</span><span class="p">,</span> <span class="s1">&#39;duck&#39;</span><span class="p">,</span> <span class="s1">&#39;doughnut&#39;</span><span class="p">)</span> <span class="c1"># dessert=&#34;doughnut&#34; 가 인수로 쓰임</span>
+</span></span></code></pre><pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">buggy</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="p">[]):</span>
+</span></span><span class="line"><span class="cl">	<span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">buggy</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">buggy</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]</span>
+</span></span></code></pre><p>이게 왜 그런 것이냐면,
+buggy 함수를 정의할 때 (선언할 때) result 변수를 이 함수 내부에 저장하는 거다.
+즉, result 변수는 buggy 함수를 실행할 때 마다 result가 []로 초기화 되는게 아니고,
+그냥 정의할 때만 result = <code>[]</code>로 정의되는 거다.
+그래서 다시는 실행할때마다 해당 변수가 <code>result = []</code>로 정의되지 않는다.
+한 번만, 정의될 때 그때만 해당 result 매개변수는 저장된다.
+그래서 buggy('a') 하면 result에는 a가 추가된다.
+그리고 다시 buggy('b') 하면 이미 'a'가 추가된 result에 'b'가 추가되는 거다.
+<strong>그래서 가변 데이터 타입을 기본 인수로 사용할때 주의해야 한다는 것이다.</strong></p>
+<p>그래서 실행할때마다 <code>result = []</code>가 되기를 원한다면,</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">works</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">	<span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">result</span>
+</span></span><span class="line"><span class="cl"><span class="n">works</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">works</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+</span></span></code></pre><p>이렇게 함수 내부에서 계속 <code>result = []</code> 라고 초기화를 진행하거나,</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">nonbuggy</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">	<span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">nonbuggy</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">nonbuggy</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+</span></span></code></pre><h2>위치 가변 인수(튜플 매개변수, <code>*args</code> 인수)</h2>
+<p><strong>함수의 매개변수에 애스터리스크(*)를 사용할 때 애스터리스크는 매개변수에서 위치 인수 변수를 튜플로 묶는다.</strong> 즉, 위치 가변 인수를 사용할 때는 <code>*</code> 를 매개변수 앞에 사용한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">print_args</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;tuple:&#39;</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+</span></span></code></pre><p>가변 인수 함수를 인수 없이 호출하면, <code>*args</code> 에는 빈 튜플 값이 담기게 된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">print_args</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">print_args</span><span class="p">()</span> <span class="c1"># ()</span>
+</span></span><span class="line"><span class="cl"><span class="n">print_args</span><span class="p">(</span><span class="s2">&#34;a&#34;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># (&#34;a&#34;, 1, 2)</span>
+</span></span></code></pre><p>함수에 위치 인수를 지정할 때, 맨 끝에 <code>*args</code> 를 써서 나머지 인수를 모두 취하게 할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">print_more</span><span class="p">(</span><span class="n">required1</span><span class="p">,</span> <span class="n">required2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">print_more</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="c1"># required1: 1, required2: 2, args: (3, 4, 5)</span>
+</span></span></code></pre><p>가변 인수를 사용할 때 가변 인수의 이름으로 <code>*args</code> 를 관용적으로 사용한다. <code>*params</code> 는 사용하지 않는다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">print_args</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;tuple:&#39;</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+</span></span></code></pre><p>라는 함수가 있을 때,</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">print_args</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span>
+</span></span></code></pre><p><code>print_args(2, 5, 7, 'x')</code> 에서 인수 <code>2, 5, 7, 'x'</code> 는 가변 인수로서 전달되어 함수 내부에서 하나의 튜플로 처리된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">print_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">))</span>
+</span></span></code></pre><p><code>print_args(args)</code> 는 <code>args</code> 라는 튜플 데이터 자체를 함수의 인수로 전달한 것이다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">print_args</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span>
+</span></span></code></pre><p><strong><code>print_args(*args)</code> 는 시퀀스 자료형을 언패킹하여 각각의 가변 인자로 전달한다. 이는 시퀀스 언패킹 연산자를 활용해서, 시퀀스 자료형을 언패킹하여, 언패킹한 객체를 함수의 가변 인자로서 전달하는 것으로, 이는 문법적인 약속이다. 즉, 시퀀스 언패킹 연산자를 활용하여 시퀀스 객체를 가변 인수로서 처리되도록 전달할 수 있다.</strong></p>
+<h2>키워드 가변 인수(딕셔너리 매개변수, <code>**kwargs</code> 인수)</h2>
+<p><strong>키워드 인수를 딕셔너리로 묶기 위해 두 개의 애스터리스크(<code>**</code>)를 사용할 수 있다.</strong> 즉, 키워드 가변 인수를 사용할 때 <code>**</code>를 매개변수 앞에 사용한다.
+인수의 이름은 키고, 값은 이 키에 대응하는 딕셔너리 값이다.</p>
+<blockquote>
+<p>키워드 가변 인수를 딕셔너리 형태로 묶는 것이니, 딕셔너리의 키는 항상 문자열이다. 키워드 인수의 인수는 항상 문자열이기 때문이다.</p>
+</blockquote>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">print_kwargs</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;keyword arguments:&#39;</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">print_kwargs</span><span class="p">(</span><span class="n">wine</span><span class="o">=</span><span class="s1">&#39;merlot&#39;</span><span class="p">,</span> <span class="n">entree</span><span class="o">=</span><span class="s1">&#39;mutton&#39;</span><span class="p">,</span> <span class="n">dessert</span><span class="o">=</span><span class="s1">&#39;macaroon&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">keyword</span> <span class="n">arguments</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;wine&#39;</span><span class="p">:</span> <span class="s1">&#39;merlot&#39;</span><span class="p">,</span> <span class="s1">&#39;entree&#39;</span><span class="p">:</span> <span class="s1">&#39;mutton&#39;</span><span class="p">,</span> <span class="s1">&#39;dessert&#39;</span><span class="p">:</span> <span class="s1">&#39;macaroon&#39;</span><span class="p">}</span>
+</span></span></code></pre><p>딕셔너리 가변 인수 함수를 인수 없이 호출하면 빈 딕셔너리 값이 딕셔너리 가변 인수에 저장된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">print_kwargs</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">keyword</span> <span class="n">arguments</span><span class="p">:</span> <span class="p">{}</span>
+</span></span></code></pre><p>함수가 처리하는 인수 순서는 다음과 같다.</p>
+<ol>
+<li>위치 인수</li>
+<li>위치 가변 인수 <code>*args</code></li>
+<li>키워드 가변 인수 <code>**kwargs</code>
+예, 위치 가변 인수 앞에 키워드 가변 인수가 위치해선 안된다.</li>
+</ol>
+<p>키워드 가변 인수를 사용할 때는 인수 이름을 관용적으로 kwargs로 사용한다.</p>
+<p>위치 가변 인수와 동일하게, 함수 외부에서 <code>**kwargs</code> 를 인수로 전달하면, 딕셔너리 <code>kwargs</code> 를 <code>이름=값</code> 키워드 인수로 분해하여 전달한다.</p>
+<h2>키워드 전용 인수</h2>
+<p>키워드 전용 인수란 오직 키워드 인수로만 인수를 전달해야 하는 인수이다.
+즉, 위치 인수로 인수를 전달이 불가능하며, 키워드 인수로만 인수를 전달해야 하는 인수이다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">print_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]):</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">print_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">print_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">print_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">print_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">print_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></span></code></pre><p>단일 애스터리스크는 start, end 매개변수의 기본값을 사용하고 싶지 않은 경우(인자를 전달하지 않으면 기본값이 사용된다. 그러나 인자를 직접 전달하면 기본값이 사용되지 않는다.) 키워드 인수로서 start, end 인수가 제공되어야 함을 의미한다.</p>
+<p><strong>즉, <code>*</code> 매개변수를 기준으로 그 뒤에 오는 인자들은 모두 키워드 전용 인수가 된다.</strong></p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+</span></span></code></pre><p>a, b는 위치 인수다.
+c, d는 키워드 전용 인수다.
+즉, 호출할 때 반드시 c=값, d=값처럼 이름 붙여서 전달해야 된다.</p>
+<h2>가변/불변 인수</h2>
+<p>함수에 인수를 전달할 때 주의해야 한다.
+인수가 가변 객체인 경우 해당 매개변수를 통해 함수 내부에서 해당 객체의 값을 변경할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">outside</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;fine&#39;</span><span class="p">,</span> <span class="s1">&#39;day&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">mangle</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="n">arg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;terrible!&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">outside</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;fine&#39;</span><span class="p">,</span> <span class="s1">&#39;day&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">mangle</span><span class="p">(</span><span class="n">outside</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;&gt;</span> <span class="n">outside</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;terrible!&#39;</span><span class="p">,</span> <span class="s1">&#39;day&#39;</span><span class="p">]</span>
+</span></span></code></pre><p>함수 내에서 인수가 변경될 수 있는 함수는 안좋은 코드이다.</p>
+<h2>독스트링</h2>
+<p>함수의 독스트링(docstring)이란 함수 바디 시작 부분에 문자열을 포함시켜 함수 정의에 문서를 붙일 수 있다는 것을 의미한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">echo</span><span class="p">(</span><span class="n">anything</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="s1">&#39;echo returns its input qrgument&#39;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">anything</span>
+</span></span></code></pre><p>독스트링은 길게 작성할 수도 있고, 포매팅(문자열 포매팅과는 다름. 이는 독스트링 포매팅임.)을 추가할 수도 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">print_if_true</span><span class="p">(</span><span class="n">thing</span><span class="p">,</span> <span class="n">check</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">	Prints the first argument if a second argument is true.
+</span></span></span><span class="line"><span class="cl"><span class="s1">	The operation is:
+</span></span></span><span class="line"><span class="cl"><span class="s1">		1. Check whether the *second* argument is true.
+</span></span></span><span class="line"><span class="cl"><span class="s1">		2. If it is, print the *first* argument.
+</span></span></span><span class="line"><span class="cl"><span class="s1">	&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="n">check</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">print</span><span class="p">(</span><span class="n">thing</span><span class="p">)</span>
+</span></span></code></pre><p>함수의 독스트링을 출력하려면 <code>help(함수 객체)</code> 함수 호출한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">help</span><span class="p">(</span><span class="n">echo</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>
+</span></span></code></pre><p>help() 함수를 활용하여 echo 함수의 서식화된 독스트링을 읽을 수 있다.</p>
+<p>서식 없는 독스트링은 <code>함수 객체.__doc__</code> 에 담겨 있다. 이것을 출력하면 서식 없는 독스트링을 볼 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">echo</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>
+</span></span></code></pre><h2>일등 시민: 함수</h2>
+<p>파이썬에서 모든 것은 객체다.
+객체는 숫자, 문자열, 튜플, 리스트, 딕셔너리, 함수를 포함한다.</p>
+<p>함수 또한 객체이기에, 함수를 리스트, 튜플, 셋, 딕셔너리의 요소로 사용할 수 있다.
+함수는 불변하다.
+그렇기 때문에 함수를 딕셔너리의 키로도 사용할 수 있다.</p>
+<p>파이썬에서 함수는 일등 시민(first-class citizen) 또는 일급 객체(first-class object)이다.
+함수가 일등 시민이라는 말은, 함수를 변수에 할당하고, 다른 함수에서 이를 인수로 사용하고, 함수에서 이를 반환할 수 있다는 것이다.
+즉, 함수가 다른 값과 동일한 방식으로 처리될 수 있다는 것을 의미한다.</p>
+<p>한 번, 함수가 일등 시민이라는 것을 테스트해보자.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">answer</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">answer</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="mi">42</span>
+</span></span></code></pre><p>매개변수(인수, 인자)가 없는 answer() 함수를 선언했다. 이 함수는 숫자 42를 출력한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">run_something</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="n">func</span><span class="p">()</span>
+</span></span></code></pre><p>run_something() 함수를 정의해보자. func 매개변수로 함수를 받아 이를 호출한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">run_something</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">42</span>
+</span></span></code></pre><p>run_something 함수에 answer 함수를 인수로 전달하면, 다른 모든 인수와 마찬가지로 이 answer 함수를 데이터 처럼 사용한다.</p>
+<p>단, <code>answer()</code> 로 전달하는 게 아니라 <code>answer</code> 로 전달했다.
+왜냐하면 함수 객체를 전달해야 호출할 수 있기 때문이다. 함수 객체를 호출해서 전달하면 값을 전달하는 것이기에 함수 객체가 아니라 다른 타입의 객체로 전달되게 된다. 여기서 매개변수 func는 꼭 함수 객체여야 한다. 왜냐면 func() 에서 괄호를 이용하여 실행하기 때문이다.</p>
+<p>파이썬에서 괄호는 함수를 호출한다는 의미이다.
+괄호가 없다면 파이썬에서는 함수를 다른 모든 객체와 마찬가지로 간주한다.
+파이썬에서 모든 것은 객체이기 때문이다.
+그러나 괄호가 있다면 함수를 호출하게 된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">add_args</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">arg1</span> <span class="o">+</span> <span class="n">arg2</span><span class="p">)</span>
+</span></span></code></pre><p>두 숫자의 인수 arg1, arg2를 더한 값을 출력하는 add_args() 함수를 정의한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">run_something_with_args</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="n">func</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
+</span></span></code></pre><p>세 인수를 취하는 run_something_with_args() 함수를 정의한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">run_something_with_args</span><span class="p">(</span><span class="n">add_args</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">14</span>
+</span></span></code></pre><p>run_something_with_args()를 호출할 때 호출자에 의해 전달된 함수는 func 매개변수에 할당된다. 그리고 arg1, arg2는 인수 목록의 값을 얻는다. 그러고 나서 인수와 함께 func(arg1, arg2) 함수가 실행된다. 객체 앞의 괄호()는 함수 객체를 실행하라는 뜻이기 때문이다.</p>
+<p>즉, run_something_with_args() 함수 내의 add_args 함수 객체는 func 매개변수에 할당된다. 그리고 숫자 5, 9는 각각 arg1, arg2에 할당된다.</p>
+<p>결국, 다음과 같은 함수를 실행한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">add_args</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+</span></span></code></pre><p>또한 이것을 <code>*args, **kwargs</code> 인수와 결합해서 사용할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">sum_args</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</span></span></code></pre><p>여러 개의 위치 인수를 취하는 함수를 정의해보자. <code>sum()</code> 함수를 사용해서 이 인수들을 더한 값을 반환한다.
+sum() 함수는 숫자로만 이루어진 이터러블 내부의 모든 요소의 합을 구하는 파이썬 내장 함수이다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">run_with_positional_args</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span> <span class="c1"># 여기서 *args는 가변 위치 인수 정의.</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="c1"># 여기서 *args는 시퀀스 언패킹 연산자를 활용하여 가변 위치 인수 args로 받은 튜플 데이터 args를 다시 가변 위치 인수 형태로 전달하는 문법.</span>
+</span></span></code></pre><p>함수와 여러 개의 위치 인수를 취하는 새로운 run_with_positional_args() 함수를 정의한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">run_with_positional_args</span><span class="p">(</span><span class="n">sum_args</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">10</span>
+</span></span></code></pre><p>이는</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">sum_args</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span></span></code></pre><p>와 같은 코드이다.</p>
+<h2>내부 함수</h2>
+<p>함수 안에 또 다른 함수를 정의할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">outer</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">c</span> <span class="o">+</span> <span class="n">d</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">inner</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</span></span></code></pre><p>내부(inner) 함수는 반복문이나 코드 중복을 피하고자 또 다른 함수 내에 어떤 복잡한 작업을 한 번 이상 수행할 때 유용하게 사용된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">knights</span><span class="p">(</span><span class="n">saying</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="n">quote</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="s2">&#34;We are the knights who say: &#39;</span><span class="si">%s</span><span class="s2">&#39;&#34;</span> <span class="o">%</span> <span class="n">quote</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">inner</span><span class="p">(</span><span class="n">saying</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">knights</span><span class="p">(</span><span class="s1">&#39;Ni&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;We are the knights who say: &#39;Ni&#39;&#34;</span>
+</span></span></code></pre><h2>클로저</h2>
+<blockquote>
+<p>내부 함수와 클로저의 차이점을 명확히 해야 한다.
+내부 함수는 함수 안에 정의된 다른 함수이며, 클로저는 내부 함수가 외부 함수의 변수에 접근할 수 있는 특수한 형태의 함수이다.</p>
+</blockquote>
+<p>내부 함수는 클로저(closure)처럼 동작할 수 있다.
+클로저는 다른 함수에 의해 동적으로 생성된다.
+클로저는 외부 함수로부터 생성된 변수값을 변경하고, 저장할 수 있는 함수이다.
+즉, 외부 함수에 의해 동적으로 생성되고, 그 함수의 변수 값을 알고 있는 함수를 클로저라고 부른다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">knights2</span><span class="p">(</span><span class="n">saying</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">def</span> <span class="nf">inner2</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="s2">&#34;We are the knights who say: &#39;</span><span class="si">%s</span><span class="s2">&#39;&#34;</span> <span class="o">%</span> <span class="n">saying</span> <span class="c1"># saying이 전역변수 같은 그런 위치 상에 있기에, 이렇게 외부의 매개변수도 참조가 가능하다.</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">inner2</span>
+</span></span></code></pre><p>inner2()는 인수를 취하지 않고, 외부 함수의 변수를 직접적으로 사용한다.
+knights2()는 inner2 함수 이름을 호출하지 않고 함수 객체를 직접 반환한다.</p>
+<p>inner2() 함수는 knights2() 함수가 전달받은 saying 변수를 알고 있다.
+코드의 return inner2 부분은 호출되지 않은 inner2 함수의 특별한 복사본을 반환한다.
+이것이 외부 함수에 의해 동적으로 생성되고, 그 함수의 변수 값을 알고 있는 함수인 클로저이다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">a</span> <span class="o">=</span> <span class="n">knights2</span><span class="p">(</span><span class="s1">&#39;Duck&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span> <span class="o">=</span> <span class="n">knights2</span><span class="p">(</span><span class="s1">&#39;Has&#39;</span><span class="p">)</span>
+</span></span></code></pre><p>이들을 호출하면, knights2() 함수에 전달되어 사용된 saying을 기억한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">a</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>
+</span></span></code></pre><h2>익명 함수: lambda</h2>
+<p>파이썬 람다 함수(lambda function)는 단일 문장으로 표현되는 익명 함수(anonymous function)이다.
+람다 함수는 <code>lambda argument: expression</code> 이렇게 쓰고, 인자는 콤마로 구분되며 표현식을 계산한 값을 반환한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">edit_story</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">print</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">stairs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">enliven</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">word</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">edit_story</span><span class="p">(</span><span class="n">stairs</span><span class="p">,</span> <span class="n">enliven</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">A</span><span class="err">!</span>
+</span></span><span class="line"><span class="cl"><span class="n">B</span><span class="err">!</span>
+</span></span><span class="line"><span class="cl"><span class="n">C</span><span class="err">!</span>
+</span></span></code></pre><p>에서</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">edit_story</span><span class="p">(</span><span class="n">stairs</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">word</span><span class="p">:</span> <span class="n">word</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span><span class="p">)</span>
+</span></span></code></pre><p>이렇게 enliven() 함수를 람다 함수 형태로 바꿀 수 있다.</p>
+<p>람다 함수는 인수를 취하지 않아도 된다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">lambda</span><span class="p">:</span> <span class="n">expression</span> <span class="c1"># 이 형태를 더 많이 씀</span>
+</span></span><span class="line"><span class="cl"><span class="k">lambda</span> <span class="p">:</span> <span class="n">expression</span>
+</span></span></code></pre><p>람다 함수는 괄호 <code>()</code> 를 람다 함수에 묶고, 함수를 <code>()</code> 로 호출하여 즉시 실행할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="p">(</span><span class="k">lambda</span> <span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">))</span>
+</span></span></code></pre><pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span></span></code></pre><p>이 함수를</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">add</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span></span></code></pre><p>이렇게 람다 함수로 바꿀 수 있다.
+<code>add</code> 변수는 람다 함수를 참조합니다.
+def로 선언한 것이든, lambda로 선언한 것이든 결과적으로는 함수 객체를 둘 다 반환하는 것이기에 둘 다 똑같은 결과값을 산출한다.
+<strong>즉, 두 개의 코드 모두 <code>add</code>라는 이름으로 함수 객체를 참조하는 것이다.</strong></p>
+<p>대부분의 경우, 실제 함수를 정의하여 사용하는 것이 람다 함수를 사용하는 것보다 훨씬 더 명확하다.
+람다는 많은 작은 함수를 정의하고, 이들을 호추랳서 얻은 모든 결과값을 저장해야 하는 경우에 유용하다.
+특히 콜백 함수를 정의하는 GUI에서 람다를 사용할 수 있다.</p>
+<h2>제너레이터</h2>
+<p><strong>제너레이터(generator)는 시퀀스 객체를 생성하는 객체다.</strong>
+제너레이터로 전체 시퀀스를 한 번에 메모리에 생성하고 정렬할 필요 없이, 잠재적으로 아주 큰 시퀀스를 순회할 수 있다.
+제너레이터는 이터레이터에 대한 데이터의 소스로 자주 사용된다.
+range() 함수도 제너레이터이다. range() 함수는 일련의 정수(시퀀스 객체)를 생성한다.</p>
+<p>제너레이터를 순회할 때마다 마지막으로 호출된 항목을 기억하고 다음 값을 반환한다.
+제너레이터는 일반 함수와 다르다.
+일반 함수는 이전 호출에 대한 메모리가 없고, 항상 똑같은 상태로 첫 번째 줄부터 수행한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="mi">5050</span>
+</span></span></code></pre><h2>제너레이터 함수</h2>
+<p>잠재적으로 큰 시퀀스를 생성하고, 제너레이터 컴프리헨션에 대한 코드가 아주 길다면 제너레이터 함수를 사용하면 된다.
+제너레이터 함수는 일반 함수와 똑같지만, return 문으로 값을 반환하지 않고 yield 문으로 값을 반환한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">my_range</span><span class="p">(</span><span class="n">first</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">last</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="n">number</span> <span class="o">=</span> <span class="n">first</span>
+</span></span><span class="line"><span class="cl">	<span class="k">while</span> <span class="n">number</span> <span class="o">&lt;</span> <span class="n">last</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="k">yield</span> <span class="n">number</span>
+</span></span><span class="line"><span class="cl">		<span class="n">number</span> <span class="o">+=</span> <span class="n">step</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ranger</span> <span class="o">=</span> <span class="n">my_range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">ranger</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">generator</span> <span class="o">...&gt;</span>
+</span></span></code></pre><p>이 ranger 제너레이터 객체를 순회할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ranger</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="mi">3</span>
+</span></span><span class="line"><span class="cl"><span class="mi">4</span>
+</span></span></code></pre><p><strong>제너레이터는 한 번만 순회할 수 있다.</strong>
+제너레이터는 해당 값을 즉석에서 생성하고, 이터레이터를 통해 한 번에 하나씩 전달한다.
+제너레이터는 모든 값을 기억하지 않으므로 제너레이터를 절대 다시 시작하거나 되돌릴 수 없다.</p>
+<p>순회를 마친 제너레이터를 다시 순회한다면 다음과 같이 아무것도 반환하지 않는다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">for</span> <span class="n">try_again</span> <span class="ow">in</span> <span class="n">ranger</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">try_again</span><span class="p">)</span>
+</span></span></code></pre><h2>제너레이터 컴프리헨션</h2>
+<p>리스트, 딕셔너리, 셋 컴프리헨션을 살펴봤다.
+제너레이터 컴프리헨션은 이들과 비슷하다.
+대괄호, 중괄호 대신 괄호로 묶어서 사용한다.
+제너레이터 컴프리헨션은 제너레이터 함수의 축약 버전이며, 안보이게 yield 문을 실행하고, 제너레이터 객체를 반환한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">genobj</span> <span class="o">=</span> <span class="p">(</span><span class="n">pair</span> <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl"><span class="n">genobj</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">generator</span> <span class="o">...&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">thing</span> <span class="ow">in</span> <span class="n">genobj</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">thing</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span>
+</span></span></code></pre><h2>데커레이터</h2>
+<p>코드를 바꾸지 않고, 사용하고 있는 함수를 수정할 때 데커레이터를 사용한다.
+데커레이터(decorator)는 하나의 함수를 취해서 또 다른 함수를 반환하는 함수다.
+즉, 데커레이터는 함수를 또다른 함수에 감싸서 호출하는 래핑 함수다.</p>
+<p><strong>데커레이터 함수를 만들기 위해</strong></p>
+<ul>
+<li><strong><code>*args, **kwargs</code></strong></li>
+<li><strong>내부 함수</strong></li>
+<li><strong>함수 인수</strong>
+<strong>를 사용한다.</strong></li>
+</ul>
+<p>document_it() 함수는 다음과 같이 데커레이터를 정의한다.</p>
+<ul>
+<li>함수 이름과 인수를 출력한다.</li>
+<li>인수로 함수를 실행한다.</li>
+<li>결과를 출력한다.</li>
+<li>수정된 함수를 사용하도록 반환한다.
+코드는 다음과 같다.</li>
+</ul>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">document_it</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">def</span> <span class="nf">new_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Running function:&#39;</span><span class="p">,</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Positional arguments:&#39;</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Keyword arguments:&#39;</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Result:&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">result</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">new</span> <span class="n">function</span>
+</span></span></code></pre><p>document_it() 함수에 어떤 func 함수 변수를 전달하든지 간에 document_it() 함수에 추가 선언문이 포함된 새 함수를 얻는다. 데커레이터는 실제로 func 함수로부터 코드를 실행하지 않는다. 하지만 document_it() 함수로부터 func를 호출하여 결과뿐만 아니라 새로운 함수를 얻는다.</p>
+<p>그러면 데커레이터를 어떻게 사용할 까? 수동으로 데커레이터를 적용해보자.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">add_ints</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</span></span><span class="line"><span class="cl"><span class="n">add_ints</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="mi">8</span>
+</span></span><span class="line"><span class="cl"><span class="n">cooler_add_ints</span> <span class="o">=</span> <span class="n">document_it</span><span class="p">(</span><span class="n">add_ints</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">cooler_add_ints</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Running_function</span><span class="p">:</span> <span class="n">add_ints</span>
+</span></span><span class="line"><span class="cl"><span class="n">Positional</span> <span class="n">arguments</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Keyword</span> <span class="n">arguments</span><span class="p">:</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="n">Result</span><span class="p">:</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl"><span class="mi">8</span>
+</span></span></code></pre><p><code>cooler_add_ints = document_it(add_ints)</code> 처럼 수동으로 데커레이터를 할당하는 대신, 다음과 같이 데커레이터를 사용하고 싶은 함수 상단에 그냥 <code>@데커레이터_이름</code>을 추가한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nd">@document_it</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">add_ints</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">add_ints</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Running_function</span><span class="p">:</span> <span class="n">add_ints</span>
+</span></span><span class="line"><span class="cl"><span class="n">Positional</span> <span class="n">arguments</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Keyword</span> <span class="n">arguments</span><span class="p">:</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="n">Result</span><span class="p">:</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl"><span class="mi">8</span>
+</span></span></code></pre><p>즉,</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nd">@doucment_it</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">add_ints</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="o">...</span>
+</span></span></code></pre><p>이렇게 쓰면 add_ints() 함수는 cooler_add_ints() 함수와 똑같이 동작한다. add_ints() 함수만 써도, 데커레이터가 적용된 함수로서 작동하게 된다.</p>
+<p>함수는 여러 데커레이터를 가질 수 있다. result를 제곱하는 square_it() 데커레이터를 작성해보자.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">square_it</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">def</span> <span class="nf">new_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">		<span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">result</span> <span class="o">*</span> <span class="n">result</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">new_function</span>
+</span></span></code></pre><p><strong>함수에서 가장 가까운(def 바로 위) 데커레이터를 먼저 실행한 후, 그 위의 데커레이터가 실행된다.</strong>
+이 예제에서 순서를 바꿔도 똑같은 result를 얻지만, 중간 과정이 바뀐다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nd">@document_it</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@square_it</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">add_ints</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">add_ints</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span></span></code></pre><pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nd">@square_it</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@document_it</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">add_ints</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">add_ints</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span></span></code></pre><h2>네임스페이스와 스코프</h2>
+<p>이름(변수)은 사용되는 위치(스코프)에 따라 다른 것을 참조할 수 있다.
+파이썬 프로그램에서는 다양한 네임스페이스(namespace)가 있다.
+네임스페이스는 특정 이름이 유일하고, 다른 네임스페이스에서의 같은 이름과 관계가 없는 것을 말한다.</p>
+<blockquote>
+<p>네임스페이스(namespace, 이름공간)란 프로그래밍 언어에서 특정한 객체(Object)를 이름(Name)에 따라 구분할 수 있는 범위를 의미한다. 파이썬 내부의 모든것은 객체로 구성되며 이들 각각은 특정 이름과의 매핑 관계를 갖게 되는데 이 매핑을 포함하고 있는 공간을 네임스페이스라고 한다. 네임스페이스가 필요한 이유는 다음과 같다. 프로그래밍을 수행하다보면 모든 변수 이름과 함수 이름을 정하는 것이 중요한데 이들 모두를 겹치지 않게 정하는 것은 사실상 불가능하다. 프로그래밍언어에서는 네임스페이스라는 개념을 도입하여, 특정한 하나의 이름이 통용될 수 있는 범위를 제한한다. 즉, 소속된 네임스페이스가 다르다면 같은 이름이 다른 개체를 가리키도록 하는 것이 가능해진다.</p>
+</blockquote>
+<blockquote>
+<p>네임스페이스는 변수와 객체를 저장하고 관리하는 공간을 의미하며, 스코프는 변수의 접근 가능 범위를 나타냅니다.</p>
+</blockquote>
+<p>각 함수는 자신의 네임스페이스를 정의한다.
+메인 프로그램에서 x라는 변수를 정의하고, 함수에서 x라는 변수를 정의했을 때 이들은 서로 다른 것을 참조한다. 하지만 이 경계를 넘을 수 있다. 다양한 방법으로 다른 네임스페이스의 이름을 접근할 수 있다.</p>
+<p>메인 프로그램은 전역 네임스페이스를 정의한다. 메인 프로그램의 네임스페이스에서 선언된 변수는 전역 변수다.</p>
+<p>다음 함수에서 전역 변수 값을 얻을 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">animal</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">print_global</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;inside print_global:&#39;</span><span class="p">,</span> <span class="n">animal</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">print_global</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">inside</span> <span class="n">print_global</span><span class="p">:</span> <span class="n">a</span>
+</span></span></code></pre><p>함수에서 전역 변수의 값을 얻어서 바꾸려 하면 에러가 발생한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">animal</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">change_and_print_global</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="n">animal</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span>
+</span></span></code></pre><p>함수 내에서 전역 변수와 이름이 같은 변수 animal을 변경할 때, 함수 내 animal 변수를 변경한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">animal</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">change_local</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">	<span class="n">animal</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">change_local</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">animal</span>
+</span></span><span class="line"><span class="cl"><span class="nb">id</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span>
+</span></span></code></pre><p>여기서 무슨 일이 일어날까? 첫 번째 줄에서 문자열 'a'를 전역변수 animal에 할당했다. change_local() 함수 또한 이름이 animal 인 변수를 갖지만, 그것은 로컬 네임스페이스 안에 있다.</p>
+<p>각 객체의 유일한 값을 출력하기 위해 그리고 change_local() 함수 내 animal 변수가 메인 프로그램의 animal 변수와 같지 않다는 것을 증명하기 위해 id() 함수를 사용했다.</p>
+<p>함수 내의 지역 변수가 아닌 전역 변수를 접근하여 변경하기 위해 global 키워드를 사용해서 전역 변수의 접근을 명시해야 한다.
+즉, 전역 변수의 값을 읽는 것은 그냥 전역 변수를 쓰면 되지만, 전역 변수의 값을 변경하기 위해서는 메인 네임스페이스가 아니라면 global 키워드를 사용해서 접근을 명시해야 한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">animal</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">change_and_print_global</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">	<span class="k">global</span> <span class="n">animal</span> <span class="c1"># 접근 명시</span>
+</span></span><span class="line"><span class="cl">	<span class="n">animal</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">animal</span><span class="p">)</span>
+</span></span></code></pre><p>함수 안에 global 키워드를 사용하지 않으면 파이썬은 로컬 네임스페이스를 사용하고, 변수는 지역변수가 된다. 지역 변수는 함수를 수행한 뒤 사라진다.</p>
+<p>파이썬은 네임스페이스의 내용을 접근하기 위해 두 가지 함수를 제공한다.</p>
+<ul>
+<li>locals() 함수는 로컬(지역) 네임스페이스의 내용이 담긴 딕셔너리를 반환한다.</li>
+<li>globals() 함수는 글로벌(전역) 네임스페이스의 내용이 담긴 딕셔너리를 반환한다.
+이들을 사용해보자.</li>
+</ul>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="n">animal</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span> <span class="c1"># global var</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">change_local</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">	<span class="n">animal</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span> <span class="c1"># local var</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="nb">locals</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="n">animal</span>
+</span></span><span class="line"><span class="cl"><span class="n">change_local</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nb">globals</span><span class="p">()</span>
+</span></span></code></pre><p>change_local() 함수 내 로컬 네임스페이스에는 animal 로컬 변수만 있다.
+메인 프로그램의 글로벌 네임스페이스에는 animal 전역 변수와 다른 여러 가지가 포함되어 있다.</p>
+<h2>이름에 <code>_</code>와 <code>__</code> 사용하기</h2>
+<p>언더바 두 개(<code>__</code>)로 시작하고 끝나는 이름은 파이썬 내부 사용을 위해 예약되어 있다.
+그러므로, 변수를 선언할 때 두 언더바를 사용하면 안된다.
+개발자들이 이와 같은 변수 이름을 선택할 가능성이 낮아서, 이러한 네이밍 패턴을 선택한 것이다.</p>
+<p>함수 이름은 시스템 변수 <code>function.__name__</code> 에 있다.
+함수 독스트링은 <code>function.__doc__</code> 에 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">amazing</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">	<span class="s1">&#39;&#39;&#39;test&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">amazing</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">amazing</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">amazing</span><span class="p">()</span>
+</span></span></code></pre><p>메인 프로그램은 특별한 이름 <code>__main__</code> 으로 할당되어 있다.</p>
+<h2>재귀 함수</h2>
+<p>함수가 자기 자신을 호출하는 것을 재귀(recursion)라고 한다.
+파이썬에서 재귀가 깊다면(자기 자신을 너무 많이 호출하면) 예외가 발생한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span><span class="line"><span class="cl"><span class="n">sys</span><span class="o">.</span><span class="n">getrecursionlimit</span><span class="p">()</span> <span class="c1"># 재귀 제한 얻기</span>
+</span></span><span class="line"><span class="cl"><span class="n">sys</span><span class="o">.</span><span class="n">setrecursionlimit</span><span class="p">(</span><span class="mi">1500</span><span class="p">)</span> <span class="c1"># 재귀 함수 제한 설정하기</span>
+</span></span></code></pre><p>다음과 같이 재귀 함수의 깊이 제한을 구하고, 설정할 수 있다.</p>
+<p>재귀 함수는 리스트의 리스트의 리스트와 같이 '고르지 않은' 데이터를 처리할 때 유용하다.
+이러한 모든 하위 리스트를 '평평하게' 만든다고 하자.
+다음과 같이 재귀함수를 작성할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="n">lol</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">lol</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">			<span class="k">for</span> <span class="n">subitem</span> <span class="ow">in</span> <span class="n">flatten</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">				<span class="k">yield</span> <span class="n">subitem</span>
+</span></span><span class="line"><span class="cl">		<span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">yield</span> <span class="n">item</span>
+</span></span><span class="line"><span class="cl"><span class="n">lol</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[[</span><span class="mi">6</span><span class="p">,</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[]]]]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">list</span><span class="p">(</span><span class="n">flatten</span><span class="p">(</span><span class="n">lol</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+</span></span></code></pre><p>yield from 표현식을 추가하여 제너레이터의 일부를 전달할 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="n">lol</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">lol</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">			<span class="k">yield from</span> <span class="n">flatten</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">yield</span> <span class="n">item</span>
+</span></span></code></pre><h2>비동기 함수</h2>
+<p>비동기 함수(asynchronous function)를 정의하고 실행하기 위해서 async와 await 키워드가 파이썬 3.5에서 추가됬다. 이들의 특징은 다음과 같다.</p>
+<ul>
+<li>비교적 새로운 기능이다.</li>
+<li>이해하기 조금 어렵다.</li>
+<li>시간이 갈수록 더 중요해지고 더 잘 알려질 것이다.
+이러한 이유로 이 주제와 다른 비동기 주제에 대한 내용은 나중에 다룬다.
+지금은 함수를 정의하는 def 앞에 async 키워드가 붙으면 비동기 함수라는 것을 알면 된다.
+마찬가지로 함수를 호출하기 전에 await 키워드가 있으면 해당 함수는 비동기적이라는 것을 알면 된다.
+비동기 함수와 일반 함수의 주요 차이점은 비동기 함수는 실행을 완료하기보다 제어를 넘겨주는 것(give up control)이다.</li>
+</ul>
+<h2>예외</h2>
+<p>파이썬에서는 코드 관련 에러가 발생할 때 실행되는 예외(exception)를 사용한다.
+어떤 상황에서 실패할 수 있는 코드를 실행할 때, 잠재적인 모든 에러를 방지하기 위해 적절한 예외 처리(exception handler)가 필요하다.
+사용자가 어디에서 예외를 발생할 것인지 예측하고, 예외 처리를 하는 것은 좋은 습관이다.</p>
+<h2>예외 처리하기: try, except</h2>
+<p>예러가 예상되는 코드에 try 문을 사용하고, 그 에러를 처리하기 위해 except 문을 사용한다.
+try 문의 코드를 실행할 때 에러가 있다면 예외가 발생하고 except 문의 코드가 실행된다. try 문에 에러가 없다면 except 문을 건너뛴다.
+인수가 없는 except 문은 모든 예외 타입을 잡는다는 것을 말한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">pos</span> <span class="o">=</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">list</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;exception&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;exception&#39;</span>
+</span></span></code></pre><p>두 개 이상의 예외 타입이 발생하면, <code>except 예외 타입</code> 처럼 별도의 예외 타입에 대한 예외 핸들러를 제공하는 것이 가장 좋은 방법이다.
+그러나, 별도의 예외 핸들러를 제공하고도 인수가 없는 <code>except</code>  문을 사용하여 그 외의 모든 에러를 잡을 수도 있다.
+(else와 비슷하다고 생각하면 된다.)</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;값 에러 발생!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;그 외 모든 에러 발생!&#34;</span><span class="p">)</span>  <span class="c1"># 모든 에러를 잡음 (예외 타입 안 씀)</span>
+</span></span></code></pre><p>예외 타입을 넘어 예와 사항에 대한 세부정보를 얻고 싶다면, <code>except 예외 타입 as 이름</code> 처럼 변수 이름을 설정하여 이것으로 부터 예외 객체 전체를 얻을 수 있다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;이건 값 오류야&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>   <span class="c1"># &lt;class &#39;ValueError&#39;&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>    <span class="c1"># (&#39;이건 값 오류야&#39;,)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>    <span class="c1"># 이건 값 오류야</span>
+</span></span></code></pre><h2>예외 만들기</h2>
+<p>필요한 예외 처리를 선택해서 사용할 수 있다.</p>
+<p>새로운 예외 유형을 정의하려면 클래스 객체 타입을 정의해야 한다.</p>
+<p>예외는 클래스고, Exception 클래스의 자식이다.
+<strong>즉, 사용자 정의 예외는 Exception을 상속받는다.</strong></p>
+<p>다음 예제에서 words 문자열에 대문자가 있을 때 예외를 발생하는 UppercaseException 예외를 만들어보자.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">UppercaseException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">isupper</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">		<span class="k">raise</span> <span class="n">UppercaseException</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">Traceback</span><span class="o">...</span>
+</span></span></code></pre><p>UppercaseException에 대한 행동을 정의하지 않았다(pass문 만 사용함).
+부모 클래스 Exception은 예외가 발생했을 때 출력할 내용을 알아내고 있다.
+다음과 같이 예외 객체에 접근해서 그 내용을 출력한다.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="k">raise</span> <span class="n">OopsException</span><span class="p">(</span><span class="s1">&#39;panic&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">except</span> <span class="n">OopsException</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
+</span></span></code></pre><p>즉, <code>raise 사용자 정의 예외 클래스(Exception을 상속 받아야 함.)</code> 이렇게 예외를 발생시킬 수 있다.</p>
+</article>
+                </div>
+            </main>
+
+            <footer class="post-footer">
+                <section>
+                    <p>&copy; 2025 Cha Haneum</p>
+                </section>
+                <section>
+                    <a href="https://github.com/chebread">
+                        <span>깃허브</span>
+                    </a>
+                    <a href="">
+                        <span>이메일</span>
+                    </a>
+                </section>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
