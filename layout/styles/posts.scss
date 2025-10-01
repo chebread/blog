@@ -59,11 +59,15 @@
             line-height: 1.5;
             font-weight: 800;
             padding-bottom: 0.5rem;
+            text-decoration: underline;
         }
 
         .category-group-list {
             display: flex;
             flex-direction: column;
+            
+           
+
             gap: 2rem;
 
             .post-item {
@@ -91,7 +95,22 @@
                 .post-item-category {
                     font-size: 1rem;
                     line-height: 1.5;
+                    
                 }
+            }
+
+            .post-more-link {
+                text-decoration: underline;
+                font-size: 1rem;
+                font-weight: 600;
+                line-height: 1.5;
+            }
+
+            .back-link {
+                text-decoration: underline;
+                font-size: 1rem;
+                font-weight: 600;
+                line-height: 1.5;
             }
         }
     }
