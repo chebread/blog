@@ -207,6 +207,8 @@ func main() {
 				linkURL = filepath.ToSlash(filepath.Join("/", "posts", fmt.Sprintf("%s.html", slugifiedPath)))
 			}
 
+			fmt.Println(linkURL)
+
 			categoriesData = append(categoriesData, CategoryInfo{
 				Name: c,       // "Go"
 				URL:  linkURL, // "/posts/go.html"
@@ -658,13 +660,7 @@ func main() {
 			CurrentURL:   "/posts",
 		}
 
-		var outputFilePath string
-		if appEnv == "production" {
-			outputFilePath = filepath.Join(categoryPostDir, lib.SlugifyPath(category), "index.html")
-			os.MkdirAll(filepath.Join(categoryPostDir, lib.SlugifyPath(category)), 0755)
-		} else {
-			outputFilePath = filepath.Join(categoryPostDir, fmt.Sprintf("%s.html", lib.SlugifyPath(category)))
-		}
+		var outputFilePath = filepath.Join(categoryPostDir, fmt.Sprintf("%s.html", lib.SlugifyPath(category)))
 
 		outputFile, err := os.Create(outputFilePath)
 		if err != nil {
