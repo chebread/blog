@@ -1,0 +1,9 @@
+{
+  "origins": [
+    "https://chebread.github.io"
+  ],
+  "originsRegex": [
+    "http://devd.io:[0-9]+"
+  ],
+  "defaultCommentOrder": "newest"
+}
