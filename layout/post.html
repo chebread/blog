@@ -68,7 +68,11 @@
                 <header class="post-header">
                     <h1 class="post-title">{{- .Title -}}</h1>
                     <p class="post-date"><time datetime="{{- .Date -}}">{{- .FormattedDate -}}</time></p>
-                    <p class="post-category">{{- .Category -}}</p>
+                    <p class="post-category">
+                        {{- range .Categories -}}
+                            <a href="{{ .URL }}">[{{ .Name }}]</a>
+                        {{- end -}}
+                    </p>
                 </header>
                 <div class="post-body">
                     <article class="markdown-body">

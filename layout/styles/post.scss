@@ -65,7 +65,11 @@
         }
 
         .post-category {
+            text-decoration: underline;
             font-weight: 500;
+            display: flex;
+            flex-direction: row;
+            gap: 0.25rem;
         }
     }
 }

@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="/styles/layout.css" />
     <link rel="stylesheet" href="/styles/color-palette.css">
 
-    <link rel="stylesheet" href="/styles/posts.css">
+    <link rel="stylesheet" href="/styles/category.css">
     
     <link rel="icon" href="/favicons/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
@@ -48,8 +48,8 @@
 </head>
 <body>
     <div class="root">
-        <div class="posts">
-           <nav class="posts-nav">
+        <div class="category">
+           <nav class="category-nav">
                 <a href="/" class="{{if eq .CurrentURL "/"}}active{{end}}">
                     <span>홈</span>
                 </a>
@@ -61,10 +61,10 @@
                 </a>
             </nav>
             
-            <main class="posts-list">
+            <main class="category-list">
                 {{ .PostList }}
             </main>
-            <footer class="posts-footer">
+            <footer class="category-footer">
                 <section>
                     <p>&copy; 2025 Cha Haneum</p>
                 </section>

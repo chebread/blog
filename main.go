@@ -21,48 +21,6 @@ import (
 	highlighting "github.com/yuin/goldmark-highlighting/v2"
 )
 
-// Refactor TODO:
-/*
-0. CI/CD
-	1. pnpm run build 하면 build.sh 먼저 실행 및 go run .
-	2. pnpm run build:prod 하면 build.sh 먼저 실행 및 cross-env APP_ENV=production go run .
-
-1. data 처리:
-	1. build.sh:
-		1. unix 명령어로 public 디렉토리 초기화(없으면 생성, 있으면 초기화)
-			DOCS: public 디렉토리 자체는 이제 main.go에서 처리하지 않음(즉, 생성 및 초기화 안함)
-		2. sass 명령어로 public/styles 디렉토리 생성 및 scss 컴파일
-		3. esbuild 명령어로 public/js 디렉토리 생성 및 js 컴파일
-		4. unix 명령어로 .nojekyll 파일 생성
-		5. unix 명령어로 robots.txt 파일 복사해서 붙여넣기
-		6. content/assets 속 모든 파일 public/assets에 붙여넣기
-	2. main.go:
-		1. 포스트 관련 처리
-			1. PostsData 처리
-				- title string
-				- date string
-				- description string
-				- category []string
-				- fixed bool
-				- sourceFilePath string <- 실제 블로그가 저장된 위치
-					e.g. content/tgpl/go 정리법
-				- slug <- 그냥 가공된 PATH로 활용될 이름임
-					e.g. go-정리법
-					-> 여기에 .html, post/, public/ 붙여서 활용하기
-			2. post.html 생성
-				href: posts/category-foo, /, about, posts
-				DOCS: href는 해당 html에 포함된 hyperlink임
-			3. posts.html 생성
-				href: posts/category-foo, /, about, posts
-			4. posts/category-foo.html 생성
-				href: /, about, posts
-		2. 블로그 관련 처리
-			1. index.html 생성
-			2. about.html 생성
-2.
-
-*/
-
 func main() {
 	// Get env
 	var appEnv string = os.Getenv("APP_ENV")
@@ -199,16 +157,22 @@ func main() {
 		fmt.Printf("error: layout/post.html - 템플릿 파싱 실패\n")
 	}
 
+	type CategoryInfo struct {
+		Name string
+		URL  string
+	}
+
 	type PostTmplData struct {
 		IsProduction  bool
 		Title         string
 		Date          string
 		FormattedDate string
-		Category      []string
-		Description   string
-		Permalink     string
-		Content       template.HTML
-		CurrentURL    string // for nav tag
+		// Category      []string
+		Description string
+		Permalink   string
+		Content     template.HTML
+		CurrentURL  string // for nav tag
+		Categories  []CategoryInfo
 	}
 
 	for _, data := range postsData {
@@ -230,6 +194,23 @@ func main() {
 		if err != nil {
 			fmt.Printf("error: %s - 날짜 변환 실패\n", sourceFilePath)
 			return
+		}
+
+		var categoriesData []CategoryInfo
+		for _, c := range category {
+			var linkURL string
+			slugifiedPath := lib.SlugifyPath(c)
+
+			if appEnv == "production" {
+				linkURL = filepath.ToSlash(filepath.Join("/", "posts", slugifiedPath))
+			} else {
+				linkURL = filepath.ToSlash(filepath.Join("/", "posts", fmt.Sprintf("%s.html", slugifiedPath)))
+			}
+
+			categoriesData = append(categoriesData, CategoryInfo{
+				Name: c,       // "Go"
+				URL:  linkURL, // "/posts/go.html"
+			})
 		}
 
 		// Post 생성
@@ -268,11 +249,12 @@ func main() {
 			Title:         title,
 			Date:          date,
 			FormattedDate: formattedDate,
-			Category:      category,
-			Description:   description,
-			Permalink:     permalink,
-			Content:       template.HTML(contentBuf.String()),
-			CurrentURL:    "/posts",
+			// Category:      category,
+			Description: description,
+			Permalink:   permalink,
+			Content:     template.HTML(contentBuf.String()),
+			CurrentURL:  "/posts",
+			Categories:  categoriesData,
 		}
 
 		if err := postTemplate.Execute(outputFile, postTmplData); err != nil {
@@ -630,22 +612,34 @@ func main() {
 
 			var templateString string
 			if isFixed {
-				templateString = `<li><article class="post-item"><h3 class="post-item-title"><a href="%s">[고정됨] %s</a></h3><p class="post-item-date"><time datetime="%s">%s</time></p><p class="post-item-description">%s</p></article></li>`
+				templateString = `<li>
+					<article class="category-item">
+						<h3 class="category-item-title"><a href="%s">[고정됨] %s</a></h3>
+						<p class="category-item-date"><time datetime="%s">%s</time></p>
+						<p class="category-item-description">%s</p>
+					</article>
+				</li>`
 				postListHtml.WriteString(fmt.Sprintf(templateString, permalink, title, date, formattedDate, description))
 			} else {
-				templateString = `<li><article class="post-item"><h3 class="post-item-title"><a href="%s">%s</a></h3><p class="post-item-date"><time datetime="%s">%s</time></p><p class="post-item-description">%s</p></article></li>`
+				templateString = `<li>
+					<article class="category-item">
+						<h3 class="category-item-title"><a href="%s">%s</a></h3>
+						<p class="category-item-date"><time datetime="%s">%s</time></p>
+						<p class="category-item-description">%s</p>
+					</article>
+				</li>`
 				postListHtml.WriteString(fmt.Sprintf(templateString, permalink, title, date, formattedDate, description))
 			}
 		}
 
-		var backLinkURL string
-		if appEnv == "production" {
-			backLinkURL = "/posts"
-		} else {
-			backLinkURL = "/posts.html"
-		}
-		backButtonHTML := fmt.Sprintf(`<li><article class="back-link"><a href="%s">돌아가기</a></article></li>`, backLinkURL)
-		postListHtml.WriteString(backButtonHTML)
+		// var backLinkURL string
+		// if appEnv == "production" {
+		// 	backLinkURL = "/posts"
+		// } else {
+		// 	backLinkURL = "/posts.html"
+		// }
+		// backButtonHTML := fmt.Sprintf(`<li><article class="back-link"><a <a href="#" onclick="history.back(); return false;">돌아가기</a></article></li>`, backLinkURL)
+		// postListHtml.WriteString(backButtonHTML)
 
 		postListHtml.WriteString("</ul>")
 		postListHtml.WriteString("</section>")
