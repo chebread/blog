@@ -207,8 +207,6 @@ func main() {
 				linkURL = filepath.ToSlash(filepath.Join("/", "posts", fmt.Sprintf("%s.html", slugifiedPath)))
 			}
 
-			fmt.Println(linkURL)
-
 			categoriesData = append(categoriesData, CategoryInfo{
 				Name: c,       // "Go"
 				URL:  linkURL, // "/posts/go.html"
@@ -515,7 +513,7 @@ func main() {
 			} else {
 				moreLinkURL = filepath.ToSlash(filepath.Join("posts", fmt.Sprintf("%s.html", lib.SlugifyPath(category))))
 			}
-			moreLinkHTML := fmt.Sprintf(`<li><article class="post-more-link"><a href="%s">[%s] 더보기</a></article></li>`, moreLinkURL, category)
+			moreLinkHTML := fmt.Sprintf(`<li><article class="post-more-link"><a href="%s">더보기...</a></article></li>`, moreLinkURL)
 			postList = append(postList, moreLinkHTML)
 		}
 
