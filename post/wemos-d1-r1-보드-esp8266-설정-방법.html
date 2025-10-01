@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>WeMos D1 R1 보드 (ESP8266) 설정 방법 | 차한음 블로그</title>
+    <meta name="description" content="arduino-cli 설치 brew install arduino-cli arduino-cli는 Arduino IDE 보다 더욱 고차원적인 아두이노 관리 프로그램임. arduino-...">
+    <meta name="author" content="차한음">
+    <link rel="canonical" href="https://chebread.github.io/">
+
+    <meta property="og:title" content="WeMos D1 R1 보드 (ESP8266) 설정 방법 | 차한음 블로그">
+    <meta property="og:description" content="arduino-cli 설치 brew install arduino-cli arduino-cli는 Arduino IDE 보다 더욱 고차원적인 아두이노 관리 프로그램임. arduino-...">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://chebread.github.io/post/wemos-d1-r1-보드-esp8266-설정-방법">
+    <meta property="og:site_name" content="차한음 블로그">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WeMos D1 R1 보드 (ESP8266) 설정 방법 | 차한음 블로그">
+    <meta name="twitter:description" content="arduino-cli 설치 brew install arduino-cli arduino-cli는 Arduino IDE 보다 더욱 고차원적인 아두이노 관리 프로그램임. arduino-...">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "WeMos D1 R1 보드 (ESP8266) 설정 방법 | 차한음 블로그",
+        "author": {
+            "@type": "Person",
+            "name": "차한음"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "차한음",
+        },
+        "datePublished": "2025-09-15",
+        "description": "arduino-cli 설치 brew install arduino-cli arduino-cli는 Arduino IDE 보다 더욱 고차원적인 아두이노 관리 프로그램임. arduino-..."
+    }
+    </script>
+
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/color-palette.css">
+    <link rel="stylesheet" href="/styles/chroma.css">
+
+    <link rel="stylesheet" href="/styles/github-markdown.css">
+    <link rel="stylesheet" href="/styles/post.css">
+
+    <link rel="icon" href="/favicons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png">
+</head>
+<body>
+    <div class="root">
+        <div class="post">
+           <nav class="post-nav">
+                <a href="/" class="">
+                    <span>홈</span>
+                </a>
+                <a href="/about" class="">
+                    <span>어바웃</span>
+                </a>
+                <a href="/posts" class="active">
+                    <span>포스트</span>
+                </a>
+            </nav>
+            
+            <main class="post-content">
+                <header class="post-header">
+                    <h1 class="post-title">WeMos D1 R1 보드 (ESP8266) 설정 방법</h1>
+                    <p class="post-date"><time datetime="2025-09-15">2025년 09월 15일</time></p>
+                    <p class="post-category"><a href="/posts/arduino">[Arduino]</a></p>
+                </header>
+                <div class="post-body">
+                    <article class="markdown-body"><h2>arduino-cli 설치</h2>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">brew install arduino-cli
+</span></span></code></pre><p>arduino-cli는 Arduino IDE 보다 더욱 고차원적인 아두이노 관리 프로그램임.</p>
+<h2>arduino-cli 최초 설정</h2>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">arduino-cli config init
+</span></span></code></pre><p>arduino-cli를 컴퓨터에 설치한 후 가장 먼저, 딱 한 번만 이 명령어를 실행하면 됨.
+이 명령어로 설정 파일의 뼈대를 만든 뒤, ESP8266 보드 URL을 추가하는 등의 설정을 하게 됨.</p>
+<h2>WeMos D1 보드 설정 (외부 보드 매니저 주소 추가)</h2>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">arduino-cli config <span class="nb">set</span> board_manager.additional_urls <span class="o">[</span>http://arduino.esp8266.com/stable/package_esp8266com_index.json<span class="o">](</span>http://arduino.esp8266.com/stable/package_esp8266com_index.json<span class="o">)</span>
+</span></span></code></pre><p>arduino-cli의 영구적인 설정 파일을 수정하는 명령어임.</p>
+<p>arduino-cli의 메인 설정 파일(<code>arduino-cli.yaml</code>) 안에 있는 <code>board_manager.additional_urls</code> 라는 목록에, 지정된 URL(<code>http://arduino.esp8266.com/...</code>)을 추가하고 저장함.</p>
+<p>이 명령어는 arduino-cli에게 &quot;앞으로 보드 패키지 목록을 찾을 때, 아두이노 공식 서버뿐만 아니라, 내가 지금 알려주는 이 인터넷 주소도 확인 대상에 포함시켜라&quot; 라고 데이터 소스(Source)를 등록하는 일회성 작업임. 이 명령 자체는 어떠한 다운로드도 수행하지 않음.</p>
+<h2>드라이버 업데이트</h2>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">arduino-cli core update-index
+</span></span></code></pre><p>등록된 모든 데이터 소스로부터 최신 패키지 목록을 다운로드하는 명령어임.</p>
+<p><code>arduino-cli.yaml</code> 설정 파일에 등록된 모든 URL(아두이노 공식 URL + 우리가 config set으로 추가한 URL)에 실제로 접속하여, <code>package_..._index.json</code> 이라는 이름의 파일들을 다운로드하고 로컬 캐시를 업데이트함.</p>
+<p><code>package_..._index.json</code> 파일 안에는 설치 가능한 보드, 라이브러리, 도구들의 이름과 버전 정보가 들어있음.</p>
+<h2>WeMos 드라이버 설치</h2>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">arduino-cli core install esp8266:esp8266
+</span></span></code></pre><p><code>arduino-cli core update-index</code> 명령어를 실행 이후에, 최신 목록을 바탕으로 WEMOS D1를 위한 전용 패키지를 설치하기.</p>
+<h2>config set ..., core update-index, core install의 차이</h2>
+<ul>
+<li>
+<p><code>config set ...</code> 명령어로 arduino-cli에게 새로운 정보 소스의 주소를 알려줌.</p>
+</li>
+<li>
+<p><code>core update-index</code> 명령어는 <code>config set</code> 으로 알려준 그 새로운 주소를 포함한 모든 주소에 접속해서, 설치 가능한 패키지 목록을 가져옴.</p>
+</li>
+<li>
+<p><code>core install ...</code> 명령어는 <code>update-index</code> 가 가져온 그 목록을 보고, 필요한 파일을 설치함.</p>
+</li>
+</ul>
+<h2>Wifi 관련 라이브러리 설치</h2>
+<p>ESP8266WiFi.h와 같은 WiFi 관련 기능은 별도의 라이브러리를 <code>lib install</code>로 설치하는 것이 아님.
+이 기능들은 <code>arduino-cli core install esp8266:esp8266</code> 명령어로 설치되는 &quot;ESP8266 보드 지원 패키지&quot; 안에 이미 포함되어 있음.</p>
+<h2>아두이노 프로젝트 생성</h2>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">arduino-cli sketch new PROJECT_NAME
+</span></span></code></pre><h2>아두이노 프로그래밍</h2>
+<p><code>PROJECT_NAME.ino</code> 이렇게 아두이노 메인 파일 이름은 프로젝트 이름과 동일해야 함이 관례임.</p>
+<p>하나의 프로젝트(폴더) 안에는 <code>setup()</code>과 <code>loop()</code> 함수가 단 한 번만 존재해야 함.
+<code>setup()</code>과 <code>loop()</code>는 프로그램의 시작점임으로, 메인 파일에 위치하는 것이 관례임.</p>
+<p>arduino-cli는 프로젝트 내부의 모든 파일들을 독립적으로 인식하는 것이 아니라, 컴파일 직전에 하나의 거대한 파일로 그냥 이어 붙여버림.
+컴포넌트 같이 만드러면 <code>.h</code> 해더파일을 만들어야함.</p>
+<p>아두이노에서 활용하는 언어는 C++의 변형된 프로그래밍 언어를 사용함으로, C++ 프로그래밍과 완전하게 같음.</p>
+<h2>아두이노 관련 VSC 익스텐션 설치</h2>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">Arduino Community Edition
+</span></span><span class="line"><span class="cl">C/C++
+</span></span><span class="line"><span class="cl">C/C++ Extension Pack
+</span></span></code></pre><p>VSC 익스텐션 3개를 설치해야 함.</p>
+<h2>.vscode 디렉토리 생성</h2>
+<p><code>.vscode</code> 디렉토리를 생성해야 함.
+그러나 개발자가 직접 생성 안해도, Arduino 확장 프로그램이 직접 <code>.vscode</code> 폴더를 생성하고 <code>arduino.json</code> 같은 파일을 거기에 위치시킴.</p>
+<h2>VSC에서 아두이노 설정하기</h2>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">Arduino: Change Board Type
+</span></span></code></pre><p>Command Palette에서 <code>Arduino: Change Board Type</code> 를 입력한 후, <code>LOLIN(WeMos) D1 R2 &amp; mini</code> 선택하기.</p>
+<p>이 명령어를 실행하면, <code>.vscode/arduino.json</code> 파일이 생성-수정됨.
+굳이 arduino.json 파일을 따로 만들지 않아도, .vscode 디렉토리에 자동으로 저장됨.</p>
+<p><code>arduino.json</code> 파일은</p>
+<ol>
+<li>&quot;Arduino&quot; 확장 프로그램의 명령어 생성기 역할
+<ul>
+<li>Arduino: Change Board Type에서 모델을 선택하면, 그 정보(&quot;board&quot;: &quot;esp8266:esp8266:d1_mini&quot;)가 arduino.json에 저장됨.</li>
+<li>이 정보가 VSC의 UI 버튼(Upload(→) 버튼 등)을 누를 때 명령어 인수로서 활용됨.</li>
+</ul>
+</li>
+<li>C/C++ 확장 프로그램의 코드 자동완성(IntelliSense)을 위한 정보 제공 역할
+을 수행함.</li>
+</ol>
+<p><code>arduino.json</code> 파일 내부의 속성은</p>
+<ul>
+<li>&quot;sketch&quot;
+<ul>
+<li>어떤 .ino 파일이 메인 파일인지 알려줌.</li>
+<li>사용자가 직접 수정해야 할 수 있음. (예: 파일 이름을 바꿨을 때)</li>
+</ul>
+</li>
+<li>&quot;board
+<ul>
+<li>어떤 보드를 타겟으로 컴파일할지 알려줌. (--fqbn 값)</li>
+<li>Arduino: Change Board Type 메뉴로 설정됨.</li>
+</ul>
+</li>
+<li>&quot;output&quot;
+<ul>
+<li>컴파일 결과물을 어디에 저장할지 알려줌.</li>
+<li>Arduino: Initialize 실행 시 기본적으로 추가되거나, 사용자가 직접 추가할 수 있음.</li>
+</ul>
+</li>
+<li>&quot;port&quot;
+<ul>
+<li>어느 USB 포트로 업로드할지 알려줌.</li>
+<li>Arduino: Select Serial Port 메뉴로 설정됨.</li>
+</ul>
+</li>
+</ul>
+<p>이것임.</p>
+<p><code>arduino.json</code> 파일은 개발자가 직접 관리할 수 있는 파일임.</p>
+<h2>참고: ESP8266은 같은데 왜 이렇게 Board Type은 선택하는 것이 많은가?</h2>
+<p>각각 보드가 ESP8266은 이라는 핵심 칩(두뇌)은 동일하지만,
+그 두뇌를 둘러싼 '몸체'가 다르기 때문에 VS Code에서 그 많은 모델을 선택해야 하는 것임.</p>
+<p><code>Arduino: Change Board Type</code> 에서 특정 모델을 선택하는 것은,
+컴파일러에게 바로 이 몸체의 미세한 차이점을 알려주는 매우 중요한 과정임.</p>
+<h2>VSC에서 아두이노를 위한 C/C++ IntelliSense 설정하기</h2>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">Arduino: Rebuild IntelliSense Configuration
+</span></span></code></pre><p><code>arduino-cli lib install &quot;MQ135&quot;</code> 이렇게 Arduino 관련 새로운 라이브러리 등을 설치하면,
+해당 라이브러리를 <code>#include</code> 를 사용해서 불러오면 오류가 발생할 수 있음.
+외부 라이브러리를 설치한 후, VS Code가 그 라이브러리의 위치를 인식하도록 강제로 해당 명령어를 활용하여 새로고침하기.</p>
+<p>이 명령어를 실행하면, <code>c_cpp_properties.json</code> 파일이 생성-수정된다.
+<code>c_cpp_properties.json</code> 파일은 C/C++ 확장 프로그램의 코드 분석기(IntelliSense)만을 위한 것임.
+사용자가 절대로 직접 수정해서는 안 됨.</p>
+<h2>컴파일</h2>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">arduino-cli compile --fqbn esp8266:esp8266:d1_mini --output-dir ./build .
+</span></span></code></pre><p>현재 폴더의 모든 .ino 파일을 합쳐서 컴파일함. 결과물은 build 디렉토리에 저장됨.
+<code>build</code> 디렉토리는 절대 Git/GitHub에 포함시키면 안됨.</p>
+<h2>업로드</h2>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">arduino-cli upload -p /dev/cu.usbserial-A5069RR4 --fqbn esp8266:esp8266:d1_mini .
+</span></span></code></pre><p>build 디렉토리를 바탕으로 업로드를 수행함.
+업로드란 아두이노에게 만든 프로그램을 주입하는 것임.</p>
+<h2>아두이노 보드 검색</h2>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">arduino-cli core list
+</span></span></code></pre><p>해당 명령어로 현재 컴퓨터에 연결된 아두이노 보드 검색하기.
+만약 업로드할 때 오류가 난다면, 보드가 정상적으로 연결되지 않았다는 것을 의미함으로, 해당 명령어로 연결된 보드를 검색해보기.</p>
+<h2>daemon</h2>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">arduino-cli daemon
+</span></span></code></pre><p>이 명령어를 실행해 두면, arduino-cli를 백그라운드에 상주시켜 컴파일 속도를 비약적으로 향상시킴.</p>
+<h2>출력 확인</h2>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">arduino-cli monitor -p /dev/cu.usbserial-A5069RR4 -c <span class="nv">baudrate</span><span class="o">=</span>115200<span class="s2">&#34;
+</span></span></span></code></pre><p>아두이노 보드가 Serial.print()로 보내는 메시지를 컴퓨터 화면에서 확인할 수 있게하는 명령어.
+<code>-c baudrate</code> 값은 아두이노 코드의 <code>Serial.begin()</code> 에 있는 숫자와 반드시 일치해야 함.</p>
+</article>
+                </div>
+            </main>
+
+            <footer class="post-footer">
+                <section>
+                    <p>&copy; 2025 Cha Haneum</p>
+                </section>
+                <section>
+                    <a href="https://github.com/chebread">
+                        <span>깃허브</span>
+                    </a>
+                    <a href="">
+                        <span>이메일</span>
+                    </a>
+                </section>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
