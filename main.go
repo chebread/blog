@@ -21,6 +21,8 @@ import (
 	highlighting "github.com/yuin/goldmark-highlighting/v2"
 )
 
+// TODO: post에 Thumnail 추가 -> header hero 처럼
+
 func main() {
 	// Get env
 	var appEnv string = os.Getenv("APP_ENV")
