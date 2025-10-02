@@ -43,6 +43,9 @@ func main() {
 				),
 			),
 		),
+		goldmark.WithParserOptions(
+			parser.WithAttribute(), // 수동 id 지정 기능
+		),
 	)
 	_ = md
 

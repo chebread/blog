@@ -1,7 +1,7 @@
 ---
 date: 2025-09-15
 category: [Arduino]
-published: true
+published: false
 fixed: false
 ---
 

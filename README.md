@@ -13,26 +13,28 @@ Website link: [https://chebread.github.io/](https://chebread.github.io/)
 - [License](#license)
 
 ## Features
-- **Custom Go SSG**: The site is not built with off-the-shelf frameworks like Hugo or Jekyll. The entire build logic—from parsing Markdown files to rendering HTML—is handled by a custom Go.
+- Custom Go SSG
 
-- **Markdown-Based Content**: All posts and pages are written in Markdown with YAML front matter for metadata.
+- Markdown-Based Content
 
-- **Build-Time Syntax Highlighting**: Code blocks are highlighted at build time using the pure-Go Chroma library, ensuring fast page loads with no client-side JavaScript dependency for styling.
+- Build-Time Syntax Highlighting
 
-- **Image Zooming**: Integrated the medium-zoom library to allow users to click and zoom into images for a better viewing experience.
+- Image Zooming
 
-- **Frontend Tooling**: The project uses pnpm to manage a modern frontend pipeline featuring Sass for advanced styling and esbuild for fast TypeScript bundling and minification.
+- Frontend Tooling
 
-- **Automated CI/CD Pipeline**: The build and deployment process is fully automated with GitHub Actions. Pushing a specially formatted Git tag triggers the workflow, which builds the site and deploys it to GitHub Pages.
+- Automated CI/CD Pipeline
+
+- Manual Anchor Links for Headings
 
 ## Tech Stack
-- **Static Site Generator (SSG)**: Go
-- **Content**: Markdown with YAML Front Matter parsed with Goldmark
-- **Styling**: SCSS compiled with Dart Sass
-- **JavaScript**: TypeScript (bundled with esbuild)
-- **Image Zoom**: medium-zoom
-- **Package Manager**: pnpm
-- **Deployment**: GitHub Actions
+- Static Site Generator (SSG): Go
+- Content: Markdown with YAML Front Matter parsed with Goldmark
+- Styling: SCSS compiled with Dart Sass
+- JavaScript: TypeScript (bundled with esbuild)
+- Image Zoom: medium-zoom
+- Package Manager: pnpm
+- Deployment: GitHub Actions
 
 ## How to Run
 ### Install Dependencies
@@ -74,6 +76,40 @@ devd -ol DIR_NAME # Run the server and open a browser using livereload
 
 killall devd # Kill devd process
 ```
+
+## How to Create Manual Anchor Links
+You can create links that jump to specific headings within a page. This is useful for building a table of contents.
+
+### Assign a Custom ID to a Heading
+Append {#your-custom-id} directly after your heading text. This ID will be the target for your link.
+
+```md
+## My Awesome Section {#section-1}
+```
+
+### Link to the Heading
+Use the standard Markdown link syntax. The URL part should be a # followed by the custom ID you created.
+
+```md
+[Go to my awesome section](#section-1)
+```
+
+### Example
+
+```md
+## Table of Contents
+- [Go to Section 1](#section-1)
+- [Go to Section 2](#section-2)
+
+## My Awesome Section {#section-1}
+Here is the content for the first section.
+
+## Another Awesome Section {#section-2}
+Here is the content for the second section.
+```
+
+### Note
+It is recommended to use only letters, numbers, and hyphens (-) for IDs to ensure URL compatibility. Special characters (like ?, &) should be avoided. Korean characters are also supported.
 
 ## How to Deploy
 To publish a new post or deploy changes, you must push a specially formatted Git tag. The deployment is handled automatically by GitHub Actions.
