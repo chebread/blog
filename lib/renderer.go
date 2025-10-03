@@ -53,9 +53,15 @@ func (r *plainTextRenderer) RegisterFuncs(reg renderer.NodeRendererFuncRegistere
 
 func (r *plainTextRenderer) renderText(w util.BufWriter, source []byte, n ast.Node, entering bool) (ast.WalkStatus, error) {
 	if entering {
-		// 타입 단언이 안전한지 확인합니다.
 		if text, ok := n.(*ast.Text); ok {
+			// 텍스트의 실제 내용을 씁니다.
 			w.Write(text.Segment.Value(source))
+
+			// 만약 이 텍스트 노드가 소프트 줄 바꿈으로 끝난다면,
+			// 띄어쓰기를 보장하기 위해 공백 하나를 추가합니다.
+			if text.SoftLineBreak() {
+				w.WriteString(" ")
+			}
 		}
 	}
 	return ast.WalkContinue, nil
