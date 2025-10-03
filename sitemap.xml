@@ -91,13 +91,33 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://chebread.github.io/post/chaos-to-cosmos</loc>
+    <lastmod>2025-09-13</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://chebread.github.io/post/개발은-본질적으로-생산과-다르다</loc>
+    <lastmod>2025-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://chebread.github.io/post/단일-책임-원칙이-무너지고-있다</loc>
     <lastmod>2025-09-13</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://chebread.github.io/post/바닐라-자바스크립트의-한계</loc>
+    <lastmod>2022-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://chebread.github.io/post/완벽주의의-종말</loc>
     <lastmod>2025-08-24</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://chebread.github.io/post/해커톤을-처음-나가는-개발자들을-위한-팁</loc>
+    <lastmod>2022-12-10</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
@@ -108,16 +128,6 @@
   <url>
     <loc>https://chebread.github.io/post/힙하게-코딩하는-방법</loc>
     <lastmod>2022-06-05</lastmod>
-    <changefreq>weekly</changefreq>
-  </url>
-  <url>
-    <loc>https://chebread.github.io/post/바닐라-자바스크립트의-한계</loc>
-    <lastmod>2022-08-30</lastmod>
-    <changefreq>weekly</changefreq>
-  </url>
-  <url>
-    <loc>https://chebread.github.io/post/해커톤을-처음-나가는-개발자들을-위한-팁</loc>
-    <lastmod>2022-12-10</lastmod>
     <changefreq>weekly</changefreq>
   </url>
 </urlset>
