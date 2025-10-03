@@ -3,6 +3,7 @@ package main
 import (
 	"blog/lib"
 	"bytes"
+	"encoding/xml"
 	"fmt"
 	"html/template"
 	"io"
@@ -10,6 +11,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"time"
 
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark/extension"
@@ -272,128 +274,6 @@ func main() {
 
 		fmt.Printf("sucess: %s 파일 생성\n", publicPath)
 	}
-
-	// index.html 처리
-	fmt.Println()
-	fmt.Println("-- index.html 처리 --")
-
-	homeMdBytes, err := os.ReadFile("content/home/home.md")
-	if err != nil {
-		fmt.Printf("home.md 파일 읽기 실패: %v\n", err)
-		return
-	}
-
-	var homeBodyBytes []byte
-	if bytes.HasPrefix(homeMdBytes, []byte("---")) {
-		parts := bytes.SplitN(homeMdBytes, []byte("---"), 3)
-		if len(parts) >= 3 {
-			homeBodyBytes = parts[2]
-		} else {
-			homeBodyBytes = homeMdBytes
-		}
-	} else {
-		homeBodyBytes = homeMdBytes
-	}
-
-	var homeContentBuf bytes.Buffer
-	if err := md.Convert(homeBodyBytes, &homeContentBuf); err != nil {
-		fmt.Printf("home.md 변환 실패: %v\n", err)
-		return
-	}
-
-	sourceHomeFile := "layout/index.html"
-	tmplHome, err := template.ParseFiles(sourceHomeFile)
-	if err != nil {
-		fmt.Printf("템플릿 파일 파싱 실패: %v\n", err)
-		return
-	}
-
-	destHomeFile := "public/index.html"
-	outputHomeFile, err := os.Create(destHomeFile)
-	if err != nil {
-		fmt.Printf("출력 파일 생성 실패: %v\n", err)
-		return
-	}
-	defer outputHomeFile.Close()
-
-	type HomePageData struct {
-		IsProduction bool
-		CurrentURL   string
-		Content      template.HTML
-	}
-	homePageData := HomePageData{
-		IsProduction: appEnv == "production",
-		CurrentURL:   "/",
-		Content:      template.HTML(homeContentBuf.String()),
-	}
-
-	if err := tmplHome.Execute(outputHomeFile, homePageData); err != nil {
-		fmt.Printf("템플릿 실행 실패: %v\n", err)
-		return
-	}
-
-	fmt.Printf("성공: %s 파일 생성\n", destHomeFile)
-
-	// about.html 처리
-	fmt.Println()
-	fmt.Println("-- abou.html 처리 --")
-
-	aboutMdBytes, err := os.ReadFile("content/about/about.md")
-	if err != nil {
-		fmt.Printf("about.md 파일 읽기 실패: %v\n", err)
-		return
-	}
-
-	var aboutBodyBytes []byte
-	if bytes.HasPrefix(aboutMdBytes, []byte("---")) {
-		parts := bytes.SplitN(aboutMdBytes, []byte("---"), 3)
-		if len(parts) >= 3 {
-			aboutBodyBytes = parts[2]
-		} else {
-			aboutBodyBytes = aboutMdBytes
-		}
-	} else {
-		aboutBodyBytes = aboutMdBytes
-	}
-
-	var aboutContentBuf bytes.Buffer
-	if err := md.Convert(aboutBodyBytes, &aboutContentBuf); err != nil {
-		fmt.Printf("about.md 변환 실패: %v\n", err)
-		return
-	}
-
-	sourceAboutFile := "layout/about.html"
-	tmplabout, err := template.ParseFiles(sourceAboutFile)
-	if err != nil {
-		fmt.Printf("템플릿 파일 파싱 실패: %v\n", err)
-		return
-	}
-
-	destAboutFile := "public/about.html"
-	outputAboutFile, err := os.Create(destAboutFile)
-	if err != nil {
-		fmt.Printf("출력 파일 생성 실패: %v\n", err)
-		return
-	}
-	defer outputAboutFile.Close()
-
-	type AboutPageData struct {
-		IsProduction bool
-		CurrentURL   string
-		Content      template.HTML
-	}
-	aboutPageData := AboutPageData{
-		IsProduction: appEnv == "production",
-		CurrentURL:   "/about",
-		Content:      template.HTML(aboutContentBuf.String()),
-	}
-
-	if err := tmplabout.Execute(outputAboutFile, aboutPageData); err != nil {
-		fmt.Printf("템플릿 실행 실패: %v\n", err)
-		return
-	}
-
-	fmt.Printf("성공: %s 파일 생성\n", destAboutFile)
 
 	// Post list 처리
 	fmt.Println()
@@ -664,4 +544,205 @@ func main() {
 
 		fmt.Printf("성공: %s 파일 생성\n", outputFilePath)
 	}
+
+	// index.html 처리
+	fmt.Println()
+	fmt.Println("-- index.html 처리 --")
+
+	homeMdBytes, err := os.ReadFile("content/home/home.md")
+	if err != nil {
+		fmt.Printf("home.md 파일 읽기 실패: %v\n", err)
+		return
+	}
+
+	var homeBodyBytes []byte
+	if bytes.HasPrefix(homeMdBytes, []byte("---")) {
+		parts := bytes.SplitN(homeMdBytes, []byte("---"), 3)
+		if len(parts) >= 3 {
+			homeBodyBytes = parts[2]
+		} else {
+			homeBodyBytes = homeMdBytes
+		}
+	} else {
+		homeBodyBytes = homeMdBytes
+	}
+
+	var homeContentBuf bytes.Buffer
+	if err := md.Convert(homeBodyBytes, &homeContentBuf); err != nil {
+		fmt.Printf("home.md 변환 실패: %v\n", err)
+		return
+	}
+
+	sourceHomeFile := "layout/index.html"
+	tmplHome, err := template.ParseFiles(sourceHomeFile)
+	if err != nil {
+		fmt.Printf("템플릿 파일 파싱 실패: %v\n", err)
+		return
+	}
+
+	destHomeFile := "public/index.html"
+	outputHomeFile, err := os.Create(destHomeFile)
+	if err != nil {
+		fmt.Printf("출력 파일 생성 실패: %v\n", err)
+		return
+	}
+	defer outputHomeFile.Close()
+
+	type HomePageData struct {
+		IsProduction bool
+		CurrentURL   string
+		Content      template.HTML
+	}
+	homePageData := HomePageData{
+		IsProduction: appEnv == "production",
+		CurrentURL:   "/",
+		Content:      template.HTML(homeContentBuf.String()),
+	}
+
+	if err := tmplHome.Execute(outputHomeFile, homePageData); err != nil {
+		fmt.Printf("템플릿 실행 실패: %v\n", err)
+		return
+	}
+
+	fmt.Printf("성공: %s 파일 생성\n", destHomeFile)
+
+	// about.html 처리
+	fmt.Println()
+	fmt.Println("-- abou.html 처리 --")
+
+	aboutMdBytes, err := os.ReadFile("content/about/about.md")
+	if err != nil {
+		fmt.Printf("about.md 파일 읽기 실패: %v\n", err)
+		return
+	}
+
+	var aboutBodyBytes []byte
+	if bytes.HasPrefix(aboutMdBytes, []byte("---")) {
+		parts := bytes.SplitN(aboutMdBytes, []byte("---"), 3)
+		if len(parts) >= 3 {
+			aboutBodyBytes = parts[2]
+		} else {
+			aboutBodyBytes = aboutMdBytes
+		}
+	} else {
+		aboutBodyBytes = aboutMdBytes
+	}
+
+	var aboutContentBuf bytes.Buffer
+	if err := md.Convert(aboutBodyBytes, &aboutContentBuf); err != nil {
+		fmt.Printf("about.md 변환 실패: %v\n", err)
+		return
+	}
+
+	sourceAboutFile := "layout/about.html"
+	tmplabout, err := template.ParseFiles(sourceAboutFile)
+	if err != nil {
+		fmt.Printf("템플릿 파일 파싱 실패: %v\n", err)
+		return
+	}
+
+	destAboutFile := "public/about.html"
+	outputAboutFile, err := os.Create(destAboutFile)
+	if err != nil {
+		fmt.Printf("출력 파일 생성 실패: %v\n", err)
+		return
+	}
+	defer outputAboutFile.Close()
+
+	type AboutPageData struct {
+		IsProduction bool
+		CurrentURL   string
+		Content      template.HTML
+	}
+	aboutPageData := AboutPageData{
+		IsProduction: appEnv == "production",
+		CurrentURL:   "/about",
+		Content:      template.HTML(aboutContentBuf.String()),
+	}
+
+	if err := tmplabout.Execute(outputAboutFile, aboutPageData); err != nil {
+		fmt.Printf("템플릿 실행 실패: %v\n", err)
+		return
+	}
+
+	fmt.Printf("성공: %s 파일 생성\n", destAboutFile)
+
+	// sitemap.xml 처리
+	type SitemapURL struct {
+		XMLName    xml.Name `xml:"url"`
+		Loc        string   `xml:"loc"`
+		LastMod    string   `xml:"lastmod"`
+		ChangeFreq string   `xml:"changefreq"`
+	}
+
+	type URLSet struct {
+		XMLName     xml.Name     `xml:"urlset"`
+		Xmlns       string       `xml:"xmlns,attr"`
+		XmlnsXSI    string       `xml:"xmlns:xsi,attr"`
+		XSILocation string       `xml:"xsi:schemaLocation,attr"`
+		URLs        []SitemapURL `xml:"url"`
+	}
+
+	fmt.Println()
+	fmt.Println("-- Sitemap 생성 --")
+
+	const baseURL = "https://chebread.github.io"
+
+	var urlset = &URLSet{
+		Xmlns:       "http://www.sitemaps.org/schemas/sitemap/0.9",
+		XmlnsXSI:    "http://www.w3.1/XMLSchema-instance",
+		XSILocation: "http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd",
+	}
+
+	var today = time.Now().Format("2006-01-02")
+
+	var staticPages = []string{"", "about.html"} // index.html은 경로가 "" 임.
+	for _, page := range staticPages {
+		urlEntry := SitemapURL{
+			Loc:        fmt.Sprintf("%s/%s", baseURL, page),
+			LastMod:    today,
+			ChangeFreq: "monthly",
+		}
+		urlset.URLs = append(urlset.URLs, urlEntry)
+	}
+
+	for _, data := range postsData {
+		var slug, okSlug = data["slug"].(string)
+		var date, okDate = data["date"].(string)
+
+		if !okSlug || !okDate {
+			continue
+		}
+
+		var postURL string
+		if appEnv == "production" {
+			postURL = fmt.Sprintf("%s/post/%s", baseURL, slug)
+		} else {
+			postURL = fmt.Sprintf("%s/post/%s.html", baseURL, slug)
+		}
+
+		var urlEntry = SitemapURL{
+			Loc:        postURL,
+			LastMod:    date,     // 포스트의 실제 최종 수정일
+			ChangeFreq: "weekly", // 포스트는 비교적 자주 변경될 수 있으므로 weekly로 설정함
+		}
+		urlset.URLs = append(urlset.URLs, urlEntry)
+	}
+
+	xmlBytes, err := xml.MarshalIndent(urlset, "", "  ")
+	if err != nil {
+		fmt.Printf("error: Sitemap XML 변환 실패\n")
+		return
+	}
+
+	var sitemapContent = []byte(xml.Header + string(xmlBytes))
+
+	var sitemapPath = "public/sitemap.xml"
+	err = os.WriteFile(sitemapPath, sitemapContent, 0644)
+	if err != nil {
+		fmt.Printf("error: %s 파일 생성 실패\n", sitemapPath)
+		return
+	}
+
+	fmt.Printf("성공: %s 파일 생성\n", sitemapPath)
 }
