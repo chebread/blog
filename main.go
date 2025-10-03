@@ -23,6 +23,9 @@ import (
 
 // TODO: post에 Thumnail 추가 -> header hero 처럼
 
+// FIX: fixed된 게시물 이름순으로 하기. -> Q: 힙하게 힙하게 가 똑같으면 어떻게 비교를 수행하는가?
+// FIX: fixed, category 이름 순에 숫자->한글->영어 순으로 하기
+
 func main() {
 	// Get env
 	var appEnv string = os.Getenv("APP_ENV")
@@ -402,17 +405,10 @@ func main() {
 	for category := range postsDataByCategory {
 		categories = append(categories, category)
 	}
+
+	// 목록 Sort
 	sort.Slice(categories, func(i, j int) bool {
-		keyI := categories[i]
-		keyJ := categories[j]
-		isKoreanI := lib.IsKorean(keyI)
-		isKoreanJ := lib.IsKorean(keyJ)
-
-		if isKoreanI != isKoreanJ {
-			return isKoreanI
-		}
-
-		return keyI < keyJ
+		return lib.CompareStrings(categories[i], categories[j])
 	})
 
 	for _, category := range categories {
@@ -429,7 +425,7 @@ func main() {
 		postList = append(postList, fmt.Sprintf("<h2 class=\"category-group-title\"><a href=\"%s\">[%s]</a></h2>", categoryLink, category))
 		postList = append(postList, "<ul class=\"category-group-list\">")
 
-		// 정렬: fixed, date
+		// fixed 정렬
 		sort.Slice(posts, func(i, j int) bool {
 			postI := posts[i]
 			postJ := posts[j]
@@ -444,15 +440,7 @@ func main() {
 			if fixedI {
 				titleI, _ := postI["title"].(string)
 				titleJ, _ := postJ["title"].(string)
-
-				isKoreanI := lib.IsKorean(titleI)
-				isKoreanJ := lib.IsKorean(titleJ)
-
-				if isKoreanI != isKoreanJ {
-					return isKoreanI
-				}
-
-				return titleI < titleJ
+				return lib.CompareStrings(titleI, titleJ)
 			}
 
 			dateI, _ := postI["date"].(string)
@@ -570,6 +558,7 @@ func main() {
 		return
 	}
 
+	// 정렬
 	for category, posts := range postsDataByCategory {
 		sort.Slice(posts, func(i, j int) bool {
 			postI := posts[i]
@@ -579,16 +568,13 @@ func main() {
 			if fixedI != fixedJ {
 				return fixedI
 			}
+
 			if fixedI {
 				titleI, _ := postI["title"].(string)
 				titleJ, _ := postJ["title"].(string)
-				isKoreanI := lib.IsKorean(titleI)
-				isKoreanJ := lib.IsKorean(titleJ)
-				if isKoreanI != isKoreanJ {
-					return isKoreanI
-				}
-				return titleI < titleJ
+				return lib.CompareStrings(titleI, titleJ)
 			}
+
 			dateI, _ := postI["date"].(string)
 			dateJ, _ := postJ["date"].(string)
 			return dateI > dateJ
