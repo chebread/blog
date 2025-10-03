@@ -14,18 +14,12 @@ Website link: [https://chebread.github.io/](https://chebread.github.io/)
 
 ## Features
 - Custom Go SSG
-
 - Markdown-Based Content
-
 - Build-Time Syntax Highlighting
-
 - Image Zooming
-
-- Frontend Tooling
-
-- Automated CI/CD Pipeline
-
 - Manual Anchor Links for Headings
+- Frontend Tooling
+- Automated CI/CD Pipeline
 
 ## Tech Stack
 - Static Site Generator (SSG): Go
