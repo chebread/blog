@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"html/template"
 	"io"
+	"net/url"
 	"os"
 	"path/filepath"
 	"sort"
@@ -25,8 +26,7 @@ import (
 
 // TODO: post에 Thumnail 추가 -> header hero 처럼
 
-// FIX: fixed된 게시물 이름순으로 하기. -> Q: 힙하게 힙하게 가 똑같으면 어떻게 비교를 수행하는가?
-// FIX: fixed, category 이름 순에 숫자->한글->영어 순으로 하기
+// TODO: postlist, category list의 a tag에서만 퍼센트 인코딩해서 전달하면 된다.
 
 func main() {
 	// Get env
@@ -344,12 +344,13 @@ func main() {
 			description, _ := data["description"].(string)
 			// categorySlice, _ := data["category"].([]string)
 			slug, _ := data["slug"].(string)
+			encodedSlug := url.PathEscape(slug)
 
 			var permalink string // 블로그 링크는 Production에서는 .html가 없음
 			if appEnv == "production" {
-				permalink = filepath.ToSlash(filepath.Join("post", slug))
+				permalink = filepath.ToSlash(filepath.Join("post", encodedSlug))
 			} else {
-				permalink = filepath.ToSlash(filepath.Join("post", fmt.Sprintf("%s.html", slug)))
+				permalink = filepath.ToSlash(filepath.Join("post", fmt.Sprintf("%s.html", encodedSlug)))
 			}
 
 			formattedDate, err := lib.FormatDateKorean(date) // yyyy년 mm월 dd일
@@ -471,12 +472,13 @@ func main() {
 			date, _ := data["date"].(string)
 			description, _ := data["description"].(string)
 			slug, _ := data["slug"].(string)
+			encodedSlug := url.PathEscape(slug)
 
 			var permalink string
 			if appEnv == "production" {
-				permalink = filepath.ToSlash(filepath.Join("/", "post", slug))
+				permalink = filepath.ToSlash(filepath.Join("/", "post", encodedSlug))
 			} else {
-				permalink = filepath.ToSlash(filepath.Join("/", "post", fmt.Sprintf("%s.html", slug)))
+				permalink = filepath.ToSlash(filepath.Join("/", "post", fmt.Sprintf("%s.html", encodedSlug)))
 			}
 
 			formattedDate, _ := lib.FormatDateKorean(date)
@@ -503,14 +505,14 @@ func main() {
 			}
 		}
 
-		// var backLinkURL string
-		// if appEnv == "production" {
-		// 	backLinkURL = "/posts"
-		// } else {
-		// 	backLinkURL = "/posts.html"
-		// }
-		// backButtonHTML := fmt.Sprintf(`<li><article class="back-link"><a <a href="#" onclick="history.back(); return false;">돌아가기</a></article></li>`, backLinkURL)
-		// postListHtml.WriteString(backButtonHTML)
+		backButtonHTML :=
+			`<li>
+				<article class="back-link">
+					<a href="#" id="back">돌아가기...</a>
+				</article>
+			</li>`
+			// onclick="history.back(); return false;"
+		postListHtml.WriteString(backButtonHTML)
 
 		postListHtml.WriteString("</ul>")
 		postListHtml.WriteString("</section>")

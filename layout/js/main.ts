@@ -16,9 +16,19 @@ function initializeStickyNav() {
   });
 }
 
+function initializeBackLink() {
+  const backLinks = document.querySelectorAll('#back');
+
+  backLinks.forEach(link => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      history.back();
+    });
+  });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     initializeStickyNav();
-
+    initializeBackLink();
     mediumZoom('.markdown-body img');
 });

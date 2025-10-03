@@ -59,7 +59,7 @@
             line-height: 1.5;
             font-weight: 800;
             padding-bottom: 0.5rem;
-            text-decoration: underline;
+            // text-decoration: underline;
         }
 
         .category-group-list {
@@ -96,12 +96,12 @@
                 }
             }
 
-            // .back-link {
-            //     text-decoration: underline;
-            //     font-size: 1rem;
-            //     font-weight: 600;
-            //     line-height: 1.5;
-            // }
+            .back-link {
+                text-decoration: underline;
+                font-size: 1rem;
+                font-weight: 600;
+                line-height: 1.5;
+            }
         }
     }
 }
