@@ -2,12 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.1/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
     <loc>https://chebread.github.io/</loc>
-    <lastmod>2025-10-03</lastmod>
+    <lastmod>2025-10-04</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://chebread.github.io/about.html</loc>
-    <lastmod>2025-10-03</lastmod>
+    <lastmod>2025-10-04</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
@@ -86,6 +86,16 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://chebread.github.io/post/힙하게-llm-사용하는-방법</loc>
+    <lastmod>2025-10-02</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://chebread.github.io/post/힙하게-코딩하는-방법</loc>
+    <lastmod>2022-06-05</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://chebread.github.io/post/나의-블로그-유목민-역사</loc>
     <lastmod>2025-09-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -106,28 +116,23 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://chebread.github.io/post/독서</loc>
+    <lastmod>2025-10-04</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://chebread.github.io/post/unix-철학</loc>
+    <lastmod>2025-10-04</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://chebread.github.io/post/바닐라-자바스크립트의-한계</loc>
     <lastmod>2022-08-30</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://chebread.github.io/post/완벽주의의-종말</loc>
-    <lastmod>2025-08-24</lastmod>
-    <changefreq>weekly</changefreq>
-  </url>
-  <url>
     <loc>https://chebread.github.io/post/해커톤을-처음-나가는-개발자들을-위한-팁</loc>
     <lastmod>2022-12-10</lastmod>
-    <changefreq>weekly</changefreq>
-  </url>
-  <url>
-    <loc>https://chebread.github.io/post/힙하게-llm-사용하는-방법</loc>
-    <lastmod>2025-10-02</lastmod>
-    <changefreq>weekly</changefreq>
-  </url>
-  <url>
-    <loc>https://chebread.github.io/post/힙하게-코딩하는-방법</loc>
-    <lastmod>2022-06-05</lastmod>
     <changefreq>weekly</changefreq>
   </url>
 </urlset>
