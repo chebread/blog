@@ -86,6 +86,11 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://chebread.github.io/post/해커톤을-처음-나가는-개발자들을-위한-팁</loc>
+    <lastmod>2022-12-10</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://chebread.github.io/post/힙하게-llm-사용하는-방법</loc>
     <lastmod>2025-10-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -128,11 +133,6 @@
   <url>
     <loc>https://chebread.github.io/post/바닐라-자바스크립트의-한계</loc>
     <lastmod>2022-08-30</lastmod>
-    <changefreq>weekly</changefreq>
-  </url>
-  <url>
-    <loc>https://chebread.github.io/post/해커톤을-처음-나가는-개발자들을-위한-팁</loc>
-    <lastmod>2022-12-10</lastmod>
     <changefreq>weekly</changefreq>
   </url>
 </urlset>
