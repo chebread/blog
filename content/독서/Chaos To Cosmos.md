@@ -1,6 +1,7 @@
 ---
+desc: 해커와 화가 (폴 그레이엄)
 date: 2025-09-13
-category: [에세이]
+category: [독서]
 published: true
 fixed: false
 ---

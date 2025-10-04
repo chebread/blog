@@ -1,6 +1,6 @@
 ---
 date: 2025-10-02
-category: [에세이]
+category: [개발 팁]
 published: true
 fixed: false
 ---
