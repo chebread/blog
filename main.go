@@ -26,9 +26,11 @@ import (
 
 // TODO: post에 Thumnail 추가 -> header hero 처럼
 
-// TODO: date를 지정하지 않으면 post list에 어떻게 뜨는가?
+// TODO: date를 지정하지 않으면 post list에 어떻게 뜨는가? -> Compile Error
 
-// TODO: date가 같다면 post list에서 이름순(숫자->한글->영어)로 정렬되는가?
+// TODO: date가 같다면 post list에서 이름순(숫자->한글->영어)로 정렬되는가? -> Ok
+
+// TODO: Category fixed through site.yml
 
 func main() {
 	// Get env
